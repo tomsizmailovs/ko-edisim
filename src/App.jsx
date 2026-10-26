@@ -126,7 +126,7 @@ const filteredMeals = meals.filter((meal) => {
   }}
 >
   
-  {["Brokastis", "Pusdienas", "Vakariņas", "Deserts"].map(
+  {["🍳Brokastis", "🍝Pusdienas", "🥩Vakariņas", "🍰Deserts"].map(
     (type) => (
       <button
         key={type}
@@ -163,14 +163,14 @@ const filteredMeals = meals.filter((meal) => {
 <div
 style={{
   backgroundColor: "#f5f5f5",
-  padding: "16px",
+  padding: "10px",
   borderRadius: "16px",
   marginBottom: "16px",
   border: "1px solid #E0E0E0",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "12px",
+  gap: "6px",
   }}
 >
   {filterGroups[mealType].map((group, index) => (
