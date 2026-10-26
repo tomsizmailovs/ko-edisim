@@ -121,6 +121,7 @@ const filteredMeals = meals.filter((meal) => {
     marginBottom: "16px",
     border: "1px solid #e0e0e0",
     display: "flex",
+    gridTemplateColumns: "1fr 1fr",
     gap: "8px",
   }}
 >
@@ -134,7 +135,7 @@ const filteredMeals = meals.filter((meal) => {
           setSelectedTags([]);
       }}
         style={{
-          flex: 1,
+          width: "100%",
           padding: "12px",
           border:
             mealType === type
