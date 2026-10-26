@@ -136,6 +136,7 @@ const filteredMeals = meals.filter((meal) => {
       }}
         style={{
           padding: "12px",
+          fontSize: "16px",
           border:
             mealType === type
               ? "4px solid #0D4715"
