@@ -6,7 +6,7 @@ const filterGroups = {
     ["Salds", "Sāļš"],
     ["Silts", "Auksts"],
     ["Olbaltumvielas", "Šķiedrvielas"],
-    ["Ātri pagatavojams"],
+    ["15 min"],
     ["Pagatavojams vairākām dienām"],
   ],
 
@@ -14,14 +14,14 @@ const filterGroups = {
     ["Salds", "Sāļš"],
     ["Silts", "Auksts"],
     ["Olbaltumvielas", "Šķiedrvielas"],
-    ["Ātri pagatavojams"],
+    ["15 min"],
     ["Pagatavojams vairākām dienām"],
   ],
 
   Vakariņas: [
     ["Silts", "Auksts"],
     ["Olbaltumvielas", "Šķiedrvielas"],
-    ["Ātri pagatavojams"],
+    ["15 min"],
     ["Pagatavojams vairākām dienām"],
   ],
 
@@ -102,9 +102,11 @@ const filteredMeals = meals.filter((meal) => {
   return (
     <div
       style={{
-        maxWidth: "400px",
+        maxWidth: "380px",
+        width: "100%",
+        boxSizing: "border-box",
         margin: "0 auto",
-        padding: "20px",
+        padding: "12px",
         fontFamily: "Arial",
       }}
     >
@@ -188,6 +190,7 @@ style={{
           onClick={() => toggleTag(tag)}
           style={{
             padding: "8px 12px",
+            maxWidth: "100%",
             borderRadius: "20px",
             border: "none",
             cursor: "pointer",

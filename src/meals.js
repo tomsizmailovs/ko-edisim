@@ -2,24 +2,24 @@ export const meals = [
   {
     name: "Overnight putra",
     type: "Brokastis",
-    tags: ["salds", "šķiedrvielas", "ātri", "auksts"],
+    tags: ["Salds", "Šķiedrvielas", "15 min", "Auksts"],
   },
 
   {
     name: "Graudainais biezpiens",
     type: "Brokastis",
-    tags: ["olbaltumvielas", "sāļš", "ātri", "auksts"],
+    tags: ["Olbaltumvielas", "Sāļš", "15 min", "Auksts"],
   },
 
   {
     name: "Olu-avokado salāti",
     type: "Brokastis",
-    tags: ["olbaltumvielas", "šķiedrvielas", "sāļš", "auksts"],
+    tags: ["Olbaltumvielas", "Šķiedrvielas", "Sāļš", "Auksts"],
   },
 
   {
     name: "Taco zupa",
     type: "Pusdienas",
-    tags: ["olbaltumvielas", "šķiedrvielas", "sāļš", "silts"],
+    tags: ["Olbaltumvielas", "Šķiedrvielas", "Sāļš", "Silts"],
   },
 ];
