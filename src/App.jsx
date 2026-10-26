@@ -197,6 +197,7 @@ style={{
             border: "none",
             cursor: "pointer",
             width: "100%",
+            fontSize: "16px",
             backgroundColor: selectedTags.includes(tag)
               ? "#4CAF50"
               : "#E0E0E0",
