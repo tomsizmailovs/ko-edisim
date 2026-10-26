@@ -108,6 +108,7 @@ const filteredMeals = meals.filter((meal) => {
         margin: "0 auto",
         padding: "12px",
         fontFamily: "Arial",
+        overFlowX: "hidden",
       }}
     >
       <h1>🍔 Ko ēdīsim?</h1>
@@ -234,97 +235,63 @@ style={{
   ))}
 </div>
       )}
-      <h2 style={{ marginTop: "30px" }}>
-  Mana ēdienkarte
-</h2>
-
-<h3>Brokastis</h3>
-
-{mealPlan.Brokastis.map((meal) => (
+<div
+  style={{
+    backgroundColor: "#F5F5F5",
+    padding: "16px",
+    borderRadius: "16px",
+    border: "1px solid #E0E0E0",
+    marginTop: "24px",
+  }}
+>
   <div
-    key={meal.name}
-    onClick={() => removeFromMealPlan(
-      "Brokastis",
-      meal.name
-    )}
     style={{
-      padding: "12px",
-      marginTop: "8px",
-      border: "1px solid #ddd",
-      borderRadius: "10px",
-      backgroundColor: "#dff5df",
-      cursor: "pointer",
+      display: "grid",
+      gridTemplateColumns: `repeat(${
+        Object.entries(mealPlan).filter(
+          ([, meals]) => meals.length > 0
+        ).length || 1
+      }, 1fr)`,
+      gap: "12px",
     }}
   >
-    {meal.name}
+    {Object.entries(mealPlan)
+      .filter(([, meals]) => meals.length > 0)
+      .map(([mealType, meals]) => (
+        <div key={mealType}>
+          <h4
+            style={{
+              textAlign: "center",
+              marginBottom: "12px",
+            }}
+          >
+            {mealType}
+          </h4>
+
+          {meals.map((meal) => (
+            <div
+              key={meal.name}
+              onClick={() =>
+                removeFromMealPlan(
+                  mealType,
+                  meal.name
+                )
+              }
+              style={{
+                padding: "10px",
+                marginBottom: "8px",
+                borderRadius: "10px",
+                backgroundColor: "#DFF5DF",
+                cursor: "pointer",
+              }}
+            >
+              {meal.name}
+            </div>
+          ))}
+        </div>
+      ))}
   </div>
-))}
-
-<h3>Pusdienas</h3>
-
-{mealPlan.Pusdienas.map((meal) => (
-  <div
-    key={meal.name}
-    onClick={() => removeFromMealPlan(
-      "Pusdienas",
-      meal.name
-    )}
-    style={{
-      padding: "12px",
-      marginTop: "8px",
-      border: "1px solid #ddd",
-      borderRadius: "10px",
-      backgroundColor: "#dff5df",
-      cursor: "pointer",
-    }}
-  >
-    {meal.name}
-  </div>
-))}
-
-<h3>Vakariņas</h3>
-
-{mealPlan.Vakariņas.map((meal) => (
-  <div
-    key={meal.name}
-    onClick={() => removeFromMealPlan(
-      "Vakariņas",
-      meal.name
-    )}
-    style={{
-      padding: "12px",
-      marginTop: "8px",
-      border: "1px solid #ddd",
-      borderRadius: "10px",
-      backgroundColor: "#dff5df",
-      cursor: "pointer",
-    }}
-  >
-    {meal.name}
-  </div>
-))}
-
-<h3>Deserts</h3>
-
-{(mealPlan.Deserts || []).map((meal) => (
-  <div
-    key={meal.name}
-    onClick={() => removeFromMealPlan(
-      "Deserts",
-      meal.name
-    )}
-    style={{
-      padding: "12px",
-      marginTop: "8px",
-      border: "1px solid #ddd",
-      borderRadius: "10px",
-      backgroundColor: "#dff5df",
-      cursor: "pointer",
-    }}
-  >
-    {meal.name}
-  </div>
-))}
+</div>
     </div>
   );
 }
