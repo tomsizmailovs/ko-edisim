@@ -1,6 +1,25 @@
 import { useState, useEffect } from "react";
 import { meals } from "./meals";
 
+const mealTypes = [
+  {
+    value: "Brokastis",
+    label: "🍳 Brokastis",
+  },
+  {
+    value: "Pusdienas",
+    label: "🍝 Pusdienas",
+  },
+  {
+    value: "Vakariņas",
+    label: "🥩 Vakariņas",
+  },
+  {
+    value: "Deserts",
+    label: "🍰 Deserts",
+  },
+];
+
 const filterGroups = {
   Brokastis: [
     ["Salds", "Sāļš"],
@@ -37,6 +56,8 @@ export default function App() {
   const [mealPlan, setMealPlan] = useState(() => {
     const savedPlan =
       localStorage.getItem("mealPlan");
+
+
 
   return savedPlan
     ? JSON.parse(savedPlan)
@@ -126,35 +147,34 @@ const filteredMeals = meals.filter((meal) => {
   }}
 >
   
-  {["🍳Brokastis", "🍝Pusdienas", "🥩Vakariņas", "🍰Deserts"].map(
-    (type) => (
+  {mealTypes.map((type) => (
       <button
-        key={type}
+        key={type.value}
         onClick={() => {
-          setMealType(type);
+          setMealType(type.value);
           setSelectedTags([]);
       }}
         style={{
           padding: "12px",
           fontSize: "16px",
           border:
-            mealType === type
+            mealType === type.value
               ? "4px solid #0D4715"
               : "2px solid transparent",
           borderRadius: "12px",
           cursor: "pointer",
           backgroundColor:
-            mealType === type
+            mealType === type.value
               ? "#4CAF50"
               : "#E0E0E0",
           color:
-            mealType === type
+            mealType === type.value
               ? "white"
               : "black",
           fontWeight: "bold",
         }}
       >
-        {type}
+        {type.label}
       </button>
     )
   )}
