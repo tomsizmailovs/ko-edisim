@@ -262,8 +262,6 @@ style={{
   ))}
 </div>
 
-      <h3 style={{ marginTop: "20px" }}>Rezultāti</h3>
-
       {filteredMeals.length === 0 ? (
         <p>Nav atrastu ēdienu</p>
       ) : (
