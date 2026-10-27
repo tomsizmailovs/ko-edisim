@@ -265,22 +265,42 @@ style={{
       {filteredMeals.length === 0 ? (
         <p>Nav atrastu ēdienu</p>
       ) : (
-<div>
-  {filteredMeals.map((meal) => (
 <div
-  key={meal.name}
-  onClick={() => addToMealPlan(meal)}
   style={{
-    padding: "12px",
-    marginTop: "8px",
-    border: "1px solid #ddd",
-    borderRadius: "10px",
-    backgroundColor: "#fafafa",
-    cursor: "pointer",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "12px",
   }}
 >
-  {meal.name}
-</div>
+  {filteredMeals.map((meal) => (
+    <div
+      key={meal.name}
+      onClick={() => addToMealPlan(meal)}
+      style={{
+        
+        padding: "12px",
+        marginTop: "8px",
+        border: "1px solid #ddd",
+        borderRadius: "10px",
+        cursor: "pointer",
+        backgroundColor: "#fafafa",
+      }}
+    >
+      {meal.image && (
+        <img
+        src={meal.image}
+        alt={meal.name}
+        style={{
+          width: "100%",
+          height: "160px",
+          objectFit: "cover",
+          borderRadius: "8px",
+          marginBottom: "8px",
+        }}
+        />
+      )}
+<strong>{meal.name}</strong>
+      </div>
   ))}
 </div>
       )}

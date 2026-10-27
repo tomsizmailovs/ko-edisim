@@ -20,6 +20,7 @@ export const meals = [
   {
     name: "Taco zupa",
     type: "Pusdienas",
-    tags: ["Olbaltumvielas", "Šķiedrvielas", "Sāļš", "Silts"],
+    tags: ["Sāļš", "Silts"],
+    image: "images/taco-zupa.jpg"
   },
 ];
