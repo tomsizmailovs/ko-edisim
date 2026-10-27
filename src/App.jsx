@@ -262,6 +262,29 @@ style={{
   ))}
 </div>
 
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+  }}
+>
+  <hr
+    style={{
+      border: "none",
+      borderTop: "3px solid #d0d0d0",
+      width: "100%",
+      margin: 0
+    }}
+  />
+  <hr
+    style={{
+      border: "none",
+      borderTop: "3px solid #d0d0d0",
+      width: "100%",
+    }}
+  />
+</div>
+
       {filteredMeals.length === 0 ? (
         <p>Nav atrastu ēdienu</p>
       ) : (
