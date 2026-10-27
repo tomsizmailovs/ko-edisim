@@ -74,9 +74,38 @@ function toggleTag(tag) {
     setSelectedTags(
       selectedTags.filter((t) => t !== tag)
     );
-  } else {
-    setSelectedTags([...selectedTags, tag]);
+    return;
   }
+
+  let newTags = [...selectedTags];
+
+  // Salds/Sāļš
+  if (tag === "Salds") {
+    newTags = newTags.filter(
+      (t) => t !== "Sāļš"
+    );
+  }
+
+  if (tag === "Sāļš") {
+    newTags = newTags.filter(
+      (t) => t !== "Salds"
+    );
+  }
+
+  // Silts/Auksts
+  if (tag === "Silts") {
+    newTags = newTags.filter(
+      (t) => t !== "Auksts"
+    );
+  }
+
+  if (tag === "Auksts") {
+    newTags = newTags.filter(
+      (t) => t !== "Silts"
+    );
+  }
+
+  setSelectedTags([...newTags, tag]);
 }
 
 function addToMealPlan(meal) {
