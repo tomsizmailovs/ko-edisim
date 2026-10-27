@@ -284,6 +284,7 @@ style={{
         borderRadius: "10px",
         cursor: "pointer",
         backgroundColor: "#fafafa",
+        color: "#222",
       }}
     >
       {meal.image && (
