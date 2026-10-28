@@ -143,14 +143,14 @@ useEffect(() => {
       const rows = csv.trim().split("\n");
 
       const data = rows.slice(1).map((row) => {
-        const [name, type, tags] = row.split(",");
-
+        const [name, type, tags, bilde] = row.split(",");
         return {
           name,
           type,
           tags: tags
             ? tags.split(";").map((tag) => tag.trim())
             : [],
+          image: bilde?.trim()
         };
       });
 
@@ -336,7 +336,7 @@ style={{
           height: "160px",
           objectFit: "cover",
           borderRadius: "8px",
-          marginBottom: "8px",
+          marginBottom: "0px",
         }}
         />
       )}
