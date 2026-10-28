@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { meals } from "./meals";
 
 const mealTypes = [
   {
@@ -53,6 +52,7 @@ const filterGroups = {
 export default function App() {
   const [mealType, setMealType] = useState("Brokastis");
   const [selectedTags, setSelectedTags] = useState([]);
+  const [meals,setMeals] = useState([]);
   const [mealPlan, setMealPlan] = useState(() => {
     const savedPlan =
       localStorage.getItem("mealPlan");
@@ -135,11 +135,28 @@ function removeFromMealPlan(mealType, mealName) {
 }
 
 useEffect(() => {
-  localStorage.setItem(
-    "mealPlan",
-    JSON.stringify(mealPlan)
-  );
-}, [mealPlan]);
+  fetch(
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRGv8FtD1nezrhxjiJQZr5ivEHTOR7QVLuwId1KRIQ5ouM_Xz1P69Xk2PGfSYUWjk34pJ9aC6UZvVa0/pub?output=csv"
+  )
+    .then((response) => response.text())
+    .then((csv) => {
+      const rows = csv.trim().split("\n");
+
+      const data = rows.slice(1).map((row) => {
+        const [name, type, tags] = row.split(",");
+
+        return {
+          name,
+          type,
+          tags: tags
+            ? tags.split(";").map((tag) => tag.trim())
+            : [],
+        };
+      });
+
+      setMeals(data);
+    });
+}, []);
 
 const filteredMeals = meals.filter((meal) => {
   if (meal.type !== mealType) return false;
