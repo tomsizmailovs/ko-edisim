@@ -50,7 +50,7 @@ const filterGroups = {
 };
 
 export default function App() {
-  const [mealType, setMealType] = useState("Brokastis");
+  const [mealType, setMealType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [meals,setMeals] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState(null);
@@ -237,6 +237,8 @@ const filteredMeals = meals.filter((meal) => {
   )}
 </div>
 
+{mealType && (
+  <>
 <div
 style={{
   backgroundColor: "#f5f5f5",
@@ -312,7 +314,11 @@ style={{
     }}
   />
 </div>
+</>
+  )}
 
+      {mealType && (
+        <>
       {filteredMeals.length === 0 ? (
         <p>Nav atrastu ēdienu</p>
       ) : (
@@ -355,6 +361,8 @@ style={{
       </div>
   ))}
 </div>
+      )}
+      </>
       )}
 
 {selectedMeal && (
