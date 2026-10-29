@@ -53,6 +53,7 @@ export default function App() {
   const [mealType, setMealType] = useState("Brokastis");
   const [selectedTags, setSelectedTags] = useState([]);
   const [meals,setMeals] = useState([]);
+  const [selectedMeal, setSelectedMeal] = useState(null);
   const [mealPlan, setMealPlan] = useState(() => {
     const savedPlan =
       localStorage.getItem("mealPlan");
@@ -143,14 +144,22 @@ useEffect(() => {
       const rows = csv.trim().split("\n");
 
       const data = rows.slice(1).map((row) => {
-        const [name, type, tags, bilde] = row.split(",");
+        const [name, type, tags, bilde, piedevas, salāti] = row.split(",");
         return {
           name,
           type,
           tags: tags
             ? tags.split(";").map((tag) => tag.trim())
             : [],
-          image: bilde?.trim()
+          image: bilde?.trim(),
+
+          sides: piedevas
+          ? piedevas.split(";").map(item => item.trim())
+          : [],
+
+          salads: salāti
+          ? salāti.split(";").map(item => item.trim())
+          : [],
         };
       });
 
@@ -315,7 +324,7 @@ style={{
   {filteredMeals.map((meal) => (
     <div
       key={meal.name}
-      onClick={() => addToMealPlan(meal)}
+      onClick={() => setSelectedMeal(meal)}
       style={{
         
         padding: "12px",
@@ -345,6 +354,39 @@ style={{
   ))}
 </div>
       )}
+
+{selectedMeal && (
+  <div
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor: "rgba(0,0,0,0.5)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <div
+      style={{
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "16px",
+      }}
+    >
+      <h3>{selectedMeal.name}</h3>
+
+      <button
+        onClick={() => {
+          addToMealPlan(selectedMeal);
+          setSelectedMeal(null);
+        }}
+      >
+        Pievienot
+      </button>
+    </div>
+  </div>
+)}
+
 <div
   style={{
     backgroundColor: "#F5F5F5",
