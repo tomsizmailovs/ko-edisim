@@ -54,6 +54,8 @@ export default function App() {
   const [selectedTags, setSelectedTags] = useState([]);
   const [meals,setMeals] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState(null);
+  const [selectedSide, setSelectedSide] = useState("");
+  const [selectedSalad, setSelectedSalad] = useState("");
   const [mealPlan, setMealPlan] = useState(() => {
     const savedPlan =
       localStorage.getItem("mealPlan");
@@ -375,11 +377,66 @@ style={{
     >
       <h3>{selectedMeal.name}</h3>
 
+{selectedMeal.sides?.length > 0 && (
+  <>
+    <h4>Piedeva</h4>
+
+    <select
+      value={selectedSide}
+      onChange={(e) =>
+        setSelectedSide(e.target.value)
+      }
+    >
+      <option value="">
+        Izvēlies piedevu
+      </option>
+
+      {selectedMeal.sides.map((side) => (
+        <option key={side} value={side}>
+          {side}
+        </option>
+      ))}
+    </select>
+  </>
+)}
+
+{selectedMeal.salads?.length > 0 && (
+  <>
+    <h4>Salāti</h4>
+
+    <select
+      value={selectedSalad}
+      onChange={(e) =>
+        setSelectedSalad(e.target.value)
+      }
+    >
+      <option value="">
+        Izvēlies salātus
+      </option>
+
+      {selectedMeal.salads.map((salad) => (
+        <option key={salad} value={salad}>
+          {salad}
+        </option>
+      ))}
+    </select>
+  </>
+)}
+
       <button
-        onClick={() => {
-          addToMealPlan(selectedMeal);
-          setSelectedMeal(null);
-        }}
+onClick={() => {
+  addToMealPlan({
+    ...selectedMeal,
+
+    side: selectedSide,
+
+    salad: selectedSalad,
+  });
+
+  setSelectedMeal(null);
+  setSelectedSide("");
+  setSelectedSalad("");
+}}
       >
         Pievienot
       </button>
@@ -437,7 +494,28 @@ style={{
                 cursor: "pointer",
               }}
             >
-              {meal.name}
+             {meal.name}
+
+{meal.side && (
+  <div
+    style={{
+      fontSize: "12px",
+      marginTop: "4px",
+    }}
+  >
+    🍚 {meal.side}
+  </div>
+)}
+
+{meal.salad && (
+  <div
+    style={{
+      fontSize: "12px",
+    }}
+  >
+    🥗 {meal.salad}
+  </div>
+)}
             </div>
           ))}
         </div>
