@@ -56,6 +56,24 @@ export default function App() {
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedSide, setSelectedSide] = useState("");
   const [selectedSalad, setSelectedSalad] = useState("");
+  const [showAddMeal, setShowAddMeal] = useState(false);
+const [newMealName, setNewMealName] =
+  useState("");
+
+const [newMealType, setNewMealType] =
+  useState("Brokastis");
+
+const [newMealTags, setNewMealTags] =
+  useState("");
+
+const [newMealImage, setNewMealImage] =
+  useState("");
+
+const [newMealSides, setNewMealSides] =
+  useState("");
+
+const [newMealSalads, setNewMealSalads] =
+  useState("");
   const [mealPlan, setMealPlan] = useState(() => {
     const savedPlan =
       localStorage.getItem("mealPlan");
@@ -190,6 +208,23 @@ const filteredMeals = meals.filter((meal) => {
       }}
     >
       <h1>🍔 Ko ēdīsim?</h1>
+      
+<button
+  onClick={() => setShowAddMeal(true)}
+  style={{
+    width: "100%",
+    marginTop: "12px",
+    padding: "12px",
+    borderRadius: "12px",
+    border: "none",
+    backgroundColor: "#2196F3",
+    color: "white",
+    fontWeight: "bold",
+    cursor: "pointer",
+  }}
+>
+  ➕ Pievienot ēdienu
+</button>
 
 <div
   style={{
@@ -452,6 +487,108 @@ onClick={() => {
   </div>
 )}
 
+{showAddMeal && (
+  <div
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor: "rgba(0,0,0,0.5)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <div
+      style={{
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "16px",
+        width: "90%",
+        maxWidth: "400px",
+      }}
+    >
+      <h3>Pievienot ēdienu</h3>
+
+      <input
+        placeholder="Nosaukums"
+        value={newMealName}
+        onChange={(e) =>
+          setNewMealName(e.target.value)
+        }
+      />
+
+      <br />
+      <br />
+
+      <select
+        value={newMealType}
+        onChange={(e) =>
+          setNewMealType(e.target.value)
+        }
+      >
+        <option>Brokastis</option>
+        <option>Pusdienas</option>
+        <option>Vakariņas</option>
+        <option>Deserts</option>
+      </select>
+
+      <br />
+      <br />
+
+      <input
+        placeholder="Filtri (ar |)"
+        value={newMealTags}
+        onChange={(e) =>
+          setNewMealTags(e.target.value)
+        }
+      />
+
+      <br />
+      <br />
+
+      <input
+        placeholder="Bildes ceļš"
+        value={newMealImage}
+        onChange={(e) =>
+          setNewMealImage(e.target.value)
+        }
+      />
+
+      <br />
+      <br />
+
+      <input
+        placeholder="Piedevas"
+        value={newMealSides}
+        onChange={(e) =>
+          setNewMealSides(e.target.value)
+        }
+      />
+
+      <br />
+      <br />
+
+      <input
+        placeholder="Salāti"
+        value={newMealSalads}
+        onChange={(e) =>
+          setNewMealSalads(e.target.value)
+        }
+      />
+
+      <br />
+      <br />
+
+      <button
+        onClick={() =>
+          setShowAddMeal(false)
+        }
+      >
+        Aizvērt
+      </button>
+    </div>
+  </div>
+)}
 
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
@@ -539,8 +676,6 @@ onClick={() => {
   </div>
 </div>
 )}
-
-
   </div>
   );
 }
