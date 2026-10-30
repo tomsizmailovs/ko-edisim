@@ -455,7 +455,16 @@ style={{
   {filteredMeals.map((meal) => (
     <div
       key={meal.name}
-      onClick={() => setSelectedMeal(meal)}
+      onClick={() => {
+  if (isInMealPlan(meal)) {
+    removeFromMealPlan(
+      meal.type,
+      meal.name
+    );
+  } else {
+    setSelectedMeal(meal);
+  }
+}}
       style={{
         position: "relative",
         padding: "12px",
