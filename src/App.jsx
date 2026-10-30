@@ -460,34 +460,18 @@ style={{
         position: "relative",
         padding: "12px",
         marginTop: "8px",
-        border: "1px solid #ddd",
+        border: isInMealPlan(meal)
+        ? "2px solid #FBC02D"
+        : "1px solid #ddd",
         borderRadius: "10px",
         cursor: "pointer",
-        backgroundColor: "#fafafa",
+        backgroundColor: isInMealPlan(meal)
+        ? "#FFF59D"
+        : "#fafafa",
         color: "#222",
       }}
     >
-      {isInMealPlan(meal) && (
-  <div
-    style={{
-      position: "absolute",
-      top: "8px",
-      left: "8px",
-      width: "24px",
-      height: "24px",
-      borderRadius: "50%",
-      backgroundColor: "#4CAF50",
-      color: "white",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: "14px",
-      fontWeight: "bold",
-    }}
-  >
-    ✓
-  </div>
-)}
+
       {meal.image && (
         <img
         src={meal.image}
