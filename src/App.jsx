@@ -452,6 +452,10 @@ onClick={() => {
   </div>
 )}
 
+
+{Object.values(mealPlan).some(
+  (meals) => meals.lenght > 0
+)}
 <div
   style={{
     backgroundColor: "#F5F5F5",
@@ -461,6 +465,8 @@ onClick={() => {
     marginTop: "24px",
   }}
 >
+
+
   <div
     style={{
       display: "grid",
