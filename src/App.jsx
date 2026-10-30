@@ -207,24 +207,43 @@ const filteredMeals = meals.filter((meal) => {
         overflowX: "hidden",
       }}
     >
-      <h1>🍔 Ko ēdīsim?</h1>
-      
-<button
-  onClick={() => setShowAddMeal(true)}
+<div
   style={{
-    width: "100%",
-    marginTop: "12px",
-    padding: "12px",
-    borderRadius: "12px",
-    border: "none",
-    backgroundColor: "#2196F3",
-    color: "white",
-    fontWeight: "bold",
-    cursor: "pointer",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "16px",
   }}
 >
-  ➕ Pievienot ēdienu
-</button>
+  <button
+    onClick={() => setShowAddMeal(true)}
+    style={{
+      width: "36px",
+      height: "36px",
+      borderRadius: "50%",
+      border: "none",
+      backgroundColor: "#048bfa",
+      color: "white",
+      fontSize: "20px",
+      fontWeight: "bold",
+      cursor: "pointer",
+    }}
+  >
+    ➕
+  </button>
+
+  <h1
+    style={{
+      margin: 0,
+      flex: 1,
+      textAlign: "center",
+    }}
+  >
+    🍔 Ko ēdīsim?
+  </h1>
+
+  <div style={{ width: "42px" }} />
+</div>
 
 <div
   style={{
