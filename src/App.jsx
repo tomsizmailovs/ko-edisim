@@ -57,6 +57,7 @@ export default function App() {
   const [selectedSide, setSelectedSide] = useState("");
   const [selectedSalad, setSelectedSalad] = useState("");
   const [showAddMeal, setShowAddMeal] = useState(false);
+  const [currentPage, setCurrentPage] = useState("home");
 const [newMealName, setNewMealName] =
   useState("");
 
@@ -195,6 +196,68 @@ const filteredMeals = meals.filter((meal) => {
   );
 });
 
+if (currentPage === "addMeal") {
+  return (
+    <div
+      style={{
+        maxWidth: "380px",
+        margin: "0 auto",
+        padding: "12px",
+      }}
+    >
+      <button
+        onClick={() => setCurrentPage("home")}
+      >
+        ← Atpakaļ
+      </button>
+
+      <h2>Pievienot ēdienu</h2>
+
+      <input
+        placeholder="Nosaukums"
+        value={newMealName}
+        onChange={(e) =>
+          setNewMealName(e.target.value)
+        }
+      />
+
+      <br /><br />
+
+      <select
+        value={newMealType}
+        onChange={(e) =>
+          setNewMealType(e.target.value)
+        }
+      >
+        <option>Brokastis</option>
+        <option>Pusdienas</option>
+        <option>Vakariņas</option>
+        <option>Deserts</option>
+      </select>
+
+      <br /><br />
+
+      <input
+        placeholder="Filtri"
+        value={newMealTags}
+        onChange={(e) =>
+          setNewMealTags(e.target.value)
+        }
+      />
+
+      <br /><br />
+
+      <input
+        placeholder="Bilde"
+        value={newMealImage}
+        onChange={(e) =>
+          setNewMealImage(e.target.value)
+        }
+      />
+    </div>
+  );
+}
+
   return (
     <div
       style={{
@@ -216,7 +279,7 @@ const filteredMeals = meals.filter((meal) => {
   }}
 >
   <button
-    onClick={() => setShowAddMeal(true)}
+    onClick={() => setCurrentPage("addMeal")}
     style={{
       width: "36px",
       height: "36px",
@@ -506,108 +569,6 @@ onClick={() => {
   </div>
 )}
 
-{showAddMeal && (
-  <div
-    style={{
-      position: "fixed",
-      inset: 0,
-      backgroundColor: "rgba(0,0,0,0.5)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    <div
-      style={{
-        backgroundColor: "white",
-        padding: "20px",
-        borderRadius: "16px",
-        width: "90%",
-        maxWidth: "400px",
-      }}
-    >
-      <h3>Pievienot ēdienu</h3>
-
-      <input
-        placeholder="Nosaukums"
-        value={newMealName}
-        onChange={(e) =>
-          setNewMealName(e.target.value)
-        }
-      />
-
-      <br />
-      <br />
-
-      <select
-        value={newMealType}
-        onChange={(e) =>
-          setNewMealType(e.target.value)
-        }
-      >
-        <option>Brokastis</option>
-        <option>Pusdienas</option>
-        <option>Vakariņas</option>
-        <option>Deserts</option>
-      </select>
-
-      <br />
-      <br />
-
-      <input
-        placeholder="Filtri (ar |)"
-        value={newMealTags}
-        onChange={(e) =>
-          setNewMealTags(e.target.value)
-        }
-      />
-
-      <br />
-      <br />
-
-      <input
-        placeholder="Bildes ceļš"
-        value={newMealImage}
-        onChange={(e) =>
-          setNewMealImage(e.target.value)
-        }
-      />
-
-      <br />
-      <br />
-
-      <input
-        placeholder="Piedevas"
-        value={newMealSides}
-        onChange={(e) =>
-          setNewMealSides(e.target.value)
-        }
-      />
-
-      <br />
-      <br />
-
-      <input
-        placeholder="Salāti"
-        value={newMealSalads}
-        onChange={(e) =>
-          setNewMealSalads(e.target.value)
-        }
-      />
-
-      <br />
-      <br />
-
-      <button
-        onClick={() =>
-          setShowAddMeal(false)
-        }
-      >
-        Aizvērt
-      </button>
-    </div>
-  </div>
-)}
 
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
