@@ -649,7 +649,8 @@ onClick={() => {
           <h4
             style={{
               textAlign: "center",
-              marginBottom: "12px",
+              marginTop: "-4px",
+              marginBottom: "8px",
             }}
           >
             {mealType}
@@ -665,10 +666,12 @@ onClick={() => {
                 )
               }
               style={{
-                padding: "10px",
+                padding: "12px",
                 marginBottom: "8px",
+                border: "2px solid #FBC02D",
                 borderRadius: "10px",
-                backgroundColor: "#DFF5DF",
+                backgroundColor: "#FFF59D",
+                color: "#222",
                 cursor: "pointer",
               }}
             >
