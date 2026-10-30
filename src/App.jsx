@@ -454,8 +454,8 @@ onClick={() => {
 
 
 {Object.values(mealPlan).some(
-  (meals) => meals.lenght > 0
-)}
+  (meals) => meals.length > 0
+) && (
 <div
   style={{
     backgroundColor: "#F5F5F5",
@@ -465,8 +465,6 @@ onClick={() => {
     marginTop: "24px",
   }}
 >
-
-
   <div
     style={{
       display: "grid",
@@ -478,6 +476,7 @@ onClick={() => {
       gap: "12px",
     }}
   >
+
     {Object.entries(mealPlan)
       .filter(([, meals]) => meals.length > 0)
       .map(([mealType, meals]) => (
@@ -534,8 +533,14 @@ onClick={() => {
           ))}
         </div>
       ))}
+
+    
+    {/* viss pārējais ēdienkartes saturs */}
   </div>
 </div>
-    </div>
+)}
+
+
+  </div>
   );
 }
