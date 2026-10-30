@@ -589,7 +589,6 @@ onClick={() => {
   </div>
 )}
 
-
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
 ) && (
@@ -618,6 +617,9 @@ onClick={() => {
     />
   </div>
 )}
+{Object.values(mealPlan).some(
+  (meals) => meals.length > 0
+) && (
   
 <div
   style={{
@@ -701,6 +703,7 @@ onClick={() => {
     {/* viss pārējais ēdienkartes saturs */}
   </div>
 </div>
+)}
   </div>
   );
 }
