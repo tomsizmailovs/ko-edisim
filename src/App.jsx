@@ -258,6 +258,12 @@ if (currentPage === "addMeal") {
   );
 }
 
+function isInMealPlan(meal) {
+  return mealPlan[meal.type]?.some(
+    (m) => m.name === meal.name
+  );
+}
+
   return (
     <div
       style={{
@@ -451,7 +457,7 @@ style={{
       key={meal.name}
       onClick={() => setSelectedMeal(meal)}
       style={{
-        
+        position: "relative",
         padding: "12px",
         marginTop: "8px",
         border: "1px solid #ddd",
@@ -461,6 +467,27 @@ style={{
         color: "#222",
       }}
     >
+      {isInMealPlan(meal) && (
+  <div
+    style={{
+      position: "absolute",
+      top: "8px",
+      left: "8px",
+      width: "24px",
+      height: "24px",
+      borderRadius: "50%",
+      backgroundColor: "#4CAF50",
+      color: "white",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "14px",
+      fontWeight: "bold",
+    }}
+  >
+    ✓
+  </div>
+)}
       {meal.image && (
         <img
         src={meal.image}
