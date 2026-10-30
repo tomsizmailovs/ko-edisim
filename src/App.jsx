@@ -593,6 +593,32 @@ onClick={() => {
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
 ) && (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      marginTop: "16px",
+      marginBottom: "16px",
+    }}
+  >
+    <hr
+      style={{
+        border: "none",
+        borderTop: "3px solid #d0d0d0",
+        width: "100%",
+        margin: 0,
+      }}
+    />
+    <hr
+      style={{
+        border: "none",
+        borderTop: "3px solid #d0d0d0",
+        width: "100%",
+      }}
+    />
+  </div>
+)}
+  
 <div
   style={{
     backgroundColor: "#F5F5F5",
@@ -675,7 +701,6 @@ onClick={() => {
     {/* viss pārējais ēdienkartes saturs */}
   </div>
 </div>
-)}
   </div>
   );
 }
