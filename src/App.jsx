@@ -662,6 +662,19 @@ onClick={() => {
     marginTop: "24px",
   }}
 >
+
+<h3
+      style={{
+        textAlign: "center",
+        marginTop: "0",
+        marginBottom: "12px",
+        color: "#000",
+        fontSize: "20px",
+      }}
+    >
+      Ēdienkarte
+    </h3>
+
   <div
     style={{
       display: "flex",
@@ -674,17 +687,20 @@ onClick={() => {
       .filter(([, meals]) => meals.length > 0)
       .map(([mealType, meals]) => (
         <div key={mealType}>
-          <h4
-            style={{
-              textAlign: "center",
-              marginTop: "-8px",
-              marginBottom: "4px",
-              color: "#000",
-              fontWeight: "700",
-            }}
-          >
-            {mealType}
-          </h4>
+<h4
+  style={{
+    textAlign: "center",
+    marginTop: "0px",
+    marginBottom: "8px",
+    color: "#000",
+  }}
+>
+  {mealType === "Brokastis" && "🍳 "}
+  {mealType === "Pusdienas" && "🍝 "}
+  {mealType === "Vakariņas" && "🥩 "}
+  {mealType === "Deserts" && "🍰 "}
+  {mealType}
+</h4>
 
           {meals.map((meal) => (
             <div
