@@ -650,8 +650,8 @@ onClick={() => {
           <h4
             style={{
               textAlign: "center",
-              marginTop: "-4px",
-              marginBottom: "8px",
+              marginTop: "-8px",
+              marginBottom: "4px",
               color: "#000",
               fontWeight: "700",
             }}
