@@ -653,6 +653,7 @@ onClick={() => {
               marginTop: "-4px",
               marginBottom: "8px",
               color: "#000",
+              fontWeight: "700",
             }}
           >
             {mealType}
@@ -668,22 +669,30 @@ onClick={() => {
                 )
               }
               style={{
-                padding: "12px",
-                marginBottom: "8px",
+                padding: "6px",
+                marginBottom: "6px",
                 border: "2px solid #FBC02D",
-                borderRadius: "10px",
+                borderRadius: "8px",
                 backgroundColor: "#FFF59D",
                 color: "#222",
                 cursor: "pointer",
               }}
             >
-             {meal.name}
+             <div
+  style={{
+    fontSize: "12px",
+    fontWeight: "bold",
+    lineHeight: "1.2",
+  }}
+>
+  {meal.name}
+</div>
 
 {meal.side && (
   <div
     style={{
-      fontSize: "12px",
-      marginTop: "4px",
+      fontSize: "10px",
+      marginTop: "2px",
     }}
   >
     🍚 {meal.side}
@@ -693,7 +702,7 @@ onClick={() => {
 {meal.salad && (
   <div
     style={{
-      fontSize: "12px",
+      fontSize: "10px",
     }}
   >
     🥗 {meal.salad}
