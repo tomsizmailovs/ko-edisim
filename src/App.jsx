@@ -42,7 +42,6 @@ const filterGroups = {
     ["Vista", "Cūka"],
     ["Liellops", "Zivs"],
     ["Olbaltumvielas", "Šķiedrvielas"],
-    ["15 min"],
   ],
 
   Deserts: [
