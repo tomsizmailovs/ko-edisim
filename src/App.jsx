@@ -652,6 +652,7 @@ onClick={() => {
               textAlign: "center",
               marginTop: "-4px",
               marginBottom: "8px",
+              color: "#000",
             }}
           >
             {mealType}
