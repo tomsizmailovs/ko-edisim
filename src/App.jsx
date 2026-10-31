@@ -23,6 +23,8 @@ const filterGroups = {
   Brokastis: [
     ["Salds", "Sāļš"],
     ["Silts", "Auksts"],
+    ["Olas", "Maize"],
+    ["Pankūkas"],
     ["Olbaltumvielas", "Šķiedrvielas"],
     ["15 min"],
     ["Pagatavojams vairākām dienām"],
@@ -31,6 +33,7 @@ const filterGroups = {
   Pusdienas: [
     ["Salds", "Sāļš"],
     ["Silts", "Auksts"],
+    ["Zupa"],
     ["Olbaltumvielas", "Šķiedrvielas"],
     ["15 min"],
     ["Pagatavojams vairākām dienām"],
@@ -38,6 +41,8 @@ const filterGroups = {
 
   Vakariņas: [
     ["Silts", "Auksts"],
+    ["Vista", "Cūka"],
+    ["Liellops", "Zivs"],
     ["Olbaltumvielas", "Šķiedrvielas"],
     ["15 min"],
     ["Pagatavojams vairākām dienām"],
@@ -632,12 +637,8 @@ onClick={() => {
 >
   <div
     style={{
-      display: "grid",
-      gridTemplateColumns: `repeat(${
-        Object.entries(mealPlan).filter(
-          ([, meals]) => meals.length > 0
-        ).length || 1
-      }, 1fr)`,
+      display: "flex",
+      flexDirection: "column",
       gap: "12px",
     }}
   >
