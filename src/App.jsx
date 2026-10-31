@@ -518,7 +518,13 @@ onClick={() => {
         }}
         />
       )}
-<strong>{meal.name}</strong>
+<strong
+  style={{
+    fontSize: "13px",
+  }}
+>
+  {meal.name}
+</strong>
       </div>
   ))}
 </div>
