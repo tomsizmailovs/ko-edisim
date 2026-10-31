@@ -491,8 +491,8 @@ onClick={() => {
 }}
       style={{
         position: "relative",
-        padding: "12px",
-        marginTop: "8px",
+        padding: "6px",
+        marginTop: "6px",
         border: isInMealPlan(meal)
         ? "2px solid #FBC02D"
         : "1px solid #ddd",
@@ -520,7 +520,9 @@ onClick={() => {
       )}
 <strong
   style={{
+    display: "block",
     fontSize: "13px",
+    lineHeight: "1",
   }}
 >
   {meal.name}
