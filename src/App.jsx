@@ -191,11 +191,15 @@ useEffect(() => {
           image: bilde?.trim(),
 
           sides: piedevas
-          ? piedevas.split(";").map(item => item.trim())
+          ? piedevas.split(";")
+          .map(item => item.trim())
+          .filter(item => item !== "")
           : [],
 
           salads: salāti
-          ? salāti.split(";").map(item => item.trim())
+          ? salāti.split(";")
+          .map(item => item.trim())
+          .filter(item => item !== "")
           : [],
         };
       });
