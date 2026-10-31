@@ -27,7 +27,6 @@ const filterGroups = {
     ["Pankūkas"],
     ["Olbaltumvielas", "Šķiedrvielas"],
     ["15 min"],
-    ["Pagatavojams vairākām dienām"],
   ],
 
   Pusdienas: [
@@ -36,7 +35,6 @@ const filterGroups = {
     ["Zupa"],
     ["Olbaltumvielas", "Šķiedrvielas"],
     ["15 min"],
-    ["Pagatavojams vairākām dienām"],
   ],
 
   Vakariņas: [
@@ -45,7 +43,6 @@ const filterGroups = {
     ["Liellops", "Zivs"],
     ["Olbaltumvielas", "Šķiedrvielas"],
     ["15 min"],
-    ["Pagatavojams vairākām dienām"],
   ],
 
   Deserts: [
