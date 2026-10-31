@@ -158,6 +158,20 @@ function removeFromMealPlan(mealType, mealName) {
   }));
 }
 
+function needsPopup(meal) {
+  const hasSides =
+    meal.sides?.some(
+      (side) => side.trim() !== ""
+    );
+
+  const hasSalads =
+    meal.salads?.some(
+      (salad) => salad.trim() !== ""
+    );
+
+  return hasSides || hasSalads;
+}
+
 useEffect(() => {
   fetch(
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vRGv8FtD1nezrhxjiJQZr5ivEHTOR7QVLuwId1KRIQ5ouM_Xz1P69Xk2PGfSYUWjk34pJ9aC6UZvVa0/pub?output=csv"
