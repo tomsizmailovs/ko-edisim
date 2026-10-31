@@ -460,14 +460,19 @@ style={{
   {filteredMeals.map((meal) => (
     <div
       key={meal.name}
-      onClick={() => {
+onClick={() => {
   if (isInMealPlan(meal)) {
     removeFromMealPlan(
       meal.type,
       meal.name
     );
-  } else {
+  } else if (
+    meal.sides?.length > 0 ||
+    meal.salads?.length > 0
+  ) {
     setSelectedMeal(meal);
+  } else {
+    addToMealPlan(meal);
   }
 }}
       style={{
