@@ -159,6 +159,9 @@ function removeFromMealPlan(mealType, mealName) {
 }
 
 function needsPopup(meal) {
+  console.log(meal.name);
+  console.log(meal.sides);
+  console.log(meal.salads);
   const hasSides =
     meal.sides?.some(
       (side) => side.trim() !== ""
@@ -179,7 +182,6 @@ useEffect(() => {
     .then((response) => response.text())
     .then((csv) => {
       const rows = csv.trim().split("\n");
-
       const data = rows.slice(1).map((row) => {
         const [name, type, tags, bilde, piedevas, salāti] = row.split(",");
         return {
