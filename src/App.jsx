@@ -627,7 +627,8 @@ style={{
   cursor: "pointer",
   textAlign: "center",
   fontSize: "14px",
-  fontWeight: "500",
+  fontWeight: "600",
+  color: "#000",
 }}
     >
       {side}
@@ -679,7 +680,8 @@ style={{
   cursor: "pointer",
   textAlign: "center",
   fontSize: "14px",
-  fontWeight: "500",
+  fontWeight: "600",
+  color: "#000",
 }}
     >
       {salad}
