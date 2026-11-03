@@ -541,8 +541,10 @@ onClick={() => {
       inset: 0,
       backgroundColor: "rgba(0,0,0,0.5)",
       display: "flex",
-      alignItems: "center",
+      alignItems: "flex-start",
       justifyContent: "center",
+      overFlowY: "auto",
+      padding: "20px 0",
     }}
   >
     <div
@@ -550,6 +552,10 @@ onClick={() => {
         backgroundColor: "white",
         padding: "20px",
         borderRadius: "16px",
+        width: "90%",
+        maxWidth: "420px",
+        maxHeight: "85vh",
+        overFlowY: "auto",
       }}
     >
       <h3
