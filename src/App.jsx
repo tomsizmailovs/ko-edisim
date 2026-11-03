@@ -556,47 +556,81 @@ onClick={() => {
 
 {selectedMeal.sides?.length > 0 && (
   <>
-    <h4>Piedeva</h4>
+    <h4>🍚 Piedeva</h4>
 
-    <select
-      value={selectedSide}
-      onChange={(e) =>
-        setSelectedSide(e.target.value)
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "8px",
+  }}
+>
+  {selectedMeal.sides.map((side) => (
+    <div
+      key={side}
+      onClick={() =>
+        setSelectedSide(side)
       }
+      style={{
+        padding: "10px",
+        borderRadius: "10px",
+        border: "1px solid #ddd",
+        cursor: "pointer",
+        textAlign: "center",
+        backgroundColor:
+          selectedSide === side
+            ? "#4CAF50"
+            : "#fafafa",
+        color:
+          selectedSide === side
+            ? "white"
+            : "black",
+      }}
     >
-      <option value="">
-        Izvēlies piedevu
-      </option>
-
-      {selectedMeal.sides.map((side) => (
-        <option key={side} value={side}>
-          {side}
-        </option>
-      ))}
-    </select>
+      {side}
+    </div>
+  ))}
+</div>
   </>
 )}
 
 {selectedMeal.salads?.length > 0 && (
   <>
-    <h4>Salāti</h4>
+    <h4>🥗 Salāti</h4>
 
-    <select
-      value={selectedSalad}
-      onChange={(e) =>
-        setSelectedSalad(e.target.value)
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "8px",
+  }}
+>
+  {selectedMeal.salads.map((salad) => (
+    <div
+      key={salad}
+      onClick={() =>
+        setSelectedSalad(salad)
       }
+      style={{
+        padding: "10px",
+        borderRadius: "10px",
+        border: "1px solid #ddd",
+        cursor: "pointer",
+        textAlign: "center",
+        backgroundColor:
+          selectedSalad === salad
+            ? "#4CAF50"
+            : "#fafafa",
+        color:
+          selectedSalad === salad
+            ? "white"
+            : "black",
+      }}
     >
-      <option value="">
-        Izvēlies salātus
-      </option>
-
-      {selectedMeal.salads.map((salad) => (
-        <option key={salad} value={salad}>
-          {salad}
-        </option>
-      ))}
-    </select>
+      {salad}
+    </div>
+  ))}
+</div>
   </>
 )}
 
