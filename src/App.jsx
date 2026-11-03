@@ -570,6 +570,20 @@ onClick={() => {
   {selectedMeal.name}
 </h3>
 
+{selectedMeal.image && (
+  <img
+    src={selectedMeal.image}
+    alt={selectedMeal.name}
+    style={{
+      width: "100%",
+      height: "180px",
+      objectFit: "cover",
+      borderRadius: "12px",
+      marginBottom: "12px",
+    }}
+  />
+)}
+
 {selectedMeal.sides?.length > 0 && (
   <>
     <h4
