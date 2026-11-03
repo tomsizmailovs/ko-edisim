@@ -577,6 +577,7 @@ onClick={() => {
     
     color: "#000",
     marginBottom: "-14px",
+    clear: "both",
   }}
 >
   🍚 Piedeva
