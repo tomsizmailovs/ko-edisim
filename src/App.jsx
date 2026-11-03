@@ -553,7 +553,7 @@ onClick={() => {
         padding: "20px",
         borderRadius: "16px",
         width: "90%",
-        maxWidth: "420px",
+        maxWidth: "320px",
         maxHeight: "85vh",
         overFlowY: "auto",
       }}
