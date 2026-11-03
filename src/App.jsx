@@ -564,7 +564,7 @@ onClick={() => {
     color: "#000",
     textAlign: "center",
     marginTop: "-8px",
-    marginBottom: "-12px",
+    marginBottom: "6px",
   }}
 >
   {selectedMeal.name}
@@ -575,11 +575,11 @@ onClick={() => {
     src={selectedMeal.image}
     alt={selectedMeal.name}
     style={{
-      width: "100%",
+      width: "60%",
       height: "180px",
       objectFit: "cover",
       borderRadius: "12px",
-      marginBottom: "12px",
+      marginBottom: "-10px",
     }}
   />
 )}
