@@ -552,17 +552,35 @@ onClick={() => {
         borderRadius: "16px",
       }}
     >
-      <h3>{selectedMeal.name}</h3>
+      <h3
+  style={{
+    textAlign: "center",
+    marginTop: "0",
+    marginBottom: "20px",
+  }}
+>
+  {selectedMeal.name}
+</h3>
 
 {selectedMeal.sides?.length > 0 && (
   <>
-    <h4>🍚 Piedeva</h4>
+    <h4
+  style={{
+    marginBottom: "10px",
+  }}
+>
+  🍚 Piedeva
+</h4>
 
 <div
   style={{
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "8px",
+    backgroundColor: "white",
+    padding: "24px",
+    borderRadius: "16px",
+    width: "90%",
+    maxWidth: "400px",
+    maxHeight: "80vh",
+    overflowY: "auto",
   }}
 >
   {selectedMeal.sides.map((side) => (
@@ -571,21 +589,21 @@ onClick={() => {
       onClick={() =>
         setSelectedSide(side)
       }
-      style={{
-        padding: "10px",
-        borderRadius: "10px",
-        border: "1px solid #ddd",
-        cursor: "pointer",
-        textAlign: "center",
-        backgroundColor:
-          selectedSide === side
-            ? "#4CAF50"
-            : "#fafafa",
-        color:
-          selectedSide === side
-            ? "white"
-            : "black",
-      }}
+style={{
+  padding: "12px",
+  borderRadius: "10px",
+  border: selectedSide === side
+    ? "2px solid #2E7D32"
+    : "1px solid #ddd",
+  backgroundColor:
+    selectedSide === side
+      ? "#A5D6A7"
+      : "#fafafa",
+  cursor: "pointer",
+  textAlign: "center",
+  fontSize: "14px",
+  fontWeight: "500",
+}}
     >
       {side}
     </div>
@@ -596,13 +614,24 @@ onClick={() => {
 
 {selectedMeal.salads?.length > 0 && (
   <>
-    <h4>🥗 Salāti</h4>
+    <h4
+  style={{
+    marginTop: "-10px",
+    marginBottom: "-10px",
+  }}
+>
+  🥗 Salāti
+</h4>
 
 <div
   style={{
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "8px",
+    backgroundColor: "white",
+    padding: "24px",
+    borderRadius: "16px",
+    width: "90%",
+    maxWidth: "400px",
+    maxHeight: "80vh",
+    overflowY: "auto",
   }}
 >
   {selectedMeal.salads.map((salad) => (
@@ -612,20 +641,20 @@ onClick={() => {
         setSelectedSalad(salad)
       }
       style={{
-        padding: "10px",
-        borderRadius: "10px",
-        border: "1px solid #ddd",
-        cursor: "pointer",
-        textAlign: "center",
-        backgroundColor:
-          selectedSalad === salad
-            ? "#4CAF50"
-            : "#fafafa",
-        color:
-          selectedSalad === salad
-            ? "white"
-            : "black",
-      }}
+  padding: "12px",
+  borderRadius: "10px",
+  border: selectedSalad === salad
+    ? "2px solid #2E7D32"
+    : "1px solid #ddd",
+  backgroundColor:
+    selectedSalad === salad
+      ? "#A5D6A7"
+      : "#fafafa",
+  cursor: "pointer",
+  textAlign: "center",
+  fontSize: "14px",
+  fontWeight: "500",
+}}
     >
       {salad}
     </div>
@@ -648,6 +677,18 @@ onClick={() => {
   setSelectedSide("");
   setSelectedSalad("");
 }}
+style={{
+    width: "100%",
+    marginTop: "24px",
+    padding: "14px",
+    border: "none",
+    borderRadius: "12px",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "16px",
+    cursor: "pointer",
+  }}
       >
         Pievienot
       </button>
