@@ -600,12 +600,15 @@ onClick={() => {
 <div
   style={{
     backgroundColor: "white",
-    padding: "24px",
+    padding: "2px",
     borderRadius: "16px",
     width: "90%",
     maxWidth: "400px",
     maxHeight: "80vh",
     overflowY: "auto",
+    display: "grid",
+    gridTemplateColums: "1fr 1fr",
+    gap: "8px",
   }}
 >
   {selectedMeal.sides.map((side) => (
@@ -615,7 +618,7 @@ onClick={() => {
         setSelectedSide(side)
       }
 style={{
-  padding: "12px",
+  padding: "4px 6px",
   borderRadius: "10px",
   border: selectedSide === side
     ? "2px solid #2E7D32"
