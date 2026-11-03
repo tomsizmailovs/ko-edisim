@@ -544,13 +544,13 @@ onClick={() => {
       alignItems: "flex-start",
       justifyContent: "center",
       overFlowY: "auto",
-      padding: "20px 0",
+      padding: "10px 0",
     }}
   >
     <div
       style={{
         backgroundColor: "white",
-        padding: "20px",
+        padding: "14px",
         borderRadius: "16px",
         width: "90%",
         maxWidth: "320px",
@@ -560,9 +560,11 @@ onClick={() => {
     >
       <h3
   style={{
+    
+    color: "#000",
     textAlign: "center",
-    marginTop: "0",
-    marginBottom: "20px",
+    marginTop: "-8px",
+    marginBottom: "-12px",
   }}
 >
   {selectedMeal.name}
@@ -572,7 +574,9 @@ onClick={() => {
   <>
     <h4
   style={{
-    marginBottom: "10px",
+    
+    color: "#000",
+    marginBottom: "-14px",
   }}
 >
   🍚 Piedeva
@@ -622,6 +626,7 @@ style={{
   <>
     <h4
   style={{
+    color: "#000",
     marginTop: "-10px",
     marginBottom: "-10px",
   }}
