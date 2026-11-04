@@ -706,7 +706,7 @@ onClick={() => {
 }}
 style={{
     width: "100%",
-    marginTop: "24px",
+    marginTop: "16px",
     padding: "14px",
     border: "none",
     borderRadius: "12px",
@@ -717,7 +717,7 @@ style={{
     cursor: "pointer",
   }}
       >
-        Pievienot
+        Ēdīsim šo
       </button>
     </div>
   </div>
