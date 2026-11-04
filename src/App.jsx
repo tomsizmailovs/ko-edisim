@@ -536,7 +536,12 @@ onClick={() => {
 
 {selectedMeal && (
   <div
-    style={{
+    onClick={() => {
+      setSelectedMeal(null);
+      setSelectedSide("");
+      setSelectedSalad("");
+    }}
+  style={{
       position: "fixed",
       inset: 0,
       backgroundColor: "rgba(0,0,0,0.5)",
@@ -547,6 +552,7 @@ onClick={() => {
     }}
   >
     <div
+      onClick={(e) => e.stopPropagation()}
       style={{
         backgroundColor: "white",
         padding: "12px",
