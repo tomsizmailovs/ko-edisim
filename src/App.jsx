@@ -543,8 +543,9 @@ onClick={() => {
       display: "flex",
       alignItems: "flex-start",
       justifyContent: "center",
-      overFlowY: "auto",
+      zIndex: "1000",
       padding: "20px",
+      overFlowY: "auto",
     }}
   >
     <div
@@ -555,7 +556,7 @@ onClick={() => {
         width: "90%",
         maxWidth: "320px",
         maxHeight: "85vh",
-        overFlowY: "auto",
+        margin: "0 auto",
       }}
     >
       <h3
@@ -579,7 +580,10 @@ onClick={() => {
       height: "180px",
       objectFit: "cover",
       borderRadius: "12px",
-      marginBottom: "-10px",
+      marginBottom: "-12px",
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
     }}
   />
 )}
@@ -599,18 +603,9 @@ onClick={() => {
 
 <div
   style={{
-    backgroundColor: "white",
-    padding: "2px",
-    borderRadius: "16px",
-    width: "100%",
-    maxWidth: "400px",
-    maxHeight: "80vh",
-    overflowY: "auto",
     display: "grid",
-    gridTemplateColums: "1fr 1fr",
+    gridTemplateColumns: "1fr 1fr",
     gap: "8px",
-    justifyContent: "center",
-    alignItems: "center",
   }}
 >
   {selectedMeal.sides.map((side) => (
@@ -666,6 +661,9 @@ style={{
     maxWidth: "400px",
     maxHeight: "80vh",
     overflowY: "auto",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "12px",
   }}
 >
   {selectedMeal.salads.map((salad) => (
