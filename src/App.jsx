@@ -373,6 +373,7 @@ function isInMealPlan(meal) {
       height: "38px",
       borderRadius: "30%",
       color: "#000",
+      backgroundColor: "#dddddd",
       fontSize: "30px",
       fontWeight: "400",
       cursor: "pointer",
