@@ -593,7 +593,7 @@ onClick={() => {
   style={{
     
     color: "#000",
-    marginBottom: "10px",
+    marginBottom: "8px",
     clear: "both",
   }}
 >
@@ -645,7 +645,7 @@ style={{
   style={{
     color: "#000",
     marginTop: "8px",
-    marginBottom: "-10px",
+    marginBottom: "8px",
   }}
 >
   🥗 Salāti
@@ -665,7 +665,7 @@ style={{
         setSelectedSalad(salad)
       }
       style={{
-  padding: "12px",
+  padding: "4px 6px",
   borderRadius: "10px",
   border: selectedSalad === salad
     ? "2px solid #2E7D32"
@@ -676,6 +676,8 @@ style={{
       : "#fafafa",
   cursor: "pointer",
   textAlign: "center",
+  width: "100%",
+  boxSizing: "border-box",
   fontSize: "14px",
   fontWeight: "600",
   color: "#000",
