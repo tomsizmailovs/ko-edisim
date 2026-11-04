@@ -57,7 +57,6 @@ export default function App() {
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedSide, setSelectedSide] = useState("");
   const [selectedSalad, setSelectedSalad] = useState("");
-  const [showAddMeal, setShowAddMeal] = useState(false);
   const [currentPage, setCurrentPage] = useState("home");
 const [newMealName, setNewMealName] =
   useState("");
@@ -76,11 +75,19 @@ const [newMealSides, setNewMealSides] =
 
 const [newMealSalads, setNewMealSalads] =
   useState("");
-  const [mealPlan, setMealPlan] = useState(() => {
-    const savedPlan =
+
+const [newMealSelectedTags,
+  setNewMealSelectedTags] = useState([]);
+
+const [hasSides, setHasSides] =
+  useState(false);
+
+const [hasSalads, setHasSalads] =
+  useState(false);
+
+const [mealPlan, setMealPlan] = useState(() => {
+  const savedPlan =
       localStorage.getItem("mealPlan");
-
-
 
   return savedPlan
     ? JSON.parse(savedPlan)
@@ -129,6 +136,23 @@ function toggleTag(tag) {
   }
 
   setSelectedTags([...newTags, tag]);
+}
+
+function toggleNewMealTag(tag) {
+  if (
+    newMealSelectedTags.includes(tag)
+  ) {
+    setNewMealSelectedTags(
+      newMealSelectedTags.filter(
+        (t) => t !== tag
+      )
+    );
+  } else {
+    setNewMealSelectedTags([
+      ...newMealSelectedTags,
+      tag,
+    ]);
+  }
 }
 
 function addToMealPlan(meal) {
@@ -242,17 +266,56 @@ if (currentPage === "addMeal") {
 
       <br /><br />
 
-      <select
-        value={newMealType}
-        onChange={(e) =>
-          setNewMealType(e.target.value)
-        }
-      >
-        <option>Brokastis</option>
-        <option>Pusdienas</option>
-        <option>Vakariņas</option>
-        <option>Deserts</option>
-      </select>
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "8px",
+    marginBottom: "16px",
+  }}
+>
+  {mealTypes.map((type) => (
+    <button
+      key={type.value}
+      onClick={() =>
+        setNewMealType(type.value)
+      }
+      style={{
+        padding: "12px",
+        borderRadius: "12px",
+        border:
+          newMealType === type.value
+            ? "3px solid #0D4715"
+            : "1px solid #ddd",
+        backgroundColor:
+          newMealType === type.value
+            ? "#4CAF50"
+            : "#f5f5f5",
+        color:
+          newMealType === type.value
+            ? "white"
+            : "black",
+      }}
+    >
+      {type.label}
+    </button>
+  ))}
+</div>
+
+<input
+  placeholder="Ēdiena nosaukums"
+  value={newMealName}
+  onChange={(e) =>
+    setNewMealName(e.target.value)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "12px",
+    border: "1px solid #ddd",
+    boxSizing: "border-box",
+  }}
+/>
 
       <br /><br />
 
@@ -306,18 +369,21 @@ function isInMealPlan(meal) {
   <button
     onClick={() => setCurrentPage("addMeal")}
     style={{
-      width: "36px",
-      height: "36px",
-      borderRadius: "50%",
-      border: "none",
-      backgroundColor: "#048bfa",
-      color: "white",
-      fontSize: "20px",
-      fontWeight: "bold",
+      width: "38px",
+      height: "38px",
+      borderRadius: "30%",
+      color: "#000",
+      fontSize: "30px",
+      fontWeight: "400",
       cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "0",
+      lineHeight: "1",
     }}
   >
-    ➕
+    ✚
   </button>
 
   <h1
@@ -394,44 +460,46 @@ style={{
   gap: "6px",
   }}
 >
-  {filterGroups[mealType].map((group, index) => (
-<div
-  key={index}
-  style={{
-    display: "grid",
-    gridTemplateColumns:
-      group.length === 2
-        ? "repeat(2, 1fr)"
-        : "1fr",
-    gap: "8px",
-    width: "100%",
-  }}
->
+{filterGroups[newMealType]?.map(
+  (group, index) => (
+    <div
+      key={index}
+      style={{
+        display: "grid",
+        gridTemplateColumns:
+          group.length === 2
+            ? "1fr 1fr"
+            : "1fr",
+        gap: "8px",
+        marginBottom: "8px",
+      }}
+    >
       {group.map((tag) => (
         <button
           key={tag}
-          onClick={() => toggleTag(tag)}
+          onClick={() =>
+            toggleNewMealTag(tag)
+          }
           style={{
-            padding: "8px 12px",
-            maxWidth: "100%",
+            padding: "10px",
             borderRadius: "20px",
             border: "none",
-            cursor: "pointer",
-            width: "100%",
-            fontSize: "16px",
-            backgroundColor: selectedTags.includes(tag)
-              ? "#4CAF50"
-              : "#E0E0E0",
-            color: selectedTags.includes(tag)
-              ? "white"
-              : "black",
+            backgroundColor:
+              newMealSelectedTags.includes(tag)
+                ? "#4CAF50"
+                : "#E0E0E0",
+            color:
+              newMealSelectedTags.includes(tag)
+                ? "white"
+                : "black",
           }}
         >
           {tag}
         </button>
       ))}
     </div>
-  ))}
+  )
+)}
 </div>
 
 <div
