@@ -594,7 +594,7 @@ onClick={() => {
   style={{
     
     color: "#000",
-    marginBottom: "0px",
+    marginBottom: "10px",
     clear: "both",
   }}
 >
@@ -645,7 +645,7 @@ style={{
     <h4
   style={{
     color: "#000",
-    marginTop: "-10px",
+    marginTop: "8px",
     marginBottom: "-10px",
   }}
 >
