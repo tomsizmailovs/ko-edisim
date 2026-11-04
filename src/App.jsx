@@ -602,13 +602,15 @@ onClick={() => {
     backgroundColor: "white",
     padding: "2px",
     borderRadius: "16px",
-    width: "90%",
+    width: "100%",
     maxWidth: "400px",
     maxHeight: "80vh",
     overflowY: "auto",
     display: "grid",
     gridTemplateColums: "1fr 1fr",
     gap: "8px",
+    justifyContent: "center",
+    alignItems: "center",
   }}
 >
   {selectedMeal.sides.map((side) => (
@@ -629,6 +631,8 @@ style={{
       : "#fafafa",
   cursor: "pointer",
   textAlign: "center",
+  width: "100%",
+  boxSizing: "border-box",
   fontSize: "14px",
   fontWeight: "600",
   color: "#000",
