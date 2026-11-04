@@ -544,13 +544,13 @@ onClick={() => {
       alignItems: "flex-start",
       justifyContent: "center",
       overFlowY: "auto",
-      padding: "10px 0",
+      padding: "20px",
     }}
   >
     <div
       style={{
         backgroundColor: "white",
-        padding: "14px",
+        padding: "12px",
         borderRadius: "16px",
         width: "90%",
         maxWidth: "320px",
