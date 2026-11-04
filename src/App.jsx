@@ -611,7 +611,11 @@ onClick={() => {
     <div
       key={side}
       onClick={() =>
-        setSelectedSide(side)
+        setSelectedSide(
+          selectedSide === side
+          ? ""
+          : side
+        )
       }
 style={{
   padding: "4px 6px",
@@ -662,7 +666,11 @@ style={{
     <div
       key={salad}
       onClick={() =>
-        setSelectedSalad(salad)
+        setSelectedSalad(
+          selectedSalad === salad
+        ? ""
+        : salad
+      )
       }
       style={{
   padding: "4px 6px",
