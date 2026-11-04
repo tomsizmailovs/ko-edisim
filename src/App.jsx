@@ -25,15 +25,13 @@ const filterGroups = {
     ["Silts", "Auksts"],
     ["Olas", "Maize"],
     ["Pankūkas"],
-    ["Olbaltumvielas", "Šķiedrvielas"],
     ["15 min"],
   ],
 
   Pusdienas: [
     ["Salds", "Sāļš"],
     ["Silts", "Auksts"],
-    ["Zupa"],
-    ["Olbaltumvielas", "Šķiedrvielas"],
+    ["Zupa", "Nezupa"],
     ["15 min"],
   ],
 
@@ -41,12 +39,9 @@ const filterGroups = {
     ["Silts", "Auksts"],
     ["Vista", "Cūka"],
     ["Liellops", "Zivs"],
-    ["Olbaltumvielas", "Šķiedrvielas"],
   ],
 
   Deserts: [
-    ["Silts", "Auksts"],
-    ["Ātri pagatavojams"],
   ],
 };
 
@@ -134,6 +129,82 @@ function toggleTag(tag) {
       (t) => t !== "Silts"
     );
   }
+
+  // Olas / Maize / Pankūkas
+
+if (tag === "Olas") {
+  newTags = newTags.filter(
+    (t) =>
+      t !== "Maize" &&
+      t !== "Pankūkas"
+  );
+}
+
+if (tag === "Maize") {
+  newTags = newTags.filter(
+    (t) =>
+      t !== "Olas" &&
+      t !== "Pankūkas"
+  );
+}
+
+if (tag === "Pankūkas") {
+  newTags = newTags.filter(
+    (t) =>
+      t !== "Olas" &&
+      t !== "Maize"
+  );
+}
+
+// Zupa / Nezupa
+
+if (tag === "Zupa") {
+  newTags = newTags.filter(
+    (t) => t !== "Nezupa"
+  );
+}
+
+if (tag === "Nezupa") {
+  newTags = newTags.filter(
+    (t) => t !== "Zupa"
+  );
+}
+
+if (tag === "Vista") {
+  newTags = newTags.filter(
+    (t) =>
+      t !== "Cūka" &&
+      t !== "Liellops" &&
+      t !== "Zivs"
+  );
+}
+
+if (tag === "Cūka") {
+  newTags = newTags.filter(
+    (t) =>
+      t !== "Vista" &&
+      t !== "Liellops" &&
+      t !== "Zivs"
+  );
+}
+
+if (tag === "Liellops") {
+  newTags = newTags.filter(
+    (t) =>
+      t !== "Vista" &&
+      t !== "Cūka" &&
+      t !== "Zivs"
+  );
+}
+
+if (tag === "Zivs") {
+  newTags = newTags.filter(
+    (t) =>
+      t !== "Vista" &&
+      t !== "Cūka" &&
+      t !== "Liellops"
+  );
+}
 
   setSelectedTags([...newTags, tag]);
 }
@@ -446,7 +517,8 @@ function isInMealPlan(meal) {
   )}
 </div>
 
-{mealType && (
+{mealType &&
+filterGroups[mealType]?.length > 0 && (
   <>
 <div
 style={{
@@ -461,7 +533,7 @@ style={{
   gap: "6px",
   }}
 >
-{filterGroups[newMealType]?.map(
+{filterGroups[mealType]?.map(
   (group, index) => (
     <div
       key={index}
@@ -472,25 +544,29 @@ style={{
             ? "1fr 1fr"
             : "1fr",
         gap: "8px",
-        marginBottom: "8px",
+        width: "100%",
+        marginBottom: "0px",
       }}
     >
       {group.map((tag) => (
         <button
           key={tag}
           onClick={() =>
-            toggleNewMealTag(tag)
+            toggleTag(tag)
           }
           style={{
-            padding: "10px",
+            padding: "6px 12px",
             borderRadius: "20px",
-            border: "none",
+            border: selectedTags.includes(tag)
+  ? "3px solid #1B5E20"
+  : "1px solid transparent",
+            fontWeight: "bold",
             backgroundColor:
-              newMealSelectedTags.includes(tag)
+              selectedTags.includes(tag)
                 ? "#4CAF50"
                 : "#E0E0E0",
             color:
-              newMealSelectedTags.includes(tag)
+              selectedTags.includes(tag)
                 ? "white"
                 : "black",
           }}
