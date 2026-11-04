@@ -543,9 +543,7 @@ onClick={() => {
       display: "flex",
       alignItems: "flex-start",
       justifyContent: "center",
-      zIndex: "1000",
       padding: "20px",
-      overFlowY: "auto",
     }}
   >
     <div
@@ -556,6 +554,7 @@ onClick={() => {
         width: "90%",
         maxWidth: "320px",
         maxHeight: "85vh",
+        overflowY: "auto",
         margin: "0 auto",
       }}
     >
@@ -654,13 +653,6 @@ style={{
 
 <div
   style={{
-    backgroundColor: "white",
-    padding: "24px",
-    borderRadius: "16px",
-    width: "90%",
-    maxWidth: "400px",
-    maxHeight: "80vh",
-    overflowY: "auto",
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: "12px",
