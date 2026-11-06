@@ -319,23 +319,61 @@ if (currentPage === "addMeal") {
         padding: "12px",
       }}
     >
+    <div
+    style={{
+      display: "flex",
+      alignItem: "center",
+      gap: "12px",
+      marginBottom: "-40px",
+    }}
+    >
       <button
-        onClick={() => setCurrentPage("home")}
+  onClick={() => setCurrentPage("home")}
+  style={{
+    width: "38px",
+    height: "38px",
+    borderRadius: "30%",
+    color: "#000",
+    backgroundColor: "#dddddd",
+    fontSize: "22px",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 0,
+    border: "none",
+  }}
+>
+  🏠
+</button>
+
+      <h2
+      style={{
+        margin: 0,
+        lineHeight: "38px",
+      }}
       >
-        ← Atpakaļ
-      </button>
-
-      <h2>Pievienot ēdienu</h2>
-
-      <input
-        placeholder="Nosaukums"
-        value={newMealName}
-        onChange={(e) =>
-          setNewMealName(e.target.value)
-        }
-      />
+        Pievienot ēdienu
+        </h2>
+        </div>
 
       <br /><br />
+
+<input
+  placeholder="Ēdiena nosaukums"
+  value={newMealName}
+  onChange={(e) =>
+    setNewMealName(e.target.value)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "12px",
+    border: "1px solid #ddd",
+    boxSizing: "border-box",
+    marginBottom: "10px",
+  }}
+/>
 
 <div
   style={{
@@ -373,30 +411,64 @@ if (currentPage === "addMeal") {
   ))}
 </div>
 
-<input
-  placeholder="Ēdiena nosaukums"
-  value={newMealName}
-  onChange={(e) =>
-    setNewMealName(e.target.value)
-  }
+<div
   style={{
-    width: "100%",
-    padding: "12px",
-    borderRadius: "12px",
-    border: "1px solid #ddd",
-    boxSizing: "border-box",
+    backgroundColor: "#f5f5f5",
+    padding: "10px",
+    borderRadius: "16px",
+    border: "1px solid #E0E0E0",
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px",
   }}
-/>
-
-      <br /><br />
-
-      <input
-        placeholder="Filtri"
-        value={newMealTags}
-        onChange={(e) =>
-          setNewMealTags(e.target.value)
-        }
-      />
+>
+  {filterGroups[newMealType]?.map(
+    (group, index) => (
+      <div
+        key={index}
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            group.length === 2
+              ? "1fr 1fr"
+              : "1fr",
+          gap: "8px",
+          width: "100%",
+        }}
+      >
+        {group.map((tag) => (
+          <button
+            key={tag}
+            type="button"
+            onClick={() =>
+              toggleNewMealTag(tag)
+            }
+            style={{
+              padding: "5px 12px",
+              borderRadius: "16px",
+              border:
+                newMealSelectedTags.includes(tag)
+                  ? "2px solid #1B5E20"
+                  : "1px solid transparent",
+              backgroundColor:
+                newMealSelectedTags.includes(tag)
+                  ? "#4CAF50"
+                  : "#E0E0E0",
+              color:
+                newMealSelectedTags.includes(tag)
+                  ? "white"
+                  : "black",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    )
+  )}
+</div>
 
       <br /><br />
 
