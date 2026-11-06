@@ -57,7 +57,7 @@ const [newMealName, setNewMealName] =
   useState("");
 
 const [newMealType, setNewMealType] =
-  useState("Brokastis");
+  useState("");
 
 const [newMealTags, setNewMealTags] =
   useState("");
@@ -992,14 +992,14 @@ style={{
     padding: "16px",
     borderRadius: "16px",
     border: "1px solid #E0E0E0",
-    marginTop: "24px",
+    marginTop: "-10px",
   }}
 >
 
 <h3
       style={{
         textAlign: "center",
-        marginTop: "0",
+        marginTop: "0px",
         marginBottom: "12px",
         color: "#000",
         fontSize: "20px",
