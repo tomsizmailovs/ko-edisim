@@ -588,9 +588,7 @@ if (currentPage === "addMeal") {
 
 <div
   style={{
-    display: "grid",
     gridTemplateColumns: "1fr 1fr",
-    gap: "8px",
   }}
 >
 
@@ -608,10 +606,12 @@ if (currentPage === "addMeal") {
       galleryInputRef.current.click()
     }
     style={{
+      width: "180px",
       padding: "12px",
       borderRadius: "12px",
       border: "1px solid #ddd",
-      backgroundColor: "#f5f5f5",
+      backgroundColor: "#E0E0E0",
+      color: "#000",
       cursor: "pointer",
       fontWeight: "bold",
     }}
