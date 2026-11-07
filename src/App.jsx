@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const mealTypes = [
   {
@@ -46,6 +46,8 @@ const filterGroups = {
 };
 
 export default function App() {
+  const galleryInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
   const [mealType, setMealType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [meals,setMeals] = useState([]);
@@ -59,11 +61,8 @@ const [newMealName, setNewMealName] =
 const [newMealType, setNewMealType] =
   useState("");
 
-const [newMealTags, setNewMealTags] =
-  useState("");
-
 const [newMealImage, setNewMealImage] =
-  useState("");
+  useState(null);
 
 const [newMealSides, setNewMealSides] =
   useState("");
@@ -462,7 +461,7 @@ if (currentPage === "addMeal") {
         margin: 0,
         flex: "1",
         lineHeight: "38px",
-        textAling: "center",
+        textAlign: "center",
       }}
       >
         Pievienot ēdienu
@@ -588,15 +587,90 @@ if (currentPage === "addMeal") {
 </div>
   )}
 
-      <br /><br />
+      <br />
 
-      <input
-        placeholder="Bilde"
-        value={newMealImage}
-        onChange={(e) =>
-          setNewMealImage(e.target.value)
-        }
-      />
+      <h3>📷 Bilde</h3>
+
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "8px",
+  }}
+>
+  <button
+    type="button"
+    onClick={() =>
+      galleryInputRef.current.click()
+    }
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border: "1px solid #ddd",
+      backgroundColor: "#f5f5f5",
+      cursor: "pointer",
+      fontWeight: "bold",
+    }}
+  >
+    🖼️ Galerija
+  </button>
+
+  <button
+    type="button"
+    onClick={() =>
+      cameraInputRef.current.click()
+    }
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border: "1px solid #ddd",
+      backgroundColor: "#f5f5f5",
+      cursor: "pointer",
+      fontWeight: "bold",
+    }}
+  >
+    📸 Kamera
+  </button>
+</div>
+
+<input
+  ref={galleryInputRef}
+  type="file"
+  accept="image/*"
+  style={{ display: "none" }}
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setNewMealImage(file);
+    }
+  }}
+/>
+
+<input
+  ref={cameraInputRef}
+  type="file"
+  accept="image/*"
+  capture="environment"
+  style={{ display: "none" }}
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setNewMealImage(file);
+    }
+  }}
+/>
+{newMealImage && (
+  <img
+    src={URL.createObjectURL(newMealImage)}
+    alt="Priekšskatījums"
+    style={{
+      width: "100%",
+      borderRadius: "12px",
+      marginTop: "12px",
+    }}
+  />
+)}
+
     </div>
   );
 }
