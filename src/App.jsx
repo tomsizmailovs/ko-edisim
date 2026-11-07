@@ -210,20 +210,127 @@ if (tag === "Zivs") {
 }
 
 function toggleNewMealTag(tag) {
-  if (
-    newMealSelectedTags.includes(tag)
-  ) {
+  if (newMealSelectedTags.includes(tag)) {
     setNewMealSelectedTags(
       newMealSelectedTags.filter(
         (t) => t !== tag
       )
     );
-  } else {
-    setNewMealSelectedTags([
-      ...newMealSelectedTags,
-      tag,
-    ]);
+    return;
   }
+
+  let newTags = [...newMealSelectedTags];
+
+  // Salds / Sāļš
+
+  if (tag === "Salds") {
+    newTags = newTags.filter(
+      (t) => t !== "Sāļš"
+    );
+  }
+
+  if (tag === "Sāļš") {
+    newTags = newTags.filter(
+      (t) => t !== "Salds"
+    );
+  }
+
+  // Silts / Auksts
+
+  if (tag === "Silts") {
+    newTags = newTags.filter(
+      (t) => t !== "Auksts"
+    );
+  }
+
+  if (tag === "Auksts") {
+    newTags = newTags.filter(
+      (t) => t !== "Silts"
+    );
+  }
+
+  // Olas / Maize / Pankūkas
+
+  if (tag === "Olas") {
+    newTags = newTags.filter(
+      (t) =>
+        t !== "Maize" &&
+        t !== "Pankūkas"
+    );
+  }
+
+  if (tag === "Maize") {
+    newTags = newTags.filter(
+      (t) =>
+        t !== "Olas" &&
+        t !== "Pankūkas"
+    );
+  }
+
+  if (tag === "Pankūkas") {
+    newTags = newTags.filter(
+      (t) =>
+        t !== "Olas" &&
+        t !== "Maize"
+    );
+  }
+
+  // Zupa / Nezupa
+
+  if (tag === "Zupa") {
+    newTags = newTags.filter(
+      (t) => t !== "Nezupa"
+    );
+  }
+
+  if (tag === "Nezupa") {
+    newTags = newTags.filter(
+      (t) => t !== "Zupa"
+    );
+  }
+
+  // Vista / Cūka / Liellops / Zivs
+
+  if (tag === "Vista") {
+    newTags = newTags.filter(
+      (t) =>
+        t !== "Cūka" &&
+        t !== "Liellops" &&
+        t !== "Zivs"
+    );
+  }
+
+  if (tag === "Cūka") {
+    newTags = newTags.filter(
+      (t) =>
+        t !== "Vista" &&
+        t !== "Liellops" &&
+        t !== "Zivs"
+    );
+  }
+
+  if (tag === "Liellops") {
+    newTags = newTags.filter(
+      (t) =>
+        t !== "Vista" &&
+        t !== "Cūka" &&
+        t !== "Zivs"
+    );
+  }
+
+  if (tag === "Zivs") {
+    newTags = newTags.filter(
+      (t) =>
+        t !== "Vista" &&
+        t !== "Cūka" &&
+        t !== "Liellops"
+    );
+  }
+
+  setNewMealSelectedTags([
+    ...newTags,
+    tag,
+  ]);
 }
 
 function addToMealPlan(meal) {
@@ -317,12 +424,15 @@ if (currentPage === "addMeal") {
         maxWidth: "380px",
         margin: "0 auto",
         padding: "12px",
+        width: "100%",
+        boxSizing: "border-box",
       }}
     >
     <div
     style={{
       display: "flex",
-      alignItem: "center",
+      alignItems: "center",
+      justifyContent: "space-between",
       gap: "12px",
       marginBottom: "-40px",
     }}
@@ -350,11 +460,14 @@ if (currentPage === "addMeal") {
       <h2
       style={{
         margin: 0,
+        flex: "1",
         lineHeight: "38px",
+        textAling: "center",
       }}
       >
         Pievienot ēdienu
         </h2>
+        <div style={{ width: "38px" }} />
         </div>
 
       <br /><br />
@@ -392,6 +505,7 @@ if (currentPage === "addMeal") {
       style={{
         padding: "12px",
         borderRadius: "12px",
+        fontWeight: "bold",
         border:
           newMealType === type.value
             ? "3px solid #0D4715"
@@ -410,6 +524,9 @@ if (currentPage === "addMeal") {
     </button>
   ))}
 </div>
+
+{newMealType &&
+  filterGroups[newMealType]?.length > 0 && (
 
 <div
   style={{
@@ -469,6 +586,7 @@ if (currentPage === "addMeal") {
     )
   )}
 </div>
+  )}
 
       <br /><br />
 
