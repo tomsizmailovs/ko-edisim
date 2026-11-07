@@ -47,7 +47,6 @@ const filterGroups = {
 
 export default function App() {
   const galleryInputRef = useRef(null);
-  const cameraInputRef = useRef(null);
   const [mealType, setMealType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [meals,setMeals] = useState([]);
@@ -587,15 +586,20 @@ if (currentPage === "addMeal") {
 </div>
   )}
 
-      <br />
-
-      <h3>📷 Bilde</h3>
-
 <div
   style={{
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: "8px",
+  }}
+>
+
+  {newMealType && (
+  <div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "12px",
   }}
 >
   <button
@@ -612,25 +616,10 @@ if (currentPage === "addMeal") {
       fontWeight: "bold",
     }}
   >
-    🖼️ Galerija
+    Ēdiena bilde
   </button>
-
-  <button
-    type="button"
-    onClick={() =>
-      cameraInputRef.current.click()
-    }
-    style={{
-      padding: "12px",
-      borderRadius: "12px",
-      border: "1px solid #ddd",
-      backgroundColor: "#f5f5f5",
-      cursor: "pointer",
-      fontWeight: "bold",
-    }}
-  >
-    📸 Kamera
-  </button>
+</div>
+  )}
 </div>
 
 <input
@@ -646,19 +635,6 @@ if (currentPage === "addMeal") {
   }}
 />
 
-<input
-  ref={cameraInputRef}
-  type="file"
-  accept="image/*"
-  capture="environment"
-  style={{ display: "none" }}
-  onChange={(e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setNewMealImage(file);
-    }
-  }}
-/>
 {newMealImage && (
   <img
     src={URL.createObjectURL(newMealImage)}
