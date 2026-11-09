@@ -72,6 +72,14 @@ const [newMealSalads, setNewMealSalads] =
 const [newMealSelectedTags,
   setNewMealSelectedTags] = useState([]);
 
+const [shoppingList, setShoppingList] = useState({
+  vegetables: "",
+  fruits: "",
+  meatFish: "",
+  dairy: "",
+  grains: "",
+});
+
 const [hasSides, setHasSides] =
   useState(false);
 
@@ -1262,6 +1270,107 @@ style={{
   </div>
 </div>
 )}
+
+<div
+  style={{
+    backgroundColor: "#F5F5F5",
+    padding: "16px",
+    borderRadius: "16px",
+    border: "1px solid #E0E0E0",
+    marginTop: "16px",
+  }}
+>
+  <h3
+    style={{
+      textAlign: "center",
+      marginTop: 0,
+      marginBottom: "16px",
+    }}
+  >
+    🛒 Iepirkumu saraksts
+  </h3>
+
+  <h4>🥦 Dārzeņi</h4>
+  <input
+    value={shoppingList.vegetables}
+    onChange={(e) =>
+      setShoppingList({
+        ...shoppingList,
+        vegetables: e.target.value,
+      })
+    }
+    rows={3}
+    style={{
+      width: "100%",
+      boxSizing: "border-box",
+    }}
+  />
+
+  <h4>🍎 Augļi</h4>
+  <input
+    value={shoppingList.fruits}
+    onChange={(e) =>
+      setShoppingList({
+        ...shoppingList,
+        fruits: e.target.value,
+      })
+    }
+    rows={3}
+    style={{
+      width: "100%",
+      boxSizing: "border-box",
+    }}
+  />
+
+  <h4>🥩 Gaļa / Zivs</h4>
+  <input
+    value={shoppingList.meatFish}
+    onChange={(e) =>
+      setShoppingList({
+        ...shoppingList,
+        meatFish: e.target.value,
+      })
+    }
+    rows={3}
+    style={{
+      width: "100%",
+      boxSizing: "border-box",
+    }}
+  />
+
+  <h4>🥛 Piena produkti</h4>
+  <input
+    value={shoppingList.dairy}
+    onChange={(e) =>
+      setShoppingList({
+        ...shoppingList,
+        dairy: e.target.value,
+      })
+    }
+    rows={3}
+    style={{
+      width: "100%",
+      boxSizing: "border-box",
+    }}
+  />
+
+  <h4>🌾 Graudaugi</h4>
+  <input
+    value={shoppingList.grains}
+    onChange={(e) =>
+      setShoppingList({
+        ...shoppingList,
+        grains: e.target.value,
+      })
+    }
+    rows={3}
+    style={{
+      width: "100%",
+      boxSizing: "border-box",
+    }}
+  />
+</div>
+
   </div>
   );
 }
