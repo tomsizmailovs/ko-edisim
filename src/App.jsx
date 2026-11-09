@@ -73,11 +73,11 @@ const [newMealSelectedTags,
   setNewMealSelectedTags] = useState([]);
 
 const [shoppingList, setShoppingList] = useState({
-  vegetables: "",
-  fruits: "",
-  meatFish: "",
-  dairy: "",
-  grains: "",
+  vegetables: [],
+  fruits: [],
+  meatFish: [],
+  dairy: [],
+  grains: [],
 });
 
 const [hasSides, setHasSides] =
@@ -363,6 +363,105 @@ function removeFromMealPlan(mealType, mealName) {
       (meal) => meal.name !== mealName
     ),
   }));
+}
+
+function addShoppingItem(category) {
+  const item = prompt("Produkts");
+
+  if (!item) return;
+
+  setShoppingList((current) => ({
+    ...current,
+    [category]: [
+      ...current[category],
+      item,
+    ],
+  }));
+}
+
+function removeShoppingItem(
+  category,
+  index
+) {
+  setShoppingList((current) => ({
+    ...current,
+    [category]: current[
+      category
+    ].filter((_, i) => i !== index),
+  }));
+}
+
+function renderShoppingCategory(
+  title,
+  icon,
+  key
+) {
+  return (
+    <div style={{ marginBottom: "16px" }}>
+      <h4
+        style={{
+          marginBottom: "8px",
+        }}
+      >
+        {icon} {title}
+      </h4>
+
+      {shoppingList[key].map(
+        (item, index) => (
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              justifyContent:
+                "space-between",
+              alignItems: "center",
+              padding: "6px",
+              marginBottom: "4px",
+              borderRadius: "8px",
+              backgroundColor:
+                "#fafafa",
+            }}
+          >
+            <span>{item}</span>
+
+            <button
+              onClick={() =>
+                removeShoppingItem(
+                  key,
+                  index
+                )
+              }
+              style={{
+                border: "none",
+                background:
+                  "transparent",
+                cursor: "pointer",
+              }}
+            >
+              ❌
+            </button>
+          </div>
+        )
+      )}
+
+      <button
+        onClick={() =>
+          addShoppingItem(key)
+        }
+        style={{
+          width: "100%",
+          padding: "8px",
+          borderRadius: "10px",
+          border: "1px solid #ddd",
+          backgroundColor: "#f5f5f5",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+      >
+        ➕ Pievienot
+      </button>
+    </div>
+  );
 }
 
 function needsPopup(meal) {
@@ -1284,91 +1383,40 @@ style={{
     style={{
       textAlign: "center",
       marginTop: 0,
-      marginBottom: "16px",
     }}
   >
     🛒 Iepirkumu saraksts
   </h3>
 
-  <h4>🥦 Dārzeņi</h4>
-  <input
-    value={shoppingList.vegetables}
-    onChange={(e) =>
-      setShoppingList({
-        ...shoppingList,
-        vegetables: e.target.value,
-      })
-    }
-    rows={3}
-    style={{
-      width: "100%",
-      boxSizing: "border-box",
-    }}
-  />
+  {renderShoppingCategory(
+    "Dārzeņi",
+    "🥦",
+    "vegetables"
+  )}
 
-  <h4>🍎 Augļi</h4>
-  <input
-    value={shoppingList.fruits}
-    onChange={(e) =>
-      setShoppingList({
-        ...shoppingList,
-        fruits: e.target.value,
-      })
-    }
-    rows={3}
-    style={{
-      width: "100%",
-      boxSizing: "border-box",
-    }}
-  />
+  {renderShoppingCategory(
+    "Augļi",
+    "🍎",
+    "fruits"
+  )}
 
-  <h4>🥩 Gaļa / Zivs</h4>
-  <input
-    value={shoppingList.meatFish}
-    onChange={(e) =>
-      setShoppingList({
-        ...shoppingList,
-        meatFish: e.target.value,
-      })
-    }
-    rows={3}
-    style={{
-      width: "100%",
-      boxSizing: "border-box",
-    }}
-  />
+  {renderShoppingCategory(
+    "Gaļa / Zivs",
+    "🥩",
+    "meatFish"
+  )}
 
-  <h4>🥛 Piena produkti</h4>
-  <input
-    value={shoppingList.dairy}
-    onChange={(e) =>
-      setShoppingList({
-        ...shoppingList,
-        dairy: e.target.value,
-      })
-    }
-    rows={3}
-    style={{
-      width: "100%",
-      boxSizing: "border-box",
-    }}
-  />
+  {renderShoppingCategory(
+    "Piena produkti",
+    "🥛",
+    "dairy"
+  )}
 
-  <h4>🌾 Graudaugi</h4>
-  <input
-    value={shoppingList.grains}
-    onChange={(e) =>
-      setShoppingList({
-        ...shoppingList,
-        grains: e.target.value,
-      })
-    }
-    rows={3}
-    style={{
-      width: "100%",
-      boxSizing: "border-box",
-    }}
-  />
+  {renderShoppingCategory(
+    "Graudaugi",
+    "🌾",
+    "grains"
+  )}
 </div>
 
   </div>
