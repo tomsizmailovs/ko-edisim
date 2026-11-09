@@ -90,6 +90,8 @@ const [mealPlan, setMealPlan] = useState(() => {
   const savedPlan =
       localStorage.getItem("mealPlan");
 
+console.log(savedPlan);
+
   return savedPlan
     ? JSON.parse(savedPlan)
     : {
@@ -401,6 +403,7 @@ function renderShoppingCategory(
       <h4
         style={{
           marginBottom: "8px",
+          color: "#000",
         }}
       >
         {icon} {title}
@@ -449,16 +452,16 @@ function renderShoppingCategory(
           addShoppingItem(key)
         }
         style={{
-          width: "100%",
-          padding: "8px",
-          borderRadius: "10px",
-          border: "1px solid #ddd",
-          backgroundColor: "#f5f5f5",
+          width: "140px",
+          padding: "6px 12px",
+          borderRadius: "12px",
+          border: "2px solid #7CB342",
+          backgroundColor: "#E8F5E9",
           fontWeight: "bold",
           cursor: "pointer",
         }}
       >
-        ➕ Pievienot
+        ✚ Pievienot
       </button>
     </div>
   );
@@ -1370,6 +1373,10 @@ style={{
 </div>
 )}
 
+{Object.values(mealPlan).some(
+  (meals) => meals.length > 0
+) && (
+
 <div
   style={{
     backgroundColor: "#F5F5F5",
@@ -1383,6 +1390,7 @@ style={{
     style={{
       textAlign: "center",
       marginTop: 0,
+      color: "#000",
     }}
   >
     🛒 Iepirkumu saraksts
@@ -1418,6 +1426,7 @@ style={{
     "grains"
   )}
 </div>
+      )}
 
   </div>
   );
