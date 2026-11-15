@@ -1157,7 +1157,7 @@ if (currentPage === "addMeal") {
         border:
           newMealType === card.value
             ? "3px solid #0D4715"
-            : "1px solid #ddd",
+            : "3px solid #ddd",
         backgroundColor:
           newMealType === card.value
             ? "#4CAF50"
@@ -1579,7 +1579,7 @@ style={{
             borderRadius: "20px",
             border: selectedTags.includes(tag)
   ? "3px solid #1B5E20"
-  : "1px solid transparent",
+  : "3px solid transparent",
             fontWeight: "bold",
             backgroundColor:
               selectedTags.includes(tag)
