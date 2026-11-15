@@ -1174,32 +1174,6 @@ if (currentPage === "addMeal") {
   ))}
 </div>
 
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-    marginBottom: "16px",
-  }}
->
-  <hr
-    style={{
-      border: "none",
-      borderTop: "3px solid #d0d0d0",
-      width: "100%",
-      margin: 0,
-    }}
-  />
-
-  <hr
-    style={{
-      border: "none",
-      borderTop: "3px solid #d0d0d0",
-      width: "100%",
-      marginBottom: "-4px",
-    }}
-  />
-</div>
-
 {newMealType && (
   <input
     placeholder="Ēdiena nosaukums"
