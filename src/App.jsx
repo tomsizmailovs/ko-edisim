@@ -1262,7 +1262,7 @@ if (currentPage === "addMeal") {
               border:
                 newMealSelectedTags.includes(tag)
                   ? "2px solid #1B5E20"
-                  : "1px solid transparent",
+                  : "2px solid transparent",
               backgroundColor:
                 newMealSelectedTags.includes(tag)
                   ? "#4CAF50"
@@ -1313,7 +1313,7 @@ if (currentPage === "addMeal") {
       borderRadius: "12px",
       border: hasSides
         ? "2px solid #1B5E20"
-        : "1px solid #ddd",
+        : "2px solid #ddd",
       backgroundColor: hasSides
         ? "#4CAF50"
         : "#f5f5f5",
@@ -1336,7 +1336,7 @@ if (currentPage === "addMeal") {
       borderRadius: "12px",
       border: hasSalads
         ? "2px solid #1B5E20"
-        : "1px solid #ddd",
+        : "2px solid #ddd",
       backgroundColor: hasSalads
         ? "#4CAF50"
         : "#f5f5f5",
@@ -1517,7 +1517,7 @@ function isInMealPlan(meal) {
           border:
             mealType === type.value
               ? "4px solid #0D4715"
-              : "2px solid transparent",
+              : "4px solid transparent",
           borderRadius: "12px",
           cursor: "pointer",
           backgroundColor:
@@ -1660,7 +1660,7 @@ onClick={() => {
         marginTop: "6px",
         border: isInMealPlan(meal)
         ? "2px solid #FBC02D"
-        : "1px solid #ddd",
+        : "2px solid #ddd",
         borderRadius: "10px",
         cursor: "pointer",
         backgroundColor: isInMealPlan(meal)
@@ -1793,7 +1793,7 @@ style={{
   borderRadius: "10px",
   border: selectedSide === side
     ? "2px solid #2E7D32"
-    : "1px solid #ddd",
+    : "2px solid #ddd",
   backgroundColor:
     selectedSide === side
       ? "#A5D6A7"
@@ -1848,7 +1848,7 @@ style={{
   borderRadius: "10px",
   border: selectedSalad === salad
     ? "2px solid #2E7D32"
-    : "1px solid #ddd",
+    : "2px solid #ddd",
   backgroundColor:
     selectedSalad === salad
       ? "#A5D6A7"
