@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { supabase } from "./supabase";
 
 const mealTypes = [
   {
@@ -63,11 +64,14 @@ const [newMealType, setNewMealType] =
 const [newMealImage, setNewMealImage] =
   useState(null);
 
-const [newMealSides, setNewMealSides] =
-  useState("");
+const [allSides, setAllSides] = useState([]);
+const [allSalads, setAllSalads] = useState([]);
 
-const [newMealSalads, setNewMealSalads] =
-  useState("");
+const [hasSides, setHasSides] =
+  useState(false);
+
+const [hasSalads, setHasSalads] =
+  useState(false);
 
 const [newMealSelectedTags,
   setNewMealSelectedTags] = useState([]);
@@ -80,17 +84,9 @@ const [shoppingList, setShoppingList] = useState({
   grains: [],
 });
 
-const [hasSides, setHasSides] =
-  useState(false);
-
-const [hasSalads, setHasSalads] =
-  useState(false);
-
 const [mealPlan, setMealPlan] = useState(() => {
   const savedPlan =
       localStorage.getItem("mealPlan");
-
-console.log(savedPlan);
 
   return savedPlan
     ? JSON.parse(savedPlan)
@@ -341,6 +337,97 @@ function toggleNewMealTag(tag) {
   ]);
 }
 
+async function uploadImage(file) {
+  if (!file) return "";
+
+  const fileName =
+    `${Date.now()}-${file.name}`;
+
+  const { error } = await supabase
+    .storage
+    .from("meal-images")
+    .upload(fileName, file);
+
+  if (error) {
+    console.log(error);
+    return "";
+  }
+
+  const { data } = supabase
+    .storage
+    .from("meal-images")
+    .getPublicUrl(fileName);
+
+  return data.publicUrl;
+}
+
+async function saveMeal() {
+ 
+let imageUrl = "";
+
+if (newMealImage) {
+  imageUrl = await uploadImage(
+    newMealImage
+  );
+}
+
+  if (!newMealName || !newMealType) {
+    alert("Norādi nosaukumu un ēdienreizi");
+    return;
+  }
+
+const { data, error } = await supabase
+  .from("meals")
+  .insert([
+    {
+      name: newMealName,
+      meal_type: newMealType,
+      image_url: imageUrl,
+      has_sides: hasSides,
+      has_salads: hasSalads,
+    },
+  ])
+  .select()
+  .single();
+
+  console.log(data);
+  console.log(error);
+
+  if (error) {
+    alert("Kļūda saglabājot");
+    return;
+  }
+
+  if (newMealSelectedTags.length > 0) {
+  const tagRows =
+    newMealSelectedTags.map((tag) => ({
+      meal_id: data.id,
+      tag,
+    }));
+
+  const {
+    error: tagError,
+  } = await supabase
+    .from("meal_tags")
+    .insert(tagRows);
+
+  if (tagError) {
+    console.log(tagError);
+  }
+}
+
+  await loadMeals();
+
+alert("Ēdiens saglabāts!");
+
+setNewMealName("");
+setNewMealType("");
+setNewMealSelectedTags([]);
+setNewMealImage(null);
+
+setCurrentPage("home");
+}
+
 function addToMealPlan(meal) {
   setMealPlan((current) => {
     const alreadyExists = current[meal.type].some(
@@ -467,54 +554,79 @@ function renderShoppingCategory(
   );
 }
 
-function needsPopup(meal) {
-  const hasSides =
-    meal.sides?.some(
-      (side) => side.trim() !== ""
-    );
+async function loadMeals() {
+  const { data: mealsData, error: mealsError } =
+    await supabase
+      .from("meals")
+      .select("*");
 
-  const hasSalads =
-    meal.salads?.some(
-      (salad) => salad.trim() !== ""
-    );
+  if (mealsError) {
+    console.log(mealsError);
+    return;
+  }
 
-  return hasSides || hasSalads;
+  const { data: tagsData, error: tagsError } =
+    await supabase
+      .from("meal_tags")
+      .select("*");
+
+  if (tagsError) {
+    console.log(tagsError);
+    return;
+  }
+
+  const { data: sidesData } =
+  await supabase
+    .from("meal_sides")
+    .select("*");
+
+const { data: saladsData } =
+  await supabase
+    .from("meal_salads")
+    .select("*");
+
+    setAllSides(
+  [...new Set(
+    sidesData.map(
+      (side) => side.side_name
+    )
+  )]
+);
+
+setAllSalads(
+  [...new Set(
+    saladsData.map(
+      (salad) => salad.salad_name
+    )
+  )]
+);
+
+  const formattedMeals = mealsData.map(
+    (meal) => ({
+      name: meal.name,
+      type: meal.meal_type,
+
+      tags: tagsData
+        .filter(
+          (tag) =>
+            tag.meal_id === meal.id
+        )
+        .map((tag) => tag.tag),
+
+      image: meal.image_url,
+
+        hasSides: meal.has_sides,
+        hasSalads: meal.has_salads,
+    })
+  );
+
+
+
+  setMeals(formattedMeals);
 }
 
 useEffect(() => {
-  fetch(
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRGv8FtD1nezrhxjiJQZr5ivEHTOR7QVLuwId1KRIQ5ouM_Xz1P69Xk2PGfSYUWjk34pJ9aC6UZvVa0/pub?output=csv"
-  )
-    .then((response) => response.text())
-    .then((csv) => {
-      const rows = csv.trim().split("\n");
-
-      const data = rows.slice(1).map((row) => {
-        const [name, type, tags, bilde, piedevas, salāti] = row.split(",");
-        return {
-          name,
-          type,
-          tags: tags
-            ? tags.split(";").map((tag) => tag.trim())
-            : [],
-          image: bilde?.trim(),
-
-          sides: piedevas
-          ? piedevas.split(";")
-          .map(item => item.trim())
-          .filter(item => item !== "")
-          : [],
-
-          salads: salāti
-          ? salāti.split(";")
-          .map(item => item.trim())
-          .filter(item => item !== "")
-          : [],
-        };
-      });
-
-      setMeals(data);
-    });
+  loadMeals();
 }, []);
 
 const filteredMeals = meals.filter((meal) => {
@@ -524,6 +636,136 @@ const filteredMeals = meals.filter((meal) => {
     meal.tags.includes(tag)
   );
 });
+
+async function addNewSide() {
+  const sideName = prompt(
+    "Piedevas nosaukums"
+  );
+
+  if (!sideName) return;
+
+  await supabase
+    .from("meal_sides")
+    .insert([
+      {
+        side_name: sideName,
+      },
+    ]);
+
+  loadMeals();
+}
+
+async function addNewSalad() {
+  const saladName = prompt(
+    "Salātu nosaukums"
+  );
+
+  if (!saladName) return;
+
+  await supabase
+    .from("meal_salads")
+    .insert([
+      {
+        salad_name: saladName,
+      },
+    ]);
+
+  loadMeals();
+}
+
+if (currentPage === "addSide") {
+  return (
+    <div
+      style={{
+        maxWidth: "380px",
+        margin: "0 auto",
+        padding: "12px",
+      }}
+    >
+      <button
+        onClick={() =>
+          setCurrentPage("addMeal")
+        }
+      >
+        ← Atpakaļ
+      </button>
+
+      <h2>🍚 Piedevas</h2>
+
+      {allSides.map((side) => (
+        <div
+          key={side}
+          style={{
+            padding: "10px",
+            marginBottom: "8px",
+            backgroundColor: "#f5f5f5",
+            borderRadius: "12px",
+          }}
+        >
+          {side}
+        </div>
+      ))}
+
+      <button
+        onClick={addNewSide}
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginTop: "12px",
+        }}
+      >
+        ➕ Jauna piedeva
+      </button>
+    </div>
+  );
+}
+
+if (currentPage === "addSalad") {
+  return (
+    <div
+      style={{
+        maxWidth: "380px",
+        margin: "0 auto",
+        padding: "12px",
+      }}
+    >
+      <button
+        onClick={() =>
+          setCurrentPage("addMeal")
+        }
+      >
+        ← Atpakaļ
+      </button>
+
+      <h2>🥗 Salāti</h2>
+
+      {allSalads.map((salad) => (
+        <div
+          key={salad}
+          style={{
+            padding: "10px",
+            marginBottom: "8px",
+            backgroundColor: "#f5f5f5",
+            borderRadius: "12px",
+          }}
+        >
+          {salad}
+        </div>
+      ))}
+
+      <button
+        onClick={addNewSalad}
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginTop: "12px",
+        }}
+      >
+        ➕ Jauni salāti
+      </button>
+    </div>
+  );
+}
 
 if (currentPage === "addMeal") {
   return (
@@ -633,6 +875,45 @@ if (currentPage === "addMeal") {
   ))}
 </div>
 
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "8px",
+    marginBottom: "16px",
+  }}
+>
+  <button
+    type="button"
+    onClick={() => setCurrentPage("addSide")}
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border: "1px solid #ddd",
+      backgroundColor: "#f5f5f5",
+      fontWeight: "bold",
+      cursor: "pointer",
+    }}
+  >
+    🍚 Piedevas
+  </button>
+
+  <button
+    type="button"
+    onClick={() => setCurrentPage("addSalad")}
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border: "1px solid #ddd",
+      backgroundColor: "#f5f5f5",
+      fontWeight: "bold",
+      cursor: "pointer",
+    }}
+  >
+    🥗 Salāti
+  </button>
+</div>
+
 {newMealType &&
   filterGroups[newMealType]?.length > 0 && (
 
@@ -702,6 +983,63 @@ if (currentPage === "addMeal") {
   }}
 >
 
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+    marginTop: "12px",
+  }}
+>
+
+  <button
+    type="button"
+    onClick={() =>
+      setHasSides(!hasSides)
+    }
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border: hasSides
+        ? "2px solid #1B5E20"
+        : "1px solid #ddd",
+      backgroundColor: hasSides
+        ? "#4CAF50"
+        : "#f5f5f5",
+      color: hasSides
+        ? "#fff"
+        : "#000",
+      fontWeight: "bold",
+    }}
+  >
+    🍚 Ir piedevas
+  </button>
+
+  <button
+    type="button"
+    onClick={() =>
+      setHasSalads(!hasSalads)
+    }
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border: hasSalads
+        ? "2px solid #1B5E20"
+        : "1px solid #ddd",
+      backgroundColor: hasSalads
+        ? "#4CAF50"
+        : "#f5f5f5",
+      color: hasSalads
+        ? "#fff"
+        : "#000",
+      fontWeight: "bold",
+    }}
+  >
+    🥗 Ir salāti
+  </button>
+
+</div>
+
   {newMealType && (
   <div
   style={{
@@ -756,6 +1094,24 @@ if (currentPage === "addMeal") {
     }}
   />
 )}
+
+<button
+  onClick={saveMeal}
+  style={{
+    width: "100%",
+    padding: "14px",
+    marginTop: "16px",
+    border: "none",
+    borderRadius: "12px",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "16px",
+    cursor: "pointer",
+  }}
+>
+  ✅ Saglabāt ēdienu
+</button>
 
     </div>
   );
@@ -976,8 +1332,8 @@ onClick={() => {
       meal.name
     );
   } else if (
-    meal.sides?.length > 0 ||
-    meal.salads?.length > 0
+    meal.hasSides ||
+    meal.hasSalads
   ) {
     setSelectedMeal(meal);
   } else {
@@ -1088,7 +1444,7 @@ onClick={() => {
   />
 )}
 
-{selectedMeal.sides?.length > 0 && (
+{selectedMeal.hasSides && (
   <>
     <h4
   style={{
@@ -1108,7 +1464,7 @@ onClick={() => {
     gap: "8px",
   }}
 >
-  {selectedMeal.sides.map((side) => (
+  {allSides.map((side) => (
     <div
       key={side}
       onClick={() =>
@@ -1144,7 +1500,7 @@ style={{
   </>
 )}
 
-{selectedMeal.salads?.length > 0 && (
+{selectedMeal.hasSalads && (
   <>
     <h4
   style={{
@@ -1163,7 +1519,7 @@ style={{
     gap: "12px",
   }}
 >
-  {selectedMeal.salads.map((salad) => (
+  {allSalads.map((salad) => (
     <div
       key={salad}
       onClick={() =>
