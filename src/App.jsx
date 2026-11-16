@@ -1157,7 +1157,7 @@ if (currentPage === "addMeal") {
         border:
           newMealType === card.value
             ? "3px solid #0D4715"
-            : "3px solid #ddd",
+            : "3px solid black",
         backgroundColor:
           newMealType === card.value
             ? "#4CAF50"
