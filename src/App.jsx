@@ -61,7 +61,6 @@ const filterGroups = {
 
 export default function App() {
   const galleryInputRef = useRef(null);
-  const cameraInputRef = useRef(null);
   const [mealType, setMealType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [meals,setMeals] = useState([]);
@@ -391,6 +390,14 @@ async function saveMeal() {
  
 let imageUrl = "";
 
+if (
+  newMealSelectedTags.length === 0 &&
+  !newMealImage
+) {
+  setShowSaveWarning(true);
+  return;
+}
+
 if (newMealImage) {
   imageUrl = await uploadImage(
     newMealImage
@@ -401,6 +408,10 @@ if (newMealImage) {
     alert("Norādi nosaukumu un ēdienreizi");
     return;
   }
+
+  const [showSaveWarning,
+      setShowSaveWarning]
+      = useState(false);
 
 const { data, error } = await supabase
   .from("meals")
@@ -1096,9 +1107,10 @@ if (card.value === "addSalad") {
         );
       }}
       style={{
-        padding: "8px 12px",
+        padding: "12px",
         borderRadius: "12px",
         fontWeight: "bold",
+        fontSize: "16px",
         border:
           newMealType === card.value
             ? "3px solid #0D4715"
@@ -1398,12 +1410,13 @@ if (card.value === "addSalad") {
               toggleNewMealTag(tag)
             }
             style={{
-              padding: "5px 12px",
-              borderRadius: "16px",
+              padding: "10px",
+              borderRadius: "12px",
+              fontSize: "15px",
               border:
                 newMealSelectedTags.includes(tag)
                   ? "2px solid #1B5E20"
-                  : "2px solid transparent",
+                  : "2px solid #ddd",
               backgroundColor:
                 newMealSelectedTags.includes(tag)
                   ? "#4CAF50"
@@ -1493,6 +1506,7 @@ if (card.value === "addSalad") {
 </div>
 )}
 
+{newMealType && (
 <div
   style={{
     display: "flex",
@@ -1518,33 +1532,16 @@ if (card.value === "addSalad") {
     }}
   />
 </div>
+)}
 
 {newMealType && (
   <div
     style={{
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: "8px",
+      display: "flex",
+      justifyContent: "center",
       marginTop: "12px",
     }}
   >
-    <button
-      type="button"
-      onClick={() =>
-        cameraInputRef.current.click()
-      }
-      style={{
-        padding: "8px 12px",
-        borderRadius: "12px",
-        fontWeight: "bold",
-        border: "1px solid #ddd",
-        backgroundColor: "#f5f5f5",
-        color: "black",
-        cursor: "pointer",
-      }}
-    >
-      📷 Kamera
-    </button>
 
     <button
       type="button"
@@ -1575,21 +1572,6 @@ if (card.value === "addSalad") {
   style={{ display: "none" }}
   onChange={(e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setNewMealImage(file);
-    }
-  }}
-/>
-
-<input
-  ref={cameraInputRef}
-  type="file"
-  accept="image/*"
-  capture="environment"
-  style={{ display: "none" }}
-  onChange={(e) => {
-    const file = e.target.files?.[0];
-
     if (file) {
       setNewMealImage(file);
     }
