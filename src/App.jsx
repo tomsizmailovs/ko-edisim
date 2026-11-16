@@ -1416,7 +1416,7 @@ if (card.value === "addSalad") {
               border:
                 newMealSelectedTags.includes(tag)
                   ? "2px solid #1B5E20"
-                  : "2px solid #ddd",
+                  : "2px solid #000",
               backgroundColor:
                 newMealSelectedTags.includes(tag)
                   ? "#4CAF50"
@@ -1467,7 +1467,7 @@ if (card.value === "addSalad") {
       borderRadius: "12px",
       border: hasSides
         ? "2px solid #1B5E20"
-        : "2px solid #ddd",
+        : "2px solid #000",
       backgroundColor: hasSides
         ? "#4CAF50"
         : "#f5f5f5",
@@ -1490,7 +1490,7 @@ if (card.value === "addSalad") {
       borderRadius: "12px",
       border: hasSalads
         ? "2px solid #1B5E20"
-        : "2px solid #ddd",
+        : "2px solid #000",
       backgroundColor: hasSalads
         ? "#4CAF50"
         : "#f5f5f5",
@@ -1529,6 +1529,7 @@ if (card.value === "addSalad") {
       border: "none",
       borderTop: "3px solid #d0d0d0",
       width: "100%",
+      marginBottom: "0px",
     }}
   />
 </div>
@@ -1552,13 +1553,14 @@ if (card.value === "addSalad") {
         padding: "8px 12px",
         borderRadius: "12px",
         fontWeight: "bold",
+        fontSize: "15px",
         border: "1px solid #ddd",
         backgroundColor: "#f5f5f5",
         color: "black",
         cursor: "pointer",
       }}
     >
-      🖼️ Galerija
+      🖼️ Bilde
     </button>
   </div>
 )}
