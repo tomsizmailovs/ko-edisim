@@ -61,6 +61,7 @@ const filterGroups = {
 
 export default function App() {
   const galleryInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
   const [mealType, setMealType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [meals,setMeals] = useState([]);
@@ -76,6 +77,12 @@ const [selectedSideItem, setSelectedSideItem] =
 
 const [selectedSaladItem, setSelectedSaladItem] =
   useState(null);
+
+const [showSidesPopup, setShowSidesPopup] =
+  useState(false);
+
+const [showSaladsPopup, setShowSaladsPopup] =
+  useState(false);
   
 const [newMealType, setNewMealType] =
   useState("");
@@ -791,19 +798,9 @@ if (currentPage === "addSide") {
     <span>{side}</span>
 
     <button
-      onClick={async () => {
-  const action = prompt(
-    "1 = Pārsaukt\n2 = Dzēst"
-  );
-
-  if (action === "1") {
-    renameSide(side);
-  }
-
-  if (action === "2") {
-    deleteSide(side);
-  }
-}}
+      onClick={() =>
+  setSelectedSideItem(side)
+}
       style={{
         border: "none",
         background: "transparent",
@@ -815,6 +812,7 @@ if (currentPage === "addSide") {
     </button>
   </div>
 ))}
+
 
       <button
         onClick={addNewSide}
@@ -1014,59 +1012,6 @@ if (currentPage === "addSalad") {
   );
 }
 
-{selectedSideItem && (
-  <div
-    style={{
-      position: "fixed",
-      inset: 0,
-      backgroundColor:
-        "rgba(0,0,0,0.5)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <div
-      style={{
-        backgroundColor: "white",
-        padding: "16px",
-        borderRadius: "12px",
-        width: "280px",
-      }}
-    >
-      <h3>{selectedSideItem}</h3>
-
-      <button
-        onClick={() =>
-          renameSide(
-            selectedSideItem
-          )
-        }
-      >
-        ✏️ Pārsaukt
-      </button>
-
-      <button
-        onClick={() =>
-          deleteSide(
-            selectedSideItem
-          )
-        }
-      >
-        🗑️ Dzēst
-      </button>
-
-      <button
-        onClick={() =>
-          setSelectedSideItem(null)
-        }
-      >
-        Aizvērt
-      </button>
-    </div>
-  </div>
-)}
-
 if (currentPage === "addMeal") {
   return (
     <div
@@ -1135,14 +1080,14 @@ if (currentPage === "addMeal") {
       key={card.value}
       onClick={() => {
         if (card.value === "addSide") {
-          setCurrentPage("addSide");
-          return;
-        }
+  setShowSidesPopup(true);
+  return;
+}
 
-        if (card.value === "addSalad") {
-          setCurrentPage("addSalad");
-          return;
-        }
+if (card.value === "addSalad") {
+  setShowSaladsPopup(true);
+  return;
+}
 
         setNewMealType(
           newMealType === card.value
@@ -1174,6 +1119,104 @@ if (currentPage === "addMeal") {
   ))}
 </div>
 
+{showSidesPopup && (
+  <div
+    onClick={() =>
+      setShowSidesPopup(false)
+    }
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor:
+        "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000,
+    }}
+  >
+    <div
+      onClick={(e) =>
+        e.stopPropagation()
+      }
+      style={{
+        backgroundColor: "white",
+        width: "90%",
+        maxWidth: "320px",
+        padding: "16px",
+        borderRadius: "16px",
+      }}
+    >
+      <h3
+  style={{
+    marginTop: 0,
+    textAlign: "center",
+  }}
+>
+  🍚 Piedevas
+</h3>
+
+<button
+  onClick={addNewSide}
+  style={{
+    width: "100%",
+    padding: "12px",
+    marginBottom: "12px",
+    borderRadius: "12px",
+    border: "none",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    fontWeight: "bold",
+    cursor: "pointer",
+  }}
+>
+  ➕ Jauna piedeva
+</button>
+
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "8px",
+  }}
+>
+  {allSides.map((side) => (
+    <div
+      key={side}
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "6px 10px",
+        borderRadius: "16px",
+        backgroundColor: "#E0E0E0",
+        fontWeight: "bold",
+      }}
+    >
+      <span>{side}</span>
+
+      <button
+        onClick={() =>
+          setSelectedSideItem(side)
+        }
+        style={{
+          border: "none",
+          background: "transparent",
+          color: "#2E7D32",
+          fontSize: "18px",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+        >
+⋮
+        </button>
+    </div>
+  ))}
+  </div>
+  </div>
+  </div>
+)}
+
 {newMealType && (
   <input
     placeholder="Ēdiena nosaukums"
@@ -1199,10 +1242,6 @@ if (currentPage === "addMeal") {
 
 <div
   style={{
-    backgroundColor: "#f5f5f5",
-    padding: "10px",
-    borderRadius: "16px",
-    border: "1px solid #E0E0E0",
     display: "flex",
     flexDirection: "column",
     gap: "4px",
@@ -1327,34 +1366,79 @@ if (currentPage === "addMeal") {
 </div>
 )}
 
-  {newMealType && (
-  <div
+<div
   style={{
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
     marginTop: "12px",
+    marginBottom: "12px",
   }}
 >
-  <button
-    type="button"
-    onClick={() =>
-      galleryInputRef.current.click()
-    }
+  <hr
     style={{
-  width: "50%",
-  padding: "8px 12px",
-  borderRadius: "12px",
-  fontWeight: "bold",
-  border: "1px solid #ddd",
-  backgroundColor: "#f5f5f5",
-  color: "black",
-  cursor: "pointer",
-}}
-  >
-    Ēdiena bilde
-  </button>
+      border: "none",
+      borderTop: "3px solid #d0d0d0",
+      width: "100%",
+      margin: 0,
+    }}
+  />
+
+  <hr
+    style={{
+      border: "none",
+      borderTop: "3px solid #d0d0d0",
+      width: "100%",
+    }}
+  />
 </div>
-  )}
+
+{newMealType && (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "8px",
+      marginTop: "12px",
+    }}
+  >
+    <button
+      type="button"
+      onClick={() =>
+        cameraInputRef.current.click()
+      }
+      style={{
+        padding: "8px 12px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        border: "1px solid #ddd",
+        backgroundColor: "#f5f5f5",
+        color: "black",
+        cursor: "pointer",
+      }}
+    >
+      📷 Kamera
+    </button>
+
+    <button
+      type="button"
+      onClick={() =>
+        galleryInputRef.current.click()
+      }
+      style={{
+        padding: "8px 12px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        border: "1px solid #ddd",
+        backgroundColor: "#f5f5f5",
+        color: "black",
+        cursor: "pointer",
+      }}
+    >
+      🖼️ Galerija
+    </button>
+  </div>
+)}
+
 </div>
 
 <input
@@ -1370,12 +1454,30 @@ if (currentPage === "addMeal") {
   }}
 />
 
+<input
+  ref={cameraInputRef}
+  type="file"
+  accept="image/*"
+  capture="environment"
+  style={{ display: "none" }}
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      setNewMealImage(file);
+    }
+  }}
+/>
+
 {newMealImage && (
   <img
     src={URL.createObjectURL(newMealImage)}
     alt="Priekšskatījums"
     style={{
-      width: "100%",
+      width: "40%",
+      maxWidth: "140px",
+      display: "block",
+      margin: "12px auto 0 auto",
       borderRadius: "12px",
       marginTop: "12px",
     }}
@@ -1391,10 +1493,11 @@ if (currentPage === "addMeal") {
       padding: "14px",
       marginTop: "16px",
       borderRadius: "16px",
-      backgroundColor: "#F5F5F5",
-      color: "#000",
-      border: "3px solid #4CAF50",
+      backgroundColor: "#4CAF50",
+      color: "white",
+      border: "2px solid #1B5E20",
       fontWeight: "bold",
+      fontSize: "18px",
       cursor: "pointer",
     }}
   >
