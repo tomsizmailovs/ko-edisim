@@ -1475,6 +1475,7 @@ if (card.value === "addSalad") {
         ? "#fff"
         : "#000",
       fontWeight: "bold",
+      fontSize: "15px",
     }}
   >
     🍚 Ir piedevas
@@ -1498,6 +1499,7 @@ if (card.value === "addSalad") {
         ? "#fff"
         : "#000",
       fontWeight: "bold",
+      fontSize: "15px",
     }}
   >
     🥗 Ir salāti
