@@ -833,7 +833,7 @@ if (currentPage === "addSide") {
           marginTop: "12px",
         }}
       >
-        ➕ Jauna piedeva
+        ➕ Jaunas piedevas
       </button>
       {selectedSideItem && (
         <div
@@ -1240,6 +1240,85 @@ if (card.value === "addSalad") {
   </div>
 )}
 
+{selectedSideItem && (
+  <div
+    onClick={() =>
+      setSelectedSideItem(null)
+    }
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1100,
+    }}
+  >
+    <div
+      onClick={(e) =>
+        e.stopPropagation()
+      }
+      style={{
+        backgroundColor: "white",
+        padding: "16px",
+        borderRadius: "16px",
+        width: "280px",
+      }}
+    >
+      
+<h3
+  style={{
+    color: "#000",
+    textAlign: "center",
+    marginTop: 0,
+    marginBottom: "16px",
+  }}
+>
+  {selectedSideItem}
+</h3>
+
+<button
+  onClick={() =>
+    renameSide(selectedSideItem)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    marginBottom: "10px",
+    borderRadius: "12px",
+    border: "2px solid #F57F17",
+    backgroundColor: "#FDD835",
+    color: "#000",
+    fontWeight: "bold",
+    cursor: "pointer",
+  }}
+>
+  ✏️ Pārsaukt
+</button>
+
+<button
+  onClick={() =>
+    deleteSide(selectedSideItem)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "12px",
+    border: "2px solid #B71C1C",
+    backgroundColor: "#EF5350",
+    color: "white",
+    fontWeight: "bold",
+    cursor: "pointer",
+  }}
+>
+  🗑️ Dzēst
+</button>
+
+    </div>
+  </div>
+)}
+
 {showSaladsPopup && (
   <div
     onClick={() =>
@@ -1356,6 +1435,83 @@ if (card.value === "addSalad") {
   </div>
 )}
 
+{selectedSaladItem && (
+  <div
+    onClick={() =>
+      setSelectedSaladItem(null)
+    }
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1100,
+    }}
+  >
+    <div
+      onClick={(e) =>
+        e.stopPropagation()
+      }
+      style={{
+        backgroundColor: "white",
+        padding: "16px",
+        borderRadius: "16px",
+        width: "280px",
+      }}
+    >
+<h3
+  style={{
+    color: "#000",
+    textAlign: "center",
+    marginTop: 0,
+    marginBottom: "16px",
+  }}
+>
+  {selectedSaladItem}
+</h3>
+
+<button
+  onClick={() =>
+    renameSalad(selectedSaladItem)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    marginBottom: "10px",
+    borderRadius: "12px",
+    border: "2px solid #F57F17",
+    backgroundColor: "#FDD835",
+    color: "#000",
+    fontWeight: "bold",
+    cursor: "pointer",
+  }}
+>
+  ✏️ Pārsaukt
+</button>
+
+<button
+  onClick={() =>
+    deleteSalad(selectedSaladItem)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "12px",
+    border: "2px solid #B71C1C",
+    backgroundColor: "#EF5350",
+    color: "white",
+    fontWeight: "bold",
+    cursor: "pointer",
+  }}
+>
+  🗑️ Dzēst
+</button>
+    </div>
+  </div>
+)}
+
 {newMealType && (
   <input
     placeholder="Ēdiena nosaukums"
@@ -1438,6 +1594,37 @@ if (card.value === "addSalad") {
 </div>
   )}
 
+  {(
+  newMealType === "Pusdienas" ||
+  newMealType === "Vakariņas"
+) && (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      marginTop: "12px",
+      marginBottom: "12px",
+    }}
+  >
+    <hr
+      style={{
+        border: "none",
+        borderTop: "3px solid #d0d0d0",
+        width: "100%",
+        margin: 0,
+      }}
+    />
+
+    <hr
+      style={{
+        border: "none",
+        borderTop: "3px solid #d0d0d0",
+        width: "100%",
+      }}
+    />
+  </div>
+)}
+
 <div
   style={{
     gridTemplateColumns: "1fr 1fr",
@@ -1505,35 +1692,6 @@ if (card.value === "addSalad") {
     🥗 Ir salāti
   </button>
 
-</div>
-)}
-
-{newMealType && (
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-    marginTop: "12px",
-    marginBottom: "12px",
-  }}
->
-  <hr
-    style={{
-      border: "none",
-      borderTop: "3px solid #d0d0d0",
-      width: "100%",
-      margin: 0,
-    }}
-  />
-
-  <hr
-    style={{
-      border: "none",
-      borderTop: "3px solid #d0d0d0",
-      width: "100%",
-      marginBottom: "0px",
-    }}
-  />
 </div>
 )}
 
