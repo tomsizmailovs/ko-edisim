@@ -1183,6 +1183,7 @@ if (currentPage === "addMeal") {
     }
     style={{
       width: "90%",
+      fontSize: "16px",
       padding: "8px",
       borderRadius: "12px",
       border: "1px solid #ddd",
