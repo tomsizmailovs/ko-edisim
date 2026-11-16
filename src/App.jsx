@@ -1151,6 +1151,7 @@ if (card.value === "addSalad") {
   style={{
     marginTop: 0,
     textAlign: "center",
+    color: "#000",
   }}
 >
   🍚 Piedevas
@@ -1182,18 +1183,28 @@ if (card.value === "addSalad") {
 >
   {allSides.map((side) => (
     <div
-      key={side}
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "6px 10px",
-        borderRadius: "16px",
-        backgroundColor: "#E0E0E0",
-        fontWeight: "bold",
-      }}
-    >
-      <span>{side}</span>
+  key={side}
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "6px 10px",
+    borderRadius: "16px",
+    backgroundColor: "#E0E0E0",
+    fontWeight: "normal",
+    fontSize: "13px",
+    color: "#000",
+    position: "relative",
+  }}
+>
+      <span
+  style={{
+    textAlign: "center",
+    width: "100%",
+  }}
+>
+  {side}
+</span>
 
       <button
         onClick={() =>
@@ -1214,6 +1225,122 @@ if (card.value === "addSalad") {
   ))}
   </div>
   </div>
+  </div>
+)}
+
+{showSaladsPopup && (
+  <div
+    onClick={() =>
+      setShowSaladsPopup(false)
+    }
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor:
+        "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000,
+    }}
+  >
+    <div
+      onClick={(e) =>
+        e.stopPropagation()
+      }
+      style={{
+        backgroundColor: "white",
+        width: "90%",
+        maxWidth: "320px",
+        padding: "16px",
+        borderRadius: "16px",
+      }}
+    >
+      <h3
+        style={{
+          marginTop: 0,
+          textAlign: "center",
+          color: "#000",
+        }}
+      >
+        🥗 Salāti
+      </h3>
+
+      <button
+        onClick={addNewSalad}
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginBottom: "12px",
+          borderRadius: "12px",
+          border: "none",
+          backgroundColor: "#4CAF50",
+          color: "white",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+      >
+        ➕ Jauni salāti
+      </button>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            "1fr 1fr",
+          gap: "8px",
+        }}
+      >
+        {allSalads.map((salad) => (
+          <div
+            key={salad}
+            style={{
+              display: "flex",
+              justifyContent:
+                "center",
+              alignItems: "center",
+              padding: "6px 10px",
+              borderRadius: "16px",
+              backgroundColor:
+                "#E0E0E0",
+              fontWeight: "normal",
+              fontSize: "13px",
+              color: "#000",
+              position: "relative",
+            }}
+          >
+            <span
+              style={{
+                width: "100%",
+                textAlign: "center",
+              }}
+            >
+              {salad}
+            </span>
+
+            <button
+              onClick={() =>
+                setSelectedSaladItem(
+                  salad
+                )
+              }
+              style={{
+                position: "absolute",
+                right: "6px",
+                border: "none",
+                background:
+                  "transparent",
+                color: "#2E7D32",
+                fontSize: "18px",
+                cursor: "pointer",
+              }}
+            >
+              ⋮
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 )}
 
