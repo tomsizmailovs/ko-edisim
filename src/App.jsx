@@ -71,6 +71,34 @@ export default function App() {
 const [newMealName, setNewMealName] =
   useState("");
 
+  const DoubleLine = () => (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      marginTop: "12px",
+      marginBottom: "12px",
+    }}
+  >
+    <hr
+      style={{
+        border: "none",
+        borderTop: "3px solid #d0d0d0",
+        width: "100%",
+        margin: 0,
+      }}
+    />
+
+    <hr
+      style={{
+        border: "none",
+        borderTop: "3px solid #d0d0d0",
+        width: "100%",
+      }}
+    />
+  </div>
+);
+
 const [selectedSideItem, setSelectedSideItem] =
   useState(null);
 
@@ -833,7 +861,7 @@ if (currentPage === "addSide") {
           marginTop: "12px",
         }}
       >
-        ➕ Jaunas piedevas
+        ➕ Jauna piedeva
       </button>
       {selectedSideItem && (
         <div
@@ -1226,8 +1254,9 @@ if (card.value === "addSalad") {
           border: "none",
           background: "transparent",
           color: "#2E7D32",
-          fontSize: "18px",
+          fontSize: "22px",
           fontWeight: "bold",
+          lineHeight: "1",
           cursor: "pointer",
         }}
         >
@@ -1387,17 +1416,15 @@ if (card.value === "addSalad") {
             key={salad}
             style={{
               display: "flex",
-              justifyContent:
-                "center",
-              alignItems: "center",
-              padding: "6px 10px",
-              borderRadius: "16px",
-              backgroundColor:
-                "#E0E0E0",
-              fontWeight: "normal",
-              fontSize: "13px",
-              color: "#000",
-              position: "relative",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "6px 10px",
+    borderRadius: "16px",
+    backgroundColor: "#E0E0E0",
+    fontWeight: "normal",
+    fontSize: "13px",
+    color: "#000",
+    position: "relative",
             }}
           >
             <span
