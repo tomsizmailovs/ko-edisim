@@ -385,7 +385,7 @@ async function saveMeal() {
 let imageUrl = "";
 
 if (
-  newMealSelectedTags.length === 0 &&
+  newMealSelectedTags.length === 0 ||
   !newMealImage
 ) {
   setShowSaveWarning(true);
