@@ -76,8 +76,8 @@ const [newMealName, setNewMealName] =
     style={{
       display: "flex",
       flexDirection: "column",
-      marginTop: "12px",
-      marginBottom: "12px",
+      marginTop: "4px",
+      marginBottom: "4px",
     }}
   >
     <hr
@@ -94,6 +94,7 @@ const [newMealName, setNewMealName] =
         border: "none",
         borderTop: "3px solid #000",
         width: "100%",
+        marginBottom: "6px",
       }}
     />
   </div>
@@ -861,255 +862,6 @@ async function addNewSalad() {
   loadMeals();
 }
 
-if (currentPage === "addSide") {
-  return (
-    <div
-      style={{
-        maxWidth: "380px",
-        margin: "0 auto",
-        padding: "12px",
-      }}
-    >
-      <button
-        onClick={() =>
-          setCurrentPage("addMeal")
-        }
-      >
-        ← Atpakaļ
-      </button>
-
-      <h2>🍚 Piedevas</h2>
-
-      {allSides.map((side) => (
-  <div
-    key={side}
-    style={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "10px",
-      marginBottom: "8px",
-      backgroundColor: "#f5f5f5",
-      borderRadius: "12px",
-    }}
-  >
-    <span>{side}</span>
-
-    <button
-      onClick={() =>
-  setSelectedSideItem(side)
-}
-      style={{
-        border: "none",
-        background: "transparent",
-        fontSize: "20px",
-        cursor: "pointer",
-      }}
-    >
-      ⋮
-    </button>
-  </div>
-))}
-
-
-      <button
-        onClick={addNewSide}
-        style={{
-          width: "100%",
-          padding: "12px",
-          marginTop: "12px",
-        }}
-      >
-        ➕ Jauna piedeva
-      </button>
-      {selectedSideItem && (
-        <div
-          onClick={() =>
-            setSelectedSideItem(null)
-          }
-          style={{
-            position: "fixed",
-            inset: 0,
-            backgroundColor:
-              "rgba(0,0,0,0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            onClick={(e) =>
-              e.stopPropagation()
-            }
-            style={{
-              backgroundColor: "white",
-              padding: "16px",
-              borderRadius: "16px",
-              width: "280px",
-            }}
-          >
-            <h3>
-              {selectedSideItem}
-            </h3>
-
-            <button
-              onClick={() =>
-                renameSide(
-                  selectedSideItem
-                )
-              }
-            >
-              ✏️ Pārsaukt
-            </button>
-
-            <button
-              onClick={() =>
-                deleteSide(
-                  selectedSideItem
-                )
-              }
-            >
-              🗑️ Dzēst
-            </button>
-
-            <button
-              onClick={() =>
-                setSelectedSideItem(null)
-              }
-            >
-              Aizvērt
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-if (currentPage === "addSalad") {
-  return (
-    <div
-      style={{
-        maxWidth: "380px",
-        margin: "0 auto",
-        padding: "12px",
-      }}
-    >
-      <button
-        onClick={() =>
-          setCurrentPage("addMeal")
-        }
-      >
-        ← Atpakaļ
-      </button>
-
-      <h2>🥗 Salāti</h2>
-
-      {allSalads.map((salad) => (
-  <div
-    key={salad}
-    style={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "10px",
-      marginBottom: "8px",
-      backgroundColor: "#f5f5f5",
-      borderRadius: "12px",
-    }}
-  >
-    <span>{salad}</span>
-
-    <button
-      onClick={() =>
-        setSelectedSaladItem(salad)
-      }
-      style={{
-        border: "none",
-        background: "transparent",
-        fontSize: "20px",
-        cursor: "pointer",
-      }}
-    >
-      ⋮
-    </button>
-  </div>
-))}
-
-      <button
-        onClick={addNewSalad}
-        style={{
-          width: "100%",
-          padding: "12px",
-          marginTop: "12px",
-        }}
-      >
-        ➕ Jauni salāti
-      </button>
-      {selectedSaladItem && (
-        <div
-          onClick={() =>
-            setSelectedSaladItem(null)
-          }
-          style={{
-            position: "fixed",
-            inset: 0,
-            backgroundColor:
-              "rgba(0,0,0,0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            onClick={(e) =>
-              e.stopPropagation()
-            }
-            style={{
-              backgroundColor: "white",
-              padding: "16px",
-              borderRadius: "16px",
-              width: "280px",
-            }}
-          >
-            <h3>
-              {selectedSaladItem}
-            </h3>
-
-            <button
-              onClick={() =>
-                renameSalad(
-                  selectedSaladItem
-                )
-              }
-            >
-              ✏️ Pārsaukt
-            </button>
-
-            <button
-              onClick={() =>
-                deleteSalad(
-                  selectedSaladItem
-                )
-              }
-            >
-              🗑️ Dzēst
-            </button>
-
-            <button
-              onClick={() =>
-                setSelectedSaladItem(null)
-              }
-            >
-              Aizvērt
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
 if (currentPage === "addMeal") {
   return (
     <div
@@ -1273,7 +1025,7 @@ if (card.value === "addSalad") {
     cursor: "pointer",
   }}
 >
-  ➕ Jauna piedeva
+  ➕ Jaunas piedevas
 </button>
 
 <div
@@ -1631,20 +1383,28 @@ if (card.value === "addSalad") {
         style={{
           color: "#000",
           textAlign: "center",
+          marginTop: 0,
+          marginBottom: "8px",
         }}
       >
         ⚠️ Uzmanību
       </h3>
 
-      <p
-        style={{
-          color: "#000",
-          textAlign: "center",
-        }}
-      >
-        Nav izvēlēts neviens filtrs un
-        nav pievienota bilde.
-      </p>
+      <div
+  style={{
+    color: "#000",
+    textAlign: "center",
+    marginBottom: "12px",
+  }}
+>
+  {newMealSelectedTags.length === 0 && (
+    <div>🏷️ Nav izvēlēts neviens filtrs</div>
+  )}
+
+  {!newMealImage && (
+    <div>🖼️ Nav pievienota bilde</div>
+  )}
+</div>
 
       <button
   onClick={() =>
@@ -1657,7 +1417,7 @@ if (card.value === "addSalad") {
     borderRadius: "12px",
     border: "2px solid #1B5E20",
     backgroundColor: "#4CAF50",
-    color: "#fff",
+    color: "#000",
     fontWeight: "bold",
   }}
 >
@@ -1683,21 +1443,6 @@ if (card.value === "addSalad") {
   🖼️ Pievienot bildi
 </button>
 
-      <button
-        onClick={() =>
-          setShowSaveWarning(false)
-        }
-        style={{
-          width: "100%",
-          padding: "12px",
-          borderRadius: "12px",
-          border: "2px solid #1B5E20",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          fontWeight: "bold",
-        }}
-      >
-
 <button
   onClick={forceSaveMeal}
   style={{
@@ -1712,9 +1457,6 @@ if (card.value === "addSalad") {
 >
   ✅ Tomēr saglabāt
 </button>
-
-        Sapratu
-      </button>
     </div>
   </div>
 )}
