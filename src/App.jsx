@@ -83,7 +83,7 @@ const [newMealName, setNewMealName] =
     <hr
       style={{
         border: "none",
-        borderTop: "3px solid #d0d0d0",
+        borderTop: "3px solid #000",
         width: "100%",
         margin: 0,
       }}
@@ -92,7 +92,7 @@ const [newMealName, setNewMealName] =
     <hr
       style={{
         border: "none",
-        borderTop: "3px solid #d0d0d0",
+        borderTop: "3px solid #000",
         width: "100%",
       }}
     />
@@ -110,6 +110,10 @@ const [showSidesPopup, setShowSidesPopup] =
 
 const [showSaladsPopup, setShowSaladsPopup] =
   useState(false);
+
+const [showSaveWarning,
+      setShowSaveWarning]
+      = useState(false);
   
 const [newMealType, setNewMealType] =
   useState("");
@@ -437,10 +441,6 @@ if (newMealImage) {
     return;
   }
 
-  const [showSaveWarning,
-      setShowSaveWarning]
-      = useState(false);
-
 const { data, error } = await supabase
   .from("meals")
   .insert([
@@ -493,6 +493,65 @@ setHasSides(false);
 setHasSalads(false);
 
 setCurrentPage("home");
+}
+
+async function forceSaveMeal() {
+  setShowSaveWarning(false);
+
+  let imageUrl = "";
+
+  if (newMealImage) {
+    imageUrl = await uploadImage(
+      newMealImage
+    );
+  }
+
+  const { data, error } =
+    await supabase
+      .from("meals")
+      .insert([
+        {
+          name: newMealName,
+          meal_type: newMealType,
+          image_url: imageUrl,
+          has_sides: hasSides,
+          has_salads: hasSalads,
+        },
+      ])
+      .select()
+      .single();
+
+  if (error) {
+    alert("Kļūda saglabājot");
+    return;
+  }
+
+  if (newMealSelectedTags.length > 0) {
+    const tagRows =
+      newMealSelectedTags.map(
+        (tag) => ({
+          meal_id: data.id,
+          tag,
+        })
+      );
+
+    await supabase
+      .from("meal_tags")
+      .insert(tagRows);
+  }
+
+  await loadMeals();
+
+  alert("Ēdiens saglabāts!");
+
+  setNewMealName("");
+  setNewMealType("");
+  setNewMealSelectedTags([]);
+  setNewMealImage(null);
+  setHasSides(false);
+  setHasSalads(false);
+
+  setCurrentPage("home");
 }
 
 function addToMealPlan(meal) {
@@ -1097,6 +1156,7 @@ if (currentPage === "addMeal") {
         flex: "1",
         lineHeight: "38px",
         textAlign: "center",
+        fontSize: "24px",
       }}
       >
         Pievienot ēdienu
@@ -1338,7 +1398,7 @@ if (card.value === "addSalad") {
     borderRadius: "12px",
     border: "2px solid #B71C1C",
     backgroundColor: "#EF5350",
-    color: "white",
+    color: "#000",
     fontWeight: "bold",
     cursor: "pointer",
   }}
@@ -1529,13 +1589,132 @@ if (card.value === "addSalad") {
     borderRadius: "12px",
     border: "2px solid #B71C1C",
     backgroundColor: "#EF5350",
-    color: "white",
+    color: "#000",
     fontWeight: "bold",
     cursor: "pointer",
   }}
 >
   🗑️ Dzēst
 </button>
+    </div>
+  </div>
+)}
+
+{showSaveWarning && (
+  <div
+    onClick={() =>
+      setShowSaveWarning(false)
+    }
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1200,
+    }}
+  >
+    <div
+      onClick={(e) =>
+        e.stopPropagation()
+      }
+      style={{
+        backgroundColor: "white",
+        width: "90%",
+        maxWidth: "320px",
+        padding: "16px",
+        borderRadius: "16px",
+      }}
+    >
+      <h3
+        style={{
+          color: "#000",
+          textAlign: "center",
+        }}
+      >
+        ⚠️ Uzmanību
+      </h3>
+
+      <p
+        style={{
+          color: "#000",
+          textAlign: "center",
+        }}
+      >
+        Nav izvēlēts neviens filtrs un
+        nav pievienota bilde.
+      </p>
+
+      <button
+  onClick={() =>
+    setShowSaveWarning(false)
+  }
+  style={{
+    width: "100%",
+    padding: "12px",
+    marginBottom: "8px",
+    borderRadius: "12px",
+    border: "2px solid #1B5E20",
+    backgroundColor: "#4CAF50",
+    color: "#fff",
+    fontWeight: "bold",
+  }}
+>
+  🏷️ Pievienot filtru
+</button>
+
+<button
+  onClick={() => {
+    setShowSaveWarning(false);
+    galleryInputRef.current?.click();
+  }}
+  style={{
+    width: "100%",
+    padding: "12px",
+    marginBottom: "8px",
+    borderRadius: "12px",
+    border: "2px solid #1976D2",
+    backgroundColor: "#64B5F6",
+    color: "#000",
+    fontWeight: "bold",
+  }}
+>
+  🖼️ Pievienot bildi
+</button>
+
+      <button
+        onClick={() =>
+          setShowSaveWarning(false)
+        }
+        style={{
+          width: "100%",
+          padding: "12px",
+          borderRadius: "12px",
+          border: "2px solid #1B5E20",
+          backgroundColor: "#4CAF50",
+          color: "white",
+          fontWeight: "bold",
+        }}
+      >
+
+<button
+  onClick={forceSaveMeal}
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "12px",
+    border: "2px solid #F57F17",
+    backgroundColor: "#FDD835",
+    color: "#000",
+    fontWeight: "bold",
+  }}
+>
+  ✅ Tomēr saglabāt
+</button>
+
+        Sapratu
+      </button>
     </div>
   </div>
 )}
@@ -1631,37 +1810,6 @@ if (card.value === "addSalad") {
   newMealType === "Vakariņas"
 ) && <DoubleLine />}
 
-  {(
-  newMealType === "Pusdienas" ||
-  newMealType === "Vakariņas"
-) && (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      marginTop: "12px",
-      marginBottom: "12px",
-    }}
-  >
-    <hr
-      style={{
-        border: "none",
-        borderTop: "3px solid #d0d0d0",
-        width: "100%",
-        margin: 0,
-      }}
-    />
-
-    <hr
-      style={{
-        border: "none",
-        borderTop: "3px solid #d0d0d0",
-        width: "100%",
-      }}
-    />
-  </div>
-)}
-
 <div
   style={{
     gridTemplateColumns: "1fr 1fr",
@@ -1736,6 +1884,14 @@ if (card.value === "addSalad") {
   newMealType === "Pusdienas" ||
   newMealType === "Vakariņas"
 ) && <DoubleLine />}
+
+{newMealType === "Brokastis" && (
+  <DoubleLine />
+)}
+
+{newMealType === "Deserts" && (
+  <DoubleLine />
+)}
 
 {newMealType && (
   <div
