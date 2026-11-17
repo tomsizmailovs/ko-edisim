@@ -1159,6 +1159,8 @@ if (card.value === "addSalad") {
   ))}
 </div>
 
+{newMealType && <DoubleLine />}
+
 {showSidesPopup && (
   <div
     onClick={() =>
@@ -1443,14 +1445,13 @@ if (card.value === "addSalad") {
                 )
               }
               style={{
-                position: "absolute",
-                right: "6px",
                 border: "none",
-                background:
-                  "transparent",
-                color: "#2E7D32",
-                fontSize: "18px",
-                cursor: "pointer",
+          background: "transparent",
+          color: "#2E7D32",
+          fontSize: "22px",
+          fontWeight: "bold",
+          lineHeight: "1",
+          cursor: "pointer",
               }}
             >
               ⋮
@@ -1559,6 +1560,10 @@ if (card.value === "addSalad") {
   />
 )}
 
+{newMealType && (
+  newMealType !== "Deserts"
+) && <DoubleLine />}
+
 {newMealType &&
   filterGroups[newMealType]?.length > 0 && (
 
@@ -1620,6 +1625,11 @@ if (card.value === "addSalad") {
   )}
 </div>
   )}
+
+  {(
+  newMealType === "Pusdienas" ||
+  newMealType === "Vakariņas"
+) && <DoubleLine />}
 
   {(
   newMealType === "Pusdienas" ||
@@ -1721,6 +1731,11 @@ if (card.value === "addSalad") {
 
 </div>
 )}
+
+{(
+  newMealType === "Pusdienas" ||
+  newMealType === "Vakariņas"
+) && <DoubleLine />}
 
 {newMealType && (
   <div
