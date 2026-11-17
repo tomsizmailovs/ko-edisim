@@ -350,44 +350,6 @@ function toggleNewMealTag(tag) {
     );
   }
 
-  // Vista / Cūka / Liellops / Zivs
-
-  if (tag === "Vista") {
-    newTags = newTags.filter(
-      (t) =>
-        t !== "Cūka" &&
-        t !== "Liellops" &&
-        t !== "Zivs"
-    );
-  }
-
-  if (tag === "Cūka") {
-    newTags = newTags.filter(
-      (t) =>
-        t !== "Vista" &&
-        t !== "Liellops" &&
-        t !== "Zivs"
-    );
-  }
-
-  if (tag === "Liellops") {
-    newTags = newTags.filter(
-      (t) =>
-        t !== "Vista" &&
-        t !== "Cūka" &&
-        t !== "Zivs"
-    );
-  }
-
-  if (tag === "Zivs") {
-    newTags = newTags.filter(
-      (t) =>
-        t !== "Vista" &&
-        t !== "Cūka" &&
-        t !== "Liellops"
-    );
-  }
-
   setNewMealSelectedTags([
     ...newTags,
     tag,
