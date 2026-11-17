@@ -76,8 +76,7 @@ const [newMealName, setNewMealName] =
     style={{
       display: "flex",
       flexDirection: "column",
-      marginTop: "4px",
-      marginBottom: "4px",
+      margin: "8px 0",
     }}
   >
     <hr
@@ -94,7 +93,7 @@ const [newMealName, setNewMealName] =
         border: "none",
         borderTop: "3px solid #000",
         width: "100%",
-        marginBottom: "6px",
+        margin: "4px 0 0 0",
       }}
     />
   </div>
@@ -1474,7 +1473,7 @@ if (card.value === "addSalad") {
       padding: "8px",
       borderRadius: "12px",
       border: "1px solid #ddd",
-      margin: "0 auto 16px auto",
+      margin: "0 auto",
       display: "block",
       boxSizing: "border-box",
     }}
@@ -1567,7 +1566,7 @@ if (card.value === "addSalad") {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: "8px",
-    marginTop: "12px",
+    marginTop: "0",
   }}
 >
 
@@ -1640,7 +1639,7 @@ if (card.value === "addSalad") {
     style={{
       display: "flex",
       justifyContent: "center",
-      marginTop: "12px",
+      marginTop: "0",
     }}
   >
 
