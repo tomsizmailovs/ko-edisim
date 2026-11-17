@@ -1367,6 +1367,7 @@ if (card.value === "addSalad") {
   )}
 </div>
 
+{newMealSelectedTags.length === 0 && (
       <button
   onClick={() =>
     setShowSaveWarning(false)
@@ -1384,7 +1385,9 @@ if (card.value === "addSalad") {
 >
   🏷️ Pievienot filtru
 </button>
+)}
 
+{!newMealImage && (
 <button
   onClick={() => {
     setShowSaveWarning(false);
@@ -1403,6 +1406,7 @@ if (card.value === "addSalad") {
 >
   🖼️ Pievienot bildi
 </button>
+)}
 
 <button
   onClick={forceSaveMeal}
