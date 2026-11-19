@@ -36,15 +36,15 @@ const addMealCards = [
 
 const filterGroups = {
   Brokastis: [
-    ["Salds", "Sāļš"],
     ["Silts", "Auksts"],
+    ["Salds", "Sāļš"],
     ["Olas", "Maize", "Pankūkas", "Biezpiens"],
     ["15 min"],
   ],
 
   Pusdienas: [
-    ["Salds", "Sāļš"],
     ["Silts", "Auksts"],
+    ["Salds", "Sāļš"],
     ["Zupa", "Nezupa"],
     ["15 min"],
   ],
@@ -1500,23 +1500,31 @@ newMealSelectedTags.length === 0 && (
 )}
 
 {newMealType && (
-  <input
-    placeholder="Ēdiena nosaukums"
-    value={newMealName}
-    onChange={(e) =>
-      setNewMealName(e.target.value)
-    }
-    style={{
-      width: "90%",
-      fontSize: "16px",
-      padding: "8px",
-      borderRadius: "12px",
-      border: "1px solid #ddd",
-      margin: "0 auto",
-      display: "block",
-      boxSizing: "border-box",
-    }}
-  />
+<textarea
+  placeholder="Ēdiena nosaukums"
+  value={newMealName}
+  onChange={(e) =>
+    setNewMealName(e.target.value)
+  }
+  rows={1}
+  style={{
+    width: "90%",
+    fontSize: "16px",
+    padding: "8px",
+    borderRadius: "12px",
+    border: "1px solid #ddd",
+    margin: "0 auto",
+    display: "block",
+    boxSizing: "border-box",
+    resize: "none",
+    overflow: "hidden",
+  }}
+  onInput={(e) => {
+    e.target.style.height = "auto";
+    e.target.style.height =
+      e.target.scrollHeight + "px";
+  }}
+/>
 )}
 
 {newMealType && (
@@ -1564,12 +1572,12 @@ newMealSelectedTags.length === 0 && (
               fontSize: "15px",
               border:
                 newMealSelectedTags.includes(tag)
-                  ? "2px solid #1B5E20"
-                  : "2px solid #000",
+                  ? "2px solid #0D4715"
+                  : "2px solid black",
               backgroundColor:
                 newMealSelectedTags.includes(tag)
                   ? "#4CAF50"
-                  : "#E0E0E0",
+                  : "#f5f5f5",
               color:
                 newMealSelectedTags.includes(tag)
                   ? "white"
@@ -1818,7 +1826,10 @@ function isInMealPlan(meal) {
     style={{
       margin: 0,
       flex: 1,
+      lineHeight: "38px",
       textAlign: "center",
+      fontSize: "28px",
+      fontWeight: "bold",
     }}
   >
     🍔 Ko ēdīsim?
@@ -1839,10 +1850,15 @@ function isInMealPlan(meal) {
   {mealTypes.map((type) => (
       <button
         key={type.value}
-        onClick={() => {
-          setMealType(type.value);
-          setSelectedTags([]);
-      }}
+onClick={() => {
+  if (mealType === type.value) {
+    setMealType("");
+  } else {
+    setMealType(type.value);
+  }
+
+  setSelectedTags([]);
+}}
         style={{
   padding: "12px",
   borderRadius: "12px",
@@ -1869,16 +1885,18 @@ function isInMealPlan(meal) {
   )}
 </div>
 
+{mealType && <DoubleLine />}
+
 {mealType &&
 filterGroups[mealType]?.length > 0 && (
   <>
 <div
 style={{
-  backgroundColor: "#f5f5f5",
-  padding: "10px",
+  backgroundColor: "transparent",
+  padding: "0",
   borderRadius: "16px",
   marginBottom: "16px",
-  border: "1px solid #E0E0E0",
+  border: "none",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -1910,13 +1928,13 @@ style={{
             padding: "6px 12px",
             borderRadius: "20px",
             border: selectedTags.includes(tag)
-  ? "3px solid #1B5E20"
-  : "3px solid transparent",
+  ? "3px solid #0D4715"
+  : "3px solid balck",
             fontWeight: "bold",
             backgroundColor:
               selectedTags.includes(tag)
                 ? "#4CAF50"
-                : "#E0E0E0",
+                : "#f5f5f5",
             color:
               selectedTags.includes(tag)
                 ? "white"
@@ -1931,28 +1949,8 @@ style={{
 )}
 </div>
 
-<div
-  style={{
-    display: "flex",
-    flexDirection: "column",
-  }}
->
-  <hr
-    style={{
-      border: "none",
-      borderTop: "3px solid #000",
-      width: "100%",
-      margin: 0
-    }}
-  />
-  <hr
-    style={{
-      border: "none",
-      borderTop: "3px solid #000",
-      width: "100%",
-    }}
-  />
-</div>
+<DoubleLine />
+
 </>
   )}
 
@@ -2246,6 +2244,8 @@ style={{
   </div>
 )}
 
+<DoubleLine />
+
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
 ) && (
@@ -2257,21 +2257,6 @@ style={{
       marginBottom: "16px",
     }}
   >
-    <hr
-      style={{
-        border: "none",
-        borderTop: "3px solid #000",
-        width: "100%",
-        margin: 0,
-      }}
-    />
-    <hr
-      style={{
-        border: "none",
-        borderTop: "3px solid #000",
-        width: "100%",
-      }}
-    />
   </div>
 )}
 {Object.values(mealPlan).some(
