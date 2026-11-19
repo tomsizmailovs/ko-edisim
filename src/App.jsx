@@ -51,8 +51,7 @@ const filterGroups = {
 
   Vakariņas: [
     ["Silts", "Auksts"],
-    ["Vista", "Cūka"],
-    ["Liellops", "Zivs"],
+    ["Vista", "Cūka", "Liellops", "Zivs"],
   ],
 
   Deserts: [
@@ -322,44 +321,6 @@ function toggleNewMealTag(tag) {
     );
   }
 
-  // Olas / Maize / Pankūkas / Biezpiens
-
-  if (tag === "Olas") {
-    newTags = newTags.filter(
-      (t) =>
-        t !== "Maize" &&
-        t !== "Pankūkas" &&
-        t !== "Biezpiens"
-    );
-  }
-
-  if (tag === "Maize") {
-    newTags = newTags.filter(
-      (t) =>
-        t !== "Olas" &&
-        t !== "Pankūkas" &&
-        t !== "Biezpiens"
-    );
-  }
-
-  if (tag === "Pankūkas") {
-    newTags = newTags.filter(
-      (t) =>
-        t !== "Olas" &&
-        t !== "Maize" &&
-        t !== "Biezpiens"
-    );
-  }
-
-  if (tag === "Biezpiens") {
-    newTags = newTags.filter(
-      (t) =>
-        t !== "Olas" &&
-        t !== "Maize" &&
-        t !== "Pankūkas"
-    );
-  }
-
   // Zupa / Nezupa
 
   if (tag === "Zupa") {
@@ -409,7 +370,10 @@ async function saveMeal() {
 let imageUrl = "";
 
 if (
-  newMealSelectedTags.length === 0 ||
+  (
+    newMealType !== "Deserts" &&
+    newMealSelectedTags.length === 0
+  ) ||
   !newMealImage
 ) {
   setShowSaveWarning(true);
@@ -926,11 +890,15 @@ if (card.value === "addSalad") {
   return;
 }
 
-        setNewMealType(
+        const nextType = 
           newMealType === card.value
             ? ""
-            : card.value
-        );
+            : card.value;
+
+          setNewMealType(nextType);
+          setNewMealSelectedTags([]);
+          setHasSides(false);
+          setHasSalads(false);
       }}
       style={{
         padding: "12px",
@@ -1383,16 +1351,20 @@ if (card.value === "addSalad") {
     marginBottom: "12px",
   }}
 >
-  {newMealSelectedTags.length === 0 && (
-    <div>🏷️ Nav izvēlēts neviens filtrs</div>
-  )}
+  {newMealType !== "Deserts" &&
+  newMealSelectedTags.length === 0 && (
+    <div>
+      🏷️ Nav izvēlēts neviens filtrs
+    </div>
+)}
 
   {!newMealImage && (
     <div>🖼️ Nav pievienota bilde</div>
   )}
 </div>
 
-{newMealSelectedTags.length === 0 && (
+{newMealType !== "Deserts" &&
+newMealSelectedTags.length === 0 && (
       <button
   onClick={() =>
     setShowSaveWarning(false)
@@ -1415,7 +1387,6 @@ if (card.value === "addSalad") {
 {!newMealImage && (
 <button
   onClick={() => {
-    setShowSaveWarning(false);
     galleryInputRef.current?.click();
   }}
   style={{
@@ -1668,6 +1639,7 @@ if (card.value === "addSalad") {
     const file = e.target.files?.[0];
     if (file) {
       setNewMealImage(file);
+      setShowSaveWarning(false);
     }
   }}
 />
