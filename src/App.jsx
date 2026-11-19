@@ -1496,6 +1496,8 @@ if (card.value === "addSalad") {
               ? "1fr 1fr"
               : group.length === 3
               ? "1fr 1fr 1fr"
+              : group.length === 4
+              ? "1fr 1fr 1fr 1fr"
               : "1fr",
           gap: "8px",
           width: "100%",
