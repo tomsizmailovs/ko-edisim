@@ -141,18 +141,11 @@ const [shoppingList, setShoppingList] = useState({
   grains: [],
 });
 
-const [mealPlan, setMealPlan] = useState(() => {
-  const savedPlan =
-      localStorage.getItem("mealPlan");
-
-  return savedPlan
-    ? JSON.parse(savedPlan)
-    : {
+const [mealPlan, setMealPlan] = useState({
         Brokastis: [],
         Pusdienas: [],
         Vakariņas: [],
         Deserts:[],
-      };
 });
 
 function toggleTag(tag) {
