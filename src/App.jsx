@@ -38,7 +38,7 @@ const filterGroups = {
   Brokastis: [
     ["Salds", "Sāļš"],
     ["Silts", "Auksts"],
-    ["Olas", "Maize", "Pankūkas"],
+    ["Olas", "Maize", "Pankūkas", "Biezpiens"],
     ["15 min"],
   ],
 
@@ -191,13 +191,14 @@ function toggleTag(tag) {
     );
   }
 
-  // Olas / Maize / Pankūkas
+  // Olas / Maize / Pankūkas / Biezpiens
 
 if (tag === "Olas") {
   newTags = newTags.filter(
     (t) =>
       t !== "Maize" &&
-      t !== "Pankūkas"
+      t !== "Pankūkas" &&
+      t !== "Biezpiens"
   );
 }
 
@@ -205,7 +206,8 @@ if (tag === "Maize") {
   newTags = newTags.filter(
     (t) =>
       t !== "Olas" &&
-      t !== "Pankūkas"
+      t !== "Pankūkas" &&
+      t !== "Biezpiens"
   );
 }
 
@@ -213,7 +215,17 @@ if (tag === "Pankūkas") {
   newTags = newTags.filter(
     (t) =>
       t !== "Olas" &&
-      t !== "Maize"
+      t !== "Maize" &&
+      t !== "Biezpiens"
+  );
+}
+
+if (tag === "Biezpiens") {
+  newTags = newTags.filter(
+    (t) =>
+      t !== "Olas" &&
+      t !== "Maize" &&
+      t !== "Pankūkas"
   );
 }
 
@@ -310,13 +322,14 @@ function toggleNewMealTag(tag) {
     );
   }
 
-  // Olas / Maize / Pankūkas
+  // Olas / Maize / Pankūkas / Biezpiens
 
   if (tag === "Olas") {
     newTags = newTags.filter(
       (t) =>
         t !== "Maize" &&
-        t !== "Pankūkas"
+        t !== "Pankūkas" &&
+        t !== "Biezpiens"
     );
   }
 
@@ -324,7 +337,8 @@ function toggleNewMealTag(tag) {
     newTags = newTags.filter(
       (t) =>
         t !== "Olas" &&
-        t !== "Pankūkas"
+        t !== "Pankūkas" &&
+        t !== "Biezpiens"
     );
   }
 
@@ -332,7 +346,17 @@ function toggleNewMealTag(tag) {
     newTags = newTags.filter(
       (t) =>
         t !== "Olas" &&
-        t !== "Maize"
+        t !== "Maize" &&
+        t !== "Biezpiens"
+    );
+  }
+
+  if (tag === "Biezpiens") {
+    newTags = newTags.filter(
+      (t) =>
+        t !== "Olas" &&
+        t !== "Maize" &&
+        t !== "Pankūkas"
     );
   }
 
@@ -869,10 +893,11 @@ if (currentPage === "addMeal") {
         flex: "1",
         lineHeight: "38px",
         textAlign: "center",
-        fontSize: "24px",
+        fontSize: "28px",
+        fontWeight: "bold",
       }}
       >
-        Pievienot ēdienu
+        Jauns ēdiens
         </h2>
         <div style={{ width: "38px" }} />
         </div>
@@ -1420,7 +1445,7 @@ if (card.value === "addSalad") {
     fontWeight: "bold",
   }}
 >
-  ✅ Tomēr saglabāt
+  ✅ Tomēr pievienot
 </button>
     </div>
   </div>
@@ -1677,7 +1702,7 @@ if (card.value === "addSalad") {
       cursor: "pointer",
     }}
   >
-    Saglabāt ēdienu
+    ✅ Pievienot
   </button>
 )}
 
@@ -1862,7 +1887,7 @@ style={{
   <hr
     style={{
       border: "none",
-      borderTop: "3px solid #d0d0d0",
+      borderTop: "3px solid #000",
       width: "100%",
       margin: 0
     }}
@@ -1870,7 +1895,7 @@ style={{
   <hr
     style={{
       border: "none",
-      borderTop: "3px solid #d0d0d0",
+      borderTop: "3px solid #000",
       width: "100%",
     }}
   />
@@ -2170,7 +2195,7 @@ style={{
     <hr
       style={{
         border: "none",
-        borderTop: "3px solid #d0d0d0",
+        borderTop: "3px solid #000",
         width: "100%",
         margin: 0,
       }}
@@ -2178,7 +2203,7 @@ style={{
     <hr
       style={{
         border: "none",
-        borderTop: "3px solid #d0d0d0",
+        borderTop: "3px solid #000",
         width: "100%",
       }}
     />
