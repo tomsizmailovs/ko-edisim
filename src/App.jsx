@@ -60,6 +60,7 @@ const filterGroups = {
 
 export default function App() {
   const galleryInputRef = useRef(null);
+  const longPressRef = useRef(null);
   const [mealType, setMealType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [meals,setMeals] = useState([]);
@@ -67,8 +68,8 @@ export default function App() {
   const [selectedSide, setSelectedSide] = useState("");
   const [selectedSalad, setSelectedSalad] = useState("");
   const [currentPage, setCurrentPage] = useState("home");
-const [newMealName, setNewMealName] =
-  useState("");
+  const [newMealName, setNewMealName] = useState("");
+  const [editingMeal, setEditingMeal] = useState(null);
 
   const DoubleLine = () => (
   <div
@@ -441,8 +442,8 @@ setNewMealSelectedTags([]);
 setNewMealImage(null);
 setHasSides(false);
 setHasSalads(false);
-
 setCurrentPage("home");
+setEditingMeal(null);
 }
 
 async function forceSaveMeal() {
@@ -500,6 +501,65 @@ async function forceSaveMeal() {
   setNewMealImage(null);
   setHasSides(false);
   setHasSalads(false);
+  setCurrentPage("home");
+  setEditingMeal(null);
+}
+
+async function updateMeal() {
+  const { data: existingMeal }
+    = await supabase
+      .from("meals")
+      .select("*")
+      .eq("name", editingMeal.name)
+      .single();
+
+  if (!existingMeal) return;
+
+  let imageUrl =
+    existingMeal.image_url;
+
+  if (newMealImage) {
+    imageUrl =
+      await uploadImage(
+        newMealImage
+      );
+  }
+
+  await supabase
+    .from("meals")
+    .update({
+      name: newMealName,
+      meal_type: newMealType,
+      image_url: imageUrl,
+      has_sides: hasSides,
+      has_salads: hasSalads,
+    })
+    .eq("id", existingMeal.id);
+
+  await supabase
+    .from("meal_tags")
+    .delete()
+    .eq("meal_id", existingMeal.id);
+
+  if (
+    newMealSelectedTags.length > 0
+  ) {
+    await supabase
+      .from("meal_tags")
+      .insert(
+        newMealSelectedTags.map(
+          (tag) => ({
+            meal_id:
+              existingMeal.id,
+            tag,
+          })
+        )
+      );
+  }
+
+  await loadMeals();
+
+  setEditingMeal(null);
 
   setCurrentPage("home");
 }
@@ -811,6 +871,28 @@ async function addNewSalad() {
   loadMeals();
 }
 
+async function startEditMeal(meal) {
+  setEditingMeal(meal);
+
+  setNewMealName(meal.name);
+
+  setNewMealType(meal.type);
+
+  setNewMealSelectedTags(
+    meal.tags || []
+  );
+
+  setHasSides(
+    meal.hasSides || false
+  );
+
+  setHasSalads(
+    meal.hasSalads || false
+  );
+
+  setCurrentPage("addMeal");
+}
+
 if (currentPage === "addMeal") {
   return (
     <div
@@ -861,7 +943,9 @@ if (currentPage === "addMeal") {
         fontWeight: "bold",
       }}
       >
-        Jauns ēdiens
+        {editingMeal
+  ? "Rediģēt ēdienu"
+  : "Jauns ēdiens"}
         </h2>
         <div style={{ width: "38px" }} />
         </div>
@@ -1662,7 +1746,11 @@ newMealSelectedTags.length === 0 && (
 {newMealType &&
  newMealName.trim() && (
   <button
-    onClick={saveMeal}
+    onClick={
+      editingMeal
+      ? updateMeal
+      : saveMeal
+    }
     style={{
       width: "100%",
       padding: "14px",
@@ -1676,7 +1764,9 @@ newMealSelectedTags.length === 0 && (
       cursor: "pointer",
     }}
   >
-    ✅ Pievienot
+    {editingMeal
+  ? "💾 Saglabāt"
+  : "✅ Pievienot"}
   </button>
 )}
 
@@ -1892,6 +1982,18 @@ style={{
   {filteredMeals.map((meal) => (
     <div
       key={meal.name}
+
+onTouchStart={() => {
+  longPressRef.current =
+    setTimeout(() => {
+      startEditMeal(meal);
+    }, 700);
+}}
+
+onTouchEnd={() => {
+  clearTimeout(longPressRef.current);
+}}
+
 onClick={() => {
   if (isInMealPlan(meal)) {
     removeFromMealPlan(
