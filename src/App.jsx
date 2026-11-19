@@ -1836,14 +1836,10 @@ function isInMealPlan(meal) {
 
 <div
   style={{
-    backgroundColor: "#F5f5f5",
-    padding: "16px",
-    borderRadius: "16px",
-    marginBottom: "16px",
-    border: "1px solid #e0e0e0",
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: "8px",
+    marginBottom: "10px",
   }}
 >
   
@@ -1855,24 +1851,24 @@ function isInMealPlan(meal) {
           setSelectedTags([]);
       }}
         style={{
-          padding: "10px",
-          fontSize: "16px",
-          border:
-            mealType === type.value
-              ? "4px solid #0D4715"
-              : "4px solid transparent",
-          borderRadius: "12px",
-          cursor: "pointer",
-          backgroundColor:
-            mealType === type.value
-              ? "#4CAF50"
-              : "#E0E0E0",
-          color:
-            mealType === type.value
-              ? "white"
-              : "black",
-          fontWeight: "bold",
-        }}
+  padding: "12px",
+  borderRadius: "12px",
+  fontWeight: "bold",
+  fontSize: "16px",
+  border:
+    mealType === type.value
+      ? "3px solid #0D4715"
+      : "3px solid black",
+  backgroundColor:
+    mealType === type.value
+      ? "#4CAF50"
+      : "#f5f5f5",
+  color:
+    mealType === type.value
+      ? "white"
+      : "black",
+  cursor: "pointer",
+}}
       >
         {type.label}
       </button>
