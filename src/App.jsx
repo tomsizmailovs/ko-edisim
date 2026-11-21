@@ -564,7 +564,6 @@ async function updateMeal() {
   await loadMeals();
 
 resetMealForm();
-setShowEditPopup(false);
 }
 
 function addToMealPlan(meal) {
@@ -2372,10 +2371,9 @@ onClick={() => {
     {type.label}
   </button>
 ))}
+</div>
 
 <DoubleLine />
-
-</div>
 
 {newMealType &&
   filterGroups[newMealType]?.length > 0 && (
@@ -2524,7 +2522,7 @@ onClick={() => {
       borderRadius: "12px",
       fontWeight: "bold",
       fontSize: "15px",
-      border: "1px solid #ddd",
+      border: "2px solid #000",
       backgroundColor: "#f5f5f5",
       color: "black",
       cursor: "pointer",
@@ -2581,8 +2579,8 @@ onClick={() => {
 
 <button
   onClick={async () => {
-    await updateMeal();
     setShowEditPopup(false);
+    updateMeal();
   }}
   style={{
     width: "100%",
