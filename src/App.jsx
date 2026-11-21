@@ -2037,6 +2037,8 @@ onClick={() => {
     display: "block",
     fontSize: "13px",
     lineHeight: "1",
+    userSelect: "none",
+    WebkitUserSelect: "none",
   }}
 >
   {meal.name}
