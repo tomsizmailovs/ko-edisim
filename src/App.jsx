@@ -70,6 +70,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [newMealName, setNewMealName] = useState("");
   const [editingMeal, setEditingMeal] = useState(null);
+  const [showEditPopup, setShowEditPopup] = useState(false);
 
   const DoubleLine = () => (
   <div
@@ -883,7 +884,7 @@ async function startEditMeal(meal) {
     meal.hasSalads || false
   );
 
-  setCurrentPage("addMeal");
+  setShowEditPopup(true);
 }
 
 if (currentPage === "addMeal") {
@@ -2243,6 +2244,52 @@ style={{
       >
         Ēdīsim šo
       </button>
+    </div>
+  </div>
+)}
+
+{showEditPopup && (
+  <div
+    onClick={() =>
+      setShowEditPopup(false)
+    }
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor:
+        "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1500,
+      padding: "12px",
+    }}
+  >
+    <div
+      onClick={(e) =>
+        e.stopPropagation()
+      }
+      style={{
+        backgroundColor: "white",
+        width: "100%",
+        maxWidth: "360px",
+        maxHeight: "90vh",
+        overflowY: "auto",
+        borderRadius: "16px",
+        padding: "16px",
+      }}
+    >
+
+      <h2
+        style={{
+          textAlign: "center",
+          marginTop: 0,
+          color: "#000",
+        }}
+      >
+        Rediģēt ēdienu
+      </h2>
+
     </div>
   </div>
 )}
