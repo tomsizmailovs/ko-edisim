@@ -2290,9 +2290,10 @@ style={{
           textAlign: "center",
           marginTop: 0,
           color: "#000",
+          marginBottom: "12px",
         }}
       >
-        Rediģēt ēdienu
+        🛠️ Rediģēt ēdienu
       </h2>
 
       <textarea
@@ -2310,6 +2311,8 @@ style={{
     border: "1px solid #ddd",
     boxSizing: "border-box",
     resize: "none",
+    backgroundColor: "#fff",
+    color: "#000",
   }}
 />
 
@@ -2356,28 +2359,205 @@ style={{
 
 </div>
 
-  {(
+{newMealType &&
+  filterGroups[newMealType]?.length > 0 && (
+
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px",
+  }}
+>
+  {filterGroups[newMealType]?.map(
+    (group, index) => (
+      <div
+        key={index}
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            group.length === 2
+              ? "1fr 1fr"
+              : group.length === 3
+              ? "1fr 1fr 1fr"
+              : group.length === 4
+              ? "1fr 1fr 1fr 1fr"
+              : "1fr",
+          gap: "8px",
+          width: "100%",
+        }}
+      >
+        {group.map((tag) => (
+          <button
+            key={tag}
+            type="button"
+            onClick={() =>
+              toggleNewMealTag(tag)
+            }
+            style={{
+              padding: "10px",
+              borderRadius: "12px",
+              fontSize: "15px",
+              border:
+                newMealSelectedTags.includes(tag)
+                  ? "2px solid #0D4715"
+                  : "2px solid black",
+              backgroundColor:
+                newMealSelectedTags.includes(tag)
+                  ? "#4CAF50"
+                  : "#f5f5f5",
+              color:
+                newMealSelectedTags.includes(tag)
+                  ? "white"
+                  : "black",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    )
+  )}
+</div>
+  )}
+
+{(
   newMealType === "Pusdienas" ||
   newMealType === "Vakariņas"
 ) && (
   <div
     style={{
       display: "grid",
-      gridTemplateColumns:
-        "1fr 1fr",
+      gridTemplateColumns: "1fr 1fr",
       gap: "8px",
       marginTop: "12px",
     }}
   >
 
-      {/* tava esošā
-          hasSides poga */}
+  <button
+    type="button"
+    onClick={() =>
+      setHasSides(!hasSides)
+    }
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border: hasSides
+        ? "2px solid #1B5E20"
+        : "2px solid #000",
+      backgroundColor: hasSides
+        ? "#4CAF50"
+        : "#f5f5f5",
+      color: hasSides
+        ? "#fff"
+        : "#000",
+      fontWeight: "bold",
+      fontSize: "15px",
+    }}
+  >
+    🍚 Ir piedevas
+  </button>
 
-      {/* tava esošā
-          hasSalads poga */}
-
+  <button
+    type="button"
+    onClick={() =>
+      setHasSalads(!hasSalads)
+    }
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border: hasSalads
+        ? "2px solid #1B5E20"
+        : "2px solid #000",
+      backgroundColor: hasSalads
+        ? "#4CAF50"
+        : "#f5f5f5",
+      color: hasSalads
+        ? "#fff"
+        : "#000",
+      fontWeight: "bold",
+      fontSize: "15px",
+    }}
+  >
+    🥗 Ir salāti
+  </button>
   </div>
 )}
+
+
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "12px",
+  }}
+>
+  <button
+    type="button"
+    onClick={() =>
+      galleryInputRef.current.click()
+    }
+    style={{
+      padding: "8px 12px",
+      borderRadius: "12px",
+      fontWeight: "bold",
+      fontSize: "15px",
+      border: "1px solid #ddd",
+      backgroundColor: "#f5f5f5",
+      color: "black",
+      cursor: "pointer",
+    }}
+  >
+    🖼️ Mainīt bildi
+  </button>
+</div>
+
+<input
+  ref={galleryInputRef}
+  type="file"
+  accept="image/*"
+  style={{ display: "none" }}
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      setNewMealImage(file);
+    }
+  }}
+/>
+
+{editingMeal?.image && !newMealImage && (
+  <img
+    src={editingMeal.image}
+    alt=""
+    style={{
+      width: "40%",
+      maxWidth: "140px",
+      display: "block",
+      margin: "12px auto",
+      borderRadius: "12px",
+    }}
+  />
+)}
+{newMealImage && (
+  <img
+    src={URL.createObjectURL(
+      newMealImage
+    )}
+    alt=""
+    style={{
+      width: "40%",
+      maxWidth: "140px",
+      display: "block",
+      margin: "12px auto",
+      borderRadius: "12px",
+    }}
+  />
+)}
+
+
 
 <button
   onClick={async () => {
@@ -2388,12 +2568,14 @@ style={{
     width: "100%",
     marginTop: "16px",
     padding: "14px",
-    borderRadius: "12px",
-    border: "none",
+    borderRadius: "16px",
+    border: "2px solid #1B5E20",
     backgroundColor:
       "#4CAF50",
     color: "white",
     fontWeight: "bold",
+    fontSize: "18px",
+    cursor: "pointer",
   }}
 >
   💾 Saglabāt
