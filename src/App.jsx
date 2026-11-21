@@ -2290,6 +2290,111 @@ style={{
         Rediģēt ēdienu
       </h2>
 
+      <textarea
+  value={newMealName}
+  onChange={(e) =>
+    setNewMealName(
+      e.target.value
+    )
+  }
+  rows={1}
+  style={{
+    width: "100%",
+    padding: "10px",
+    borderRadius: "12px",
+    border: "1px solid #ddd",
+    boxSizing: "border-box",
+    resize: "none",
+  }}
+/>
+
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns:
+      "1fr 1fr",
+    gap: "8px",
+    marginTop: "12px",
+  }}
+>
+
+ {mealTypes.map((type) => (
+  <button
+    key={type.value}
+    onClick={() =>
+      setNewMealType(type.value)
+    }
+    style={{
+      padding: "12px",
+      borderRadius: "12px",
+      border:
+        newMealType === type.value
+          ? "3px solid #0D4715"
+          : "3px solid black",
+
+      backgroundColor:
+        newMealType === type.value
+          ? "#4CAF50"
+          : "#f5f5f5",
+
+      color:
+        newMealType === type.value
+          ? "white"
+          : "black",
+
+      fontWeight: "bold",
+    }}
+  >
+    {type.label}
+  </button>
+))}
+
+</div>
+
+  {(
+  newMealType === "Pusdienas" ||
+  newMealType === "Vakariņas"
+) && (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns:
+        "1fr 1fr",
+      gap: "8px",
+      marginTop: "12px",
+    }}
+  >
+
+      {/* tava esošā
+          hasSides poga */}
+
+      {/* tava esošā
+          hasSalads poga */}
+
+  </div>
+)}
+
+<button
+  onClick={async () => {
+    await updateMeal();
+    setShowEditPopup(false);
+  }}
+  style={{
+    width: "100%",
+    marginTop: "16px",
+    padding: "14px",
+    borderRadius: "12px",
+    border: "none",
+    backgroundColor:
+      "#4CAF50",
+    color: "white",
+    fontWeight: "bold",
+  }}
+>
+  💾 Saglabāt
+</button>
+
+
     </div>
   </div>
 )}
