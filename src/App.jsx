@@ -2005,7 +2005,7 @@ onClick={() => {
         marginTop: "6px",
         border: isInMealPlan(meal)
         ? "2px solid #FBC02D"
-        : "2px solid #fafafa",
+        : "2px solid #000",
         borderRadius: "10px",
         cursor: "pointer",
         backgroundColor: isInMealPlan(meal)
@@ -2249,6 +2249,10 @@ style={{
 
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
+) && <DoubleLine />}
+
+{Object.values(mealPlan).some(
+  (meals) => meals.length > 0
 ) && (
   
 <div
@@ -2257,7 +2261,7 @@ style={{
     padding: "16px",
     borderRadius: "16px",
     border: "1px solid #E0E0E0",
-    marginTop: "-10px",
+    marginTop: "8px",
   }}
 >
 
@@ -2362,6 +2366,10 @@ style={{
 
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
+) && <DoubleLine />}
+
+{Object.values(mealPlan).some(
+  (meals) => meals.length > 0
 ) && (
 
 <div
@@ -2370,7 +2378,7 @@ style={{
     padding: "16px",
     borderRadius: "16px",
     border: "1px solid #E0E0E0",
-    marginTop: "16px",
+    marginTop: "0",
   }}
 >
   <h3
