@@ -1893,7 +1893,7 @@ style={{
   backgroundColor: "transparent",
   padding: "0",
   borderRadius: "16px",
-  marginBottom: "16px",
+  marginBottom: "0",
   border: "none",
   display: "flex",
   flexDirection: "column",
@@ -1928,7 +1928,7 @@ style={{
           }
           style={{
             padding: "10px",
-            borderRadius: "20px",
+            borderRadius: "12px",
             fontSize: "15px",
             border: selectedTags.includes(tag)
   ? "3px solid #0D4715"
@@ -2247,19 +2247,6 @@ style={{
   </div>
 )}
 
-
-{Object.values(mealPlan).some(
-  (meals) => meals.length > 0
-) && <DoubleLine />}
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      marginTop: "16px",
-      marginBottom: "16px",
-    }}
-  >
-  </div>
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
 ) && (
