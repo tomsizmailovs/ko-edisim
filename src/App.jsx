@@ -276,6 +276,16 @@ if (tag === "Zivs") {
   setSelectedTags([...newTags, tag]);
 }
 
+function resetMealForm() {
+  setEditingMeal(null);
+  setNewMealName("");
+  setNewMealType("");
+  setNewMealSelectedTags([]);
+  setNewMealImage(null);
+  setHasSides(false);
+  setHasSalads(false);
+}
+
 function toggleNewMealTag(tag) {
   if (newMealSelectedTags.includes(tag)) {
     setNewMealSelectedTags(
@@ -553,9 +563,8 @@ async function updateMeal() {
 
   await loadMeals();
 
-  setEditingMeal(null);
-  setShowEditPopup(false);
-  setNewMealImage(null);
+resetMealForm();
+setShowEditPopup(false);
 }
 
 function addToMealPlan(meal) {
@@ -1801,9 +1810,8 @@ function isInMealPlan(meal) {
   }}
 >
   <button
-    onClick={() => {
-  setEditingMeal(null);
-  setNewMealImage(null);
+onClick={() => {
+  resetMealForm();
   setCurrentPage("addMeal");
 }}
     style={{
@@ -2259,11 +2267,10 @@ style={{
 
 {showEditPopup && (
   <div
-    onClick={() => {
-      setShowEditPopup(false);
-      setEditingMeal(null);
-      setNewMealImage(null);
-    }}
+onClick={() => {
+  setShowEditPopup(false);
+  resetMealForm();
+}}
     style={{
       position: "fixed",
       inset: 0,
