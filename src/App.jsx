@@ -2326,8 +2326,11 @@ onClick={() => {
     resize: "none",
     backgroundColor: "#fff",
     color: "#000",
+    fontSize: "16px",
   }}
 />
+
+<DoubleLine />
 
 <div
   style={{
@@ -2362,13 +2365,15 @@ onClick={() => {
         newMealType === type.value
           ? "white"
           : "black",
-
       fontWeight: "bold",
+      fontSize: "15px",
     }}
   >
     {type.label}
   </button>
 ))}
+
+<DoubleLine />
 
 </div>
 
@@ -2410,7 +2415,7 @@ onClick={() => {
             style={{
               padding: "10px",
               borderRadius: "12px",
-              fontSize: "15px",
+              fontSize: "14px",
               border:
                 newMealSelectedTags.includes(tag)
                   ? "2px solid #0D4715"
@@ -2435,6 +2440,8 @@ onClick={() => {
   )}
 </div>
   )}
+
+  <DoubleLine />
 
 {(
   newMealType === "Pusdienas" ||
