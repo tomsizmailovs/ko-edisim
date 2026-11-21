@@ -554,8 +554,8 @@ async function updateMeal() {
   await loadMeals();
 
   setEditingMeal(null);
-
-  setCurrentPage("home");
+  setShowEditPopup(false);
+  setNewMealImage(null);
 }
 
 function addToMealPlan(meal) {
@@ -1801,7 +1801,11 @@ function isInMealPlan(meal) {
   }}
 >
   <button
-    onClick={() => setCurrentPage("addMeal")}
+    onClick={() => {
+  setEditingMeal(null);
+  setNewMealImage(null);
+  setCurrentPage("addMeal");
+}}
     style={{
       width: "38px",
       height: "38px",
@@ -2255,9 +2259,11 @@ style={{
 
 {showEditPopup && (
   <div
-    onClick={() =>
-      setShowEditPopup(false)
-    }
+    onClick={() => {
+      setShowEditPopup(false);
+      setEditingMeal(null);
+      setNewMealImage(null);
+    }}
     style={{
       position: "fixed",
       inset: 0,
