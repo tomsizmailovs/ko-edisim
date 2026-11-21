@@ -903,7 +903,7 @@ if (currentPage === "addMeal") {
       alignItems: "center",
       justifyContent: "space-between",
       gap: "12px",
-      marginBottom: "-40px",
+      marginBottom: "16px",
     }}
     >
       <button
@@ -942,8 +942,6 @@ if (currentPage === "addMeal") {
         </h2>
         <div style={{ width: "38px" }} />
         </div>
-
-      <br /><br />
 
       <div
   style={{
@@ -1910,9 +1908,13 @@ style={{
       style={{
         display: "grid",
         gridTemplateColumns:
-          group.length === 2
-            ? "1fr 1fr"
-            : "1fr",
+  group.length === 2
+    ? "1fr 1fr"
+    : group.length === 3
+    ? "1fr 1fr 1fr"
+    : group.length === 4
+    ? "1fr 1fr 1fr 1fr"
+    : "1fr",
         gap: "8px",
         width: "100%",
         marginBottom: "0px",
@@ -1925,11 +1927,12 @@ style={{
             toggleTag(tag)
           }
           style={{
-            padding: "6px 12px",
+            padding: "10px",
             borderRadius: "20px",
+            fontSize: "15px",
             border: selectedTags.includes(tag)
   ? "3px solid #0D4715"
-  : "3px solid balck",
+  : "3px solid black",
             fontWeight: "bold",
             backgroundColor:
               selectedTags.includes(tag)
@@ -2002,7 +2005,7 @@ onClick={() => {
         marginTop: "6px",
         border: isInMealPlan(meal)
         ? "2px solid #FBC02D"
-        : "2px solid #ddd",
+        : "2px solid #fafafa",
         borderRadius: "10px",
         cursor: "pointer",
         backgroundColor: isInMealPlan(meal)
@@ -2244,11 +2247,10 @@ style={{
   </div>
 )}
 
-<DoubleLine />
 
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
-) && (
+) && <DoubleLine />}
   <div
     style={{
       display: "flex",
@@ -2258,7 +2260,6 @@ style={{
     }}
   >
   </div>
-)}
 {Object.values(mealPlan).some(
   (meals) => meals.length > 0
 ) && (
