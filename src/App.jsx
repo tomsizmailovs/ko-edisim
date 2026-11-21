@@ -2013,6 +2013,9 @@ onClick={() => {
         ? "#FFF59D"
         : "#fafafa",
         color: "#222",
+        userSelect: "none",
+        WebkitUserSelect: "none",
+        WebkitTouchCallout: "none",
       }}
     >
 
