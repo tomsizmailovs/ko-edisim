@@ -67,10 +67,11 @@ export default function App() {
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedSide, setSelectedSide] = useState("");
   const [selectedSalad, setSelectedSalad] = useState("");
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState("mealPlans");
   const [newMealName, setNewMealName] = useState("");
   const [editingMeal, setEditingMeal] = useState(null);
   const [showEditPopup, setShowEditPopup] = useState(false);
+  const [savedMealPlans, setSavedMealPlans] = useState([]);
 
   const DoubleLine = () => (
   <div
@@ -284,6 +285,35 @@ function resetMealForm() {
   setNewMealImage(null);
   setHasSides(false);
   setHasSalads(false);
+}
+
+function saveMealPlan() {
+  const hasMeals =
+    Object.values(mealPlan)
+      .some(
+        (list) => list.length > 0
+      );
+
+  if (!hasMeals) {
+    alert("Ēdienkarte ir tukša");
+    return;
+  }
+
+  const newPlan = {
+    id: Date.now(),
+    created:
+      new Date().toLocaleDateString(
+        "lv-LV"
+      ),
+    plan: mealPlan,
+  };
+
+  setSavedMealPlans((current) => [
+    ...current,
+    newPlan,
+  ]);
+
+  alert("Ēdienkarte saglabāta");
 }
 
 function toggleNewMealTag(tag) {
@@ -893,6 +923,65 @@ async function startEditMeal(meal) {
   );
 
   setShowEditPopup(true);
+}
+
+if (currentPage === "mealPlans") {
+  return (
+    <div
+      style={{
+        maxWidth: "380px",
+        margin: "0 auto",
+        padding: "12px",
+      }}
+    >
+<button
+  onClick={() =>
+    setCurrentPage("home")
+  }
+>
+  🏠
+</button>
+
+<h2>
+  📋 Ēdienkartes
+</h2>
+
+{savedMealPlans.map((plan) => (
+  <div
+    key={plan.id}
+    style={{
+      border: "2px solid #000",
+      borderRadius: "12px",
+      padding: "12px",
+      marginBottom: "12px",
+    }}
+  >
+
+    <strong>
+  {plan.created}
+</strong>
+
+{Object.entries(plan.plan)
+  .filter(
+    ([, meals]) =>
+      meals.length > 0
+  )
+  .map(([type, meals]) => (
+    <div key={type}>
+      <b>{type}</b>
+
+      {meals.map((meal) => (
+        <div key={meal.name}>
+          • {meal.name}
+        </div>
+      ))}
+    </div>
+))}
+
+    </div>
+))}
+</div>
+);
 }
 
 if (currentPage === "addMeal") {
@@ -1803,9 +1892,9 @@ function isInMealPlan(meal) {
 <div
   style={{
     display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "16px",
+    justifyContent: "center",
+    gap: "12px",
+    marginBottom: "12px",
   }}
 >
   <button
@@ -1830,6 +1919,29 @@ onClick={() => {
     }}
   >
     ✚
+  </button>
+
+    <button
+onClick={() => {
+  setCurrentPage("mealPlans");
+}}
+    style={{
+      width: "38px",
+      height: "38px",
+      borderRadius: "30%",
+      color: "#000",
+      backgroundColor: "#dddddd",
+      fontSize: "30px",
+      fontWeight: "400",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "0",
+      lineHeight: "1",
+    }}
+  >
+    📋
   </button>
 
   <h1
@@ -2633,6 +2745,22 @@ onClick={() => {
     >
       Ēdienkarte
     </h3>
+
+<button
+  onClick={saveMealPlan}
+  style={{
+    width: "100%",
+    padding: "12px",
+    marginBottom: "16px",
+    borderRadius: "12px",
+    border: "2px solid #1B5E20",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    fontWeight: "bold",
+  }}
+>
+  💾 Saglabāt ēdienkarti
+</button>
 
   <div
     style={{
