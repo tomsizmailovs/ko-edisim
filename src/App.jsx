@@ -1,6 +1,25 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "./supabase";
 
+const navigationItems = [
+  {
+    page: "mealPlans",
+    icon: "📋",
+  },
+  {
+    page: "addMeal",
+    icon: "➕",
+  },
+  {
+    page: "home",
+    icon: "🍔",
+  },
+  {
+    page: "settings",
+    icon: "⚙️",
+  },
+];
+
 const mealTypes = [
   {
     value: "Brokastis",
@@ -73,7 +92,75 @@ export default function App() {
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [savedMealPlans, setSavedMealPlans] = useState([]);
 
+function TopNavigation() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        gap: "10px",
+        marginBottom: "12px",
+      }}
+    >
+      {navigationItems.map((item) => (
+        <button
+          key={item.page}
+          onClick={() =>
+            setCurrentPage(item.page)
+          }
+          style={{
+  width:
+    currentPage === item.page
+      ? "48px"
+      : "38px",
+
+  height:
+    currentPage === item.page
+      ? "48px"
+      : "38px",
+
+  fontSize:
+    currentPage === item.page
+      ? "26px"
+      : "20px",
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  padding: 0,
+
+  borderRadius: "12px",
+
+  border:
+    currentPage === item.page
+      ? "3px solid #000"
+      : "2px solid #000",
+
+  backgroundColor: "#ffffff",
+
+  cursor: "pointer",
+
+  transition: "all 0.15s ease",
+}}
+        >
+          {item.icon}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+const pageTitleStyle = {
+  marginTop: "0",
+  marginBottom: "16px",
+  textAlign: "center",
+  fontSize: "28px",
+  fontWeight: "bold",
+};
+
   const DoubleLine = () => (
+    
   <div
     style={{
       display: "flex",
@@ -934,17 +1021,11 @@ if (currentPage === "mealPlans") {
         padding: "12px",
       }}
     >
-<button
-  onClick={() =>
-    setCurrentPage("home")
-  }
->
-  🏠
-</button>
+<TopNavigation />
 
-<h2>
-  📋 Ēdienkartes
-</h2>
+<h1 style={pageTitleStyle}>
+Ēdienkartes
+</h1>
 
 {savedMealPlans.map((plan) => (
   <div
@@ -984,6 +1065,30 @@ if (currentPage === "mealPlans") {
 );
 }
 
+if (currentPage === "settings") {
+  return (
+    <div
+      style={{
+        maxWidth: "380px",
+        margin: "0 auto",
+        padding: "12px",
+      }}
+    >
+      <TopNavigation />
+
+      <h2
+        style={pageTitleStyle}>
+        Iestatījumi
+      </h2>
+
+      <p>
+        Šeit vēlāk būs datubāzes
+        izvēle un citi parametri
+      </p>
+    </div>
+  );
+}
+
 if (currentPage === "addMeal") {
   return (
     <div
@@ -995,51 +1100,15 @@ if (currentPage === "addMeal") {
         boxSizing: "border-box",
       }}
     >
-    <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      gap: "12px",
-      marginBottom: "16px",
-    }}
-    >
-      <button
-  onClick={() => setCurrentPage("home")}
-  style={{
-    width: "38px",
-    height: "38px",
-    borderRadius: "30%",
-    color: "#000",
-    backgroundColor: "#dddddd",
-    fontSize: "22px",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 0,
-    border: "none",
-  }}
->
-  🏠
-</button>
+   
+   <TopNavigation />
 
-      <h2
-      style={{
-        margin: 0,
-        flex: "1",
-        lineHeight: "38px",
-        textAlign: "center",
-        fontSize: "28px",
-        fontWeight: "bold",
-      }}
-      >
-        {editingMeal
-  ? "Rediģēt ēdienu"
-  : "Jauns ēdiens"}
-        </h2>
-        <div style={{ width: "38px" }} />
-        </div>
+<h2 style={pageTitleStyle}
+>
+  {editingMeal
+    ? "Rediģēt ēdienu"
+    : "Jauns ēdiens"}
+</h2>
 
       <div
   style={{
@@ -1889,76 +1958,12 @@ function isInMealPlan(meal) {
         overflowX: "hidden",
       }}
     >
-<div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    gap: "12px",
-    marginBottom: "12px",
-  }}
->
-  <button
-onClick={() => {
-  resetMealForm();
-  setCurrentPage("addMeal");
-}}
-    style={{
-      width: "38px",
-      height: "38px",
-      borderRadius: "30%",
-      color: "#000",
-      backgroundColor: "#dddddd",
-      fontSize: "30px",
-      fontWeight: "400",
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "0",
-      lineHeight: "1",
-    }}
-  >
-    ✚
-  </button>
 
-    <button
-onClick={() => {
-  setCurrentPage("mealPlans");
-}}
-    style={{
-      width: "38px",
-      height: "38px",
-      borderRadius: "30%",
-      color: "#000",
-      backgroundColor: "#dddddd",
-      fontSize: "30px",
-      fontWeight: "400",
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "0",
-      lineHeight: "1",
-    }}
-  >
-    📋
-  </button>
+<TopNavigation />
 
-  <h1
-    style={{
-      margin: 0,
-      flex: 1,
-      lineHeight: "38px",
-      textAlign: "center",
-      fontSize: "28px",
-      fontWeight: "bold",
-    }}
-  >
-    🍔 Ko ēdīsim?
-  </h1>
-
-  <div style={{ width: "42px" }} />
-</div>
+<h1 style={pageTitleStyle}>
+  Ko ēdīsim?
+</h1>
 
 <div
   style={{
