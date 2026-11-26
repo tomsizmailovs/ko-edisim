@@ -381,31 +381,33 @@ function deleteMealPlan(planId) {
   );
 }
 
-function saveMealPlan() {
+async function saveMealPlan() {
+
   const hasMeals =
     Object.values(mealPlan)
-      .some(
-        (list) => list.length > 0
-      );
+      .some((list) => list.length > 0);
 
   if (!hasMeals) {
     alert("Ēdienkarte ir tukša");
     return;
   }
 
-  const newPlan = {
-    id: Date.now(),
-    created:
-      new Date().toLocaleDateString(
-        "lv-LV"
-      ),
-    plan: mealPlan,
-  };
+  const { error } =
+    await supabase
+      .from("meal_plans")
+      .insert([
+        {
+          plan: mealPlan,
+        },
+      ]);
 
-  setSavedMealPlans((current) => [
-    ...current,
-    newPlan,
-  ]);
+  if (error) {
+    console.log(error);
+    alert("Kļūda saglabājot");
+    return;
+  }
+
+  await loadMealPlans();
 
   alert("Ēdienkarte saglabāta");
 }
@@ -730,6 +732,23 @@ function addShoppingItem(category) {
   }));
 }
 
+async function deleteMealPlan(id) {
+
+  const { error } =
+    await supabase
+      .from("meal_plans")
+      .delete()
+      .eq("id", id);
+
+  if (error) {
+    console.log(error);
+    alert("Kļūda dzēšot");
+    return;
+  }
+
+  await loadMealPlans();
+}
+
 function removeShoppingItem(
   category,
   index
@@ -816,6 +835,24 @@ function renderShoppingCategory(
   );
 }
 
+async function loadMealPlans() {
+
+  const { data, error } =
+    await supabase
+      .from("meal_plans")
+      .select("*")
+      .order("id", {
+        ascending: false,
+      });
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  setSavedMealPlans(data);
+}
+
 async function loadMeals() {
   const { data: mealsData, error: mealsError } =
     await supabase
@@ -889,6 +926,7 @@ setAllSalads(
 
 useEffect(() => {
   loadMeals();
+  loadMealPlans();
 }, []);
 
 const filteredMeals = meals.filter((meal) => {
