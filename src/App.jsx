@@ -7,12 +7,12 @@ const navigationItems = [
     icon: "📋",
   },
   {
-    page: "addMeal",
-    icon: "➕",
-  },
-  {
     page: "home",
     icon: "🍔",
+  },
+  {
+    page: "addMeal",
+    icon: "➕",
   },
   {
     page: "settings",
@@ -111,23 +111,22 @@ function TopNavigation() {
           style={{
   width:
     currentPage === item.page
-      ? "48px"
-      : "38px",
+      ? "60px"
+      : "50px",
 
   height:
     currentPage === item.page
-      ? "48px"
-      : "38px",
+      ? "60px"
+      : "50px",
 
   fontSize:
     currentPage === item.page
-      ? "26px"
-      : "20px",
+      ? "32px"
+      : "26px",
 
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-
   padding: 0,
 
   borderRadius: "12px",
@@ -1027,6 +1026,19 @@ if (currentPage === "mealPlans") {
 Ēdienkartes
 </h1>
 
+{savedMealPlans.length === 0 && (
+  <p
+    style={{
+      textAlign: "center",
+      color: "#666",
+      fontSize: "16px",
+      marginTop: "30px",
+    }}
+  >
+    Nav saglabātu ēdienkaršu
+  </p>
+)}
+
 {savedMealPlans.map((plan) => (
   <div
     key={plan.id}
@@ -1076,10 +1088,10 @@ if (currentPage === "settings") {
     >
       <TopNavigation />
 
-      <h2
+      <h1
         style={pageTitleStyle}>
         Iestatījumi
-      </h2>
+      </h1>
 
       <p>
         Šeit vēlāk būs datubāzes
@@ -1103,12 +1115,12 @@ if (currentPage === "addMeal") {
    
    <TopNavigation />
 
-<h2 style={pageTitleStyle}
+<h1 style={pageTitleStyle}
 >
   {editingMeal
     ? "Rediģēt ēdienu"
     : "Jauns ēdiens"}
-</h2>
+</h1>
 
       <div
   style={{
