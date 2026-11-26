@@ -373,6 +373,14 @@ function resetMealForm() {
   setHasSalads(false);
 }
 
+function deleteMealPlan(planId) {
+  setSavedMealPlans((current) =>
+    current.filter(
+      (plan) => plan.id !== planId
+    )
+  );
+}
+
 function saveMealPlan() {
   const hasMeals =
     Object.values(mealPlan)
@@ -1047,12 +1055,41 @@ if (currentPage === "mealPlans") {
       borderRadius: "12px",
       padding: "12px",
       marginBottom: "12px",
+      position: "relative",
     }}
   >
+    <button
+  onClick={() =>
+    deleteMealPlan(plan.id)
+  }
+  style={{
+    position: "absolute",
+    top: "8px",
+    right: "8px",
 
-    <strong>
-  {plan.created}
-</strong>
+    width: "24px",
+    height: "24px",
+
+    borderRadius: "50%",
+    border: "1px solid #000",
+
+    backgroundColor: "#fff",
+
+    cursor: "pointer",
+
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    fontSize: "16px",
+    fontWeight: "bold",
+
+    padding: 0,
+    lineHeight: 1,
+  }}
+>
+  −
+</button>
 
 {Object.entries(plan.plan)
   .filter(
