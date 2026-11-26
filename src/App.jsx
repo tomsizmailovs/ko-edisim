@@ -91,62 +91,85 @@ export default function App() {
   const [editingMeal, setEditingMeal] = useState(null);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [savedMealPlans, setSavedMealPlans] = useState([]);
+  const [session, setSession] = useState(null);
+  const [hasDatabase, setHasDatabase] = useState(false);
+  const [databaseId, setDatabaseId] = useState(null);
 
 function TopNavigation() {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "10px",
-        marginBottom: "12px",
-      }}
-    >
-      {navigationItems.map((item) => (
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          marginBottom: "12px",
+        }}
+      >
+        {navigationItems.map((item) => (
+          <button
+            key={item.page}
+            onClick={() =>
+              setCurrentPage(item.page)
+            }
+            style={{
+              width:
+                currentPage === item.page
+                  ? "60px"
+                  : "50px",
+
+              height:
+                currentPage === item.page
+                  ? "60px"
+                  : "50px",
+
+              fontSize:
+                currentPage === item.page
+                  ? "32px"
+                  : "26px",
+
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 0,
+
+              borderRadius: "12px",
+
+              border:
+                currentPage === item.page
+                  ? "3px solid #000"
+                  : "2px solid #000",
+
+              backgroundColor: "#ffffff",
+
+              cursor: "pointer",
+            }}
+          >
+            {item.icon}
+          </button>
+        ))}
+      </div>
+
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: "12px",
+        }}
+      >
         <button
-          key={item.page}
-          onClick={() =>
-            setCurrentPage(item.page)
-          }
+          onClick={signOut}
           style={{
-  width:
-    currentPage === item.page
-      ? "60px"
-      : "50px",
-
-  height:
-    currentPage === item.page
-      ? "60px"
-      : "50px",
-
-  fontSize:
-    currentPage === item.page
-      ? "32px"
-      : "26px",
-
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: 0,
-
-  borderRadius: "12px",
-
-  border:
-    currentPage === item.page
-      ? "3px solid #000"
-      : "2px solid #000",
-
-  backgroundColor: "#ffffff",
-
-  cursor: "pointer",
-
-  transition: "all 0.15s ease",
-}}
+            border: "1px solid #000",
+            borderRadius: "8px",
+            padding: "4px 8px",
+            background: "#fff",
+            cursor: "pointer",
+          }}
         >
-          {item.icon}
+          Iziet
         </button>
-      ))}
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -157,6 +180,16 @@ const pageTitleStyle = {
   fontSize: "28px",
   fontWeight: "bold",
 };
+
+async function signInGoogle() {
+  await supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+}
+
+async function signOut() {
+  await supabase.auth.signOut();
+}
 
   const DoubleLine = () => (
     
@@ -373,14 +406,6 @@ function resetMealForm() {
   setHasSalads(false);
 }
 
-function deleteMealPlan(planId) {
-  setSavedMealPlans((current) =>
-    current.filter(
-      (plan) => plan.id !== planId
-    )
-  );
-}
-
 async function saveMealPlan() {
 
   const hasMeals =
@@ -398,6 +423,7 @@ async function saveMealPlan() {
       .insert([
         {
           plan: mealPlan,
+          user_id: session.user.id
         },
       ]);
 
@@ -531,6 +557,7 @@ const { data, error } = await supabase
       image_url: imageUrl,
       has_sides: hasSides,
       has_salads: hasSalads,
+      database_id: databaseId,
     },
   ])
   .select()
@@ -548,7 +575,8 @@ const { data, error } = await supabase
   const tagRows =
     newMealSelectedTags.map((tag) => ({
       meal_id: data.id,
-      tag,
+tag,
+database_id: databaseId,
     }));
 
   const {
@@ -597,6 +625,7 @@ async function forceSaveMeal() {
           image_url: imageUrl,
           has_sides: hasSides,
           has_salads: hasSalads,
+          database_id: databaseId,
         },
       ])
       .select()
@@ -612,7 +641,8 @@ async function forceSaveMeal() {
       newMealSelectedTags.map(
         (tag) => ({
           meal_id: data.id,
-          tag,
+tag,
+database_id: databaseId,
         })
       );
 
@@ -663,6 +693,7 @@ async function updateMeal() {
       image_url: imageUrl,
       has_sides: hasSides,
       has_salads: hasSalads,
+      database_id: databaseId,
     })
     .eq("id", existingMeal.id);
 
@@ -682,6 +713,7 @@ async function updateMeal() {
             meal_id:
               existingMeal.id,
             tag,
+            databse_id: databaseId,
           })
         )
       );
@@ -835,13 +867,46 @@ function renderShoppingCategory(
   );
 }
 
+async function loadUserDatabases() {
+
+  if (!session) return;
+
+  const { data, error } =
+    await supabase
+      .from("user_databases")
+      .select("*")
+      .eq(
+        "user_id",
+        session.user.id
+      );
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+setHasDatabase(
+  data.length > 0
+);
+
+if (data.length > 0) {
+  setDatabaseId(
+    data[0].database_id
+  );
+}
+}
+
 async function loadMealPlans() {
 
   const { data, error } =
     await supabase
       .from("meal_plans")
-      .select("*")
-      .order("id", {
+.select("*")
+.eq(
+  "user_id",
+  session.user.id
+)
+.order("id", {
         ascending: false,
       });
 
@@ -854,20 +919,36 @@ async function loadMealPlans() {
 }
 
 async function loadMeals() {
-  const { data: mealsData, error: mealsError } =
-    await supabase
-      .from("meals")
-      .select("*");
+if (!databaseId) return;
+
+const {
+  data: mealsData,
+  error: mealsError
+} =
+  await supabase
+    .from("meals")
+    .select("*")
+    .eq(
+      "database_id",
+      databaseId
+    );
 
   if (mealsError) {
     console.log(mealsError);
     return;
   }
 
-  const { data: tagsData, error: tagsError } =
-    await supabase
-      .from("meal_tags")
-      .select("*");
+const {
+  data: tagsData,
+  error: tagsError
+} =
+  await supabase
+    .from("meal_tags")
+    .select("*")
+    .eq(
+      "database_id",
+      databaseId
+    );
 
   if (tagsError) {
     console.log(tagsError);
@@ -925,8 +1006,51 @@ setAllSalads(
 }
 
 useEffect(() => {
+
+  if (!databaseId) return;
+
   loadMeals();
-  loadMealPlans();
+
+}, [databaseId]);
+
+useEffect(() => {
+
+  const getSession = async () => {
+
+    const {
+      data: { session }
+    } = await supabase.auth.getSession();
+
+    setSession(session);
+
+    if (session) {
+      loadUserDatabases();
+      loadMeals();
+      loadMealPlans();
+    }
+  };
+
+  getSession();
+
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange(
+    (_event, session) => {
+
+      setSession(session);
+
+      if (session) {
+        loadUserDatabases();
+        loadMeals();
+        loadMealPlans();
+      }
+    }
+  );
+
+  return () => {
+    subscription.unsubscribe();
+  };
+
 }, []);
 
 const filteredMeals = meals.filter((meal) => {
@@ -936,6 +1060,67 @@ const filteredMeals = meals.filter((meal) => {
     meal.tags.includes(tag)
   );
 });
+
+async function attachTomDatabase() {
+
+  const { error } =
+    await supabase
+      .from("user_databases")
+      .insert([
+        {
+          user_id:
+            session.user.id,
+
+          database_id: 1,
+        },
+      ]);
+
+  if (error) {
+    console.log(error);
+    alert("Kļūda");
+    return;
+  }
+
+  setHasDatabase(true);
+  setDatabaseId(1);
+  await loadUserDatabases();
+}
+
+async function createDatabase() {
+
+  const { data, error } =
+    await supabase
+      .from("meal_databases")
+      .insert([
+        {
+          name:
+            `${session.user.email} datubāze`,
+        },
+      ])
+      .select()
+      .single();
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  await supabase
+    .from("user_databases")
+    .insert([
+      {
+        user_id:
+          session.user.id,
+
+        database_id:
+          data.id,
+      },
+    ]);
+
+  setHasDatabase(true);
+  setDatabaseId(data.id);
+  setCurrentPage("addMeal");
+}
 
 async function addNewSide() {
   const sideName = prompt(
@@ -1055,6 +1240,109 @@ async function startEditMeal(meal) {
   );
 
   setShowEditPopup(true);
+}
+
+if (!session) {
+
+  return (
+    <div
+      style={{
+        maxWidth: "380px",
+        margin: "0 auto",
+        padding: "20px",
+      }}
+    >
+
+      <h1
+        style={{
+          textAlign: "center",
+          marginBottom: "30px",
+        }}
+      >
+        Ko ēdīsim?
+      </h1>
+
+      <button
+        onClick={signInGoogle}
+        style={{
+          width: "100%",
+          padding: "14px",
+          borderRadius: "12px",
+          border: "2px solid #000",
+          backgroundColor: "#fff",
+          fontSize: "16px",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+      >
+        🔐 Pieslēgties ar Google
+      </button>
+
+    </div>
+  );
+}
+
+if (
+  session &&
+  !hasDatabase
+) {
+  return (
+    <div
+      style={{
+        maxWidth: "380px",
+        margin: "0 auto",
+        padding: "20px",
+      }}
+    >
+
+      <h1
+        style={{
+          textAlign: "center",
+          marginBottom: "30px",
+        }}
+      >
+        Ko ēdīsim?
+      </h1>
+
+      <button
+        onClick={
+          attachTomDatabase
+        }
+        style={{
+          width: "100%",
+          padding: "14px",
+          marginBottom: "12px",
+          borderRadius: "12px",
+          border:
+            "2px solid #000",
+          backgroundColor:
+            "#fff",
+          fontWeight: "bold",
+        }}
+      >
+        📦 Pievienot datubāzi
+      </button>
+
+      <button
+        onClick={
+          createDatabase
+        }
+        style={{
+          width: "100%",
+          padding: "14px",
+          borderRadius: "12px",
+          border:
+            "2px solid #000",
+          backgroundColor:
+            "#fff",
+          fontWeight: "bold",
+        }}
+      >
+        ➕ Veidot jaunu datubāzi
+      </button>
+
+    </div>
+  );
 }
 
 if (currentPage === "mealPlans") {
