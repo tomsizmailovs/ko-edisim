@@ -850,14 +850,16 @@ function renderShoppingCategory(
   );
 }
 
-async function loadUserDatabases() {
+async function loadUserDatabases(userId) {
 
   const { data, error } =
     await supabase
       .from("user_databases")
       .select("*")
       .eq(
-        "user_id", userId);
+        "user_id",
+        userId
+      );
 
   if (error) {
     console.log(error);
@@ -1093,7 +1095,9 @@ async function attachTomDatabase() {
 
   setHasDatabase(true);
   setDatabaseId(1);
-  await loadUserDatabases();
+  await loadUserDatabases(
+    session.user.id
+  );
 }
 
 async function createDatabase() {
@@ -1591,8 +1595,21 @@ if (currentPage === "settings") {
 
   <hr />
 
-  <button
+<button
   onClick={removeDatabase}
+  style={{
+    width: "100%",
+    padding: "12px",
+    marginTop: "12px",
+    marginBottom: "16px",
+    borderRadius: "12px",
+    border: "2px solid #B71C1C",
+    backgroundColor: "#EF5350",
+    color: "#000",
+    fontWeight: "bold",
+    fontSize: "16px",
+    cursor: "pointer",
+  }}
 >
   📦 Noņemt datubāzi no konta
 </button>
