@@ -150,26 +150,6 @@ function TopNavigation() {
           </button>
         ))}
       </div>
-
-      <div
-        style={{
-          textAlign: "center",
-          marginBottom: "12px",
-        }}
-      >
-        <button
-          onClick={signOut}
-          style={{
-            border: "1px solid #000",
-            borderRadius: "8px",
-            padding: "4px 8px",
-            background: "#fff",
-            cursor: "pointer",
-          }}
-        >
-          Iziet
-        </button>
-      </div>
     </>
   );
 }
@@ -714,7 +694,7 @@ async function updateMeal() {
             meal_id:
               existingMeal.id,
             tag,
-            databse_id: databaseId,
+            database_id: databaseId,
           })
         )
       );
@@ -1513,6 +1493,23 @@ if (currentPage === "settings") {
   <p>
     {databaseName}
   </p>
+
+  <hr />
+
+<button
+  onClick={signOut}
+  style={{
+    width: "100%",
+    padding: "12px",
+    borderRadius: "12px",
+    border: "2px solid #000",
+    backgroundColor: "#fff",
+    cursor: "pointer",
+    fontWeight: "bold",
+  }}
+>
+  Iziet
+</button>
 
 </div>
     </div>
