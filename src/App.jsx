@@ -852,16 +852,12 @@ function renderShoppingCategory(
 
 async function loadUserDatabases() {
 
-  if (!session) return;
-
   const { data, error } =
     await supabase
       .from("user_databases")
       .select("*")
       .eq(
-        "user_id",
-        session.user.id
-      );
+        "user_id", userId);
 
   if (error) {
     console.log(error);
@@ -1036,7 +1032,8 @@ useEffect(() => {
     setSession(session);
 
     if (session) {
-      loadUserDatabases();
+      loadUserDatabases(
+        session.user.id);
       loadMeals();
       loadMealPlans();
     }
@@ -1052,7 +1049,8 @@ useEffect(() => {
       setSession(session);
 
       if (session) {
-        loadUserDatabases();
+        loadUserDatabases(
+          session.user.id);
         loadMeals();
         loadMealPlans();
       }
@@ -1136,6 +1134,7 @@ if (!newDatabaseName.trim()) {
 
   setHasDatabase(true);
   setDatabaseId(data.id);
+  await loadDatabaseInfo(data.id);
   setCurrentPage("addMeal");
   setNewDatabaseName("");
 setShowCreateDbPopup(false);
@@ -1170,6 +1169,21 @@ async function deleteSide(sideName) {
   setSelectedSideItem(null);
 
   loadMeals();
+}
+
+async function removeDatabase() {
+
+  await supabase
+    .from("user_databases")
+    .delete()
+    .eq(
+      "user_id",
+      session.user.id
+    );
+
+  setHasDatabase(false);
+  setDatabaseId(null);
+  setDatabaseName("");
 }
 
 async function renameSide(oldName) {
@@ -1342,6 +1356,7 @@ if (
           backgroundColor:
             "#fff",
           fontWeight: "bold",
+          color: "#000",
         }}
       >
         📦 Ielādēt noklusējuma datubāzi
@@ -1360,6 +1375,7 @@ if (
           backgroundColor:
             "#fff",
           fontWeight: "bold",
+          color: "#000",
         }}
       >
         ➕ Veidot jaunu datubāzi
@@ -1423,7 +1439,6 @@ if (
           width: "100%",
           padding: "12px",
           borderRadius: "12px",
-          color: "#000",
         }}
       >
         Izveidot jaunu datubāzi
@@ -1575,6 +1590,12 @@ if (currentPage === "settings") {
   </p>
 
   <hr />
+
+  <button
+  onClick={removeDatabase}
+>
+  📦 Noņemt datubāzi no konta
+</button>
 
 <button
   onClick={signOut}
