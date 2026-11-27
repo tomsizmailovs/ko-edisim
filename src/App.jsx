@@ -94,6 +94,7 @@ export default function App() {
   const [session, setSession] = useState(null);
   const [hasDatabase, setHasDatabase] = useState(false);
   const [databaseId, setDatabaseId] = useState(null);
+  const [databaseName, setDatabaseName] = useState("");
 
 function TopNavigation() {
   return (
@@ -890,10 +891,31 @@ setHasDatabase(
 );
 
 if (data.length > 0) {
-  setDatabaseId(
-    data[0].database_id
-  );
+
+  const dbId =
+    data[0].database_id;
+
+  setDatabaseId(dbId);
+
+  await loadDatabaseInfo(dbId);
 }
+}
+
+async function loadDatabaseInfo(id) {
+
+  const { data, error } =
+    await supabase
+      .from("meal_databases")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  setDatabaseName(data.name);
 }
 
 async function loadMealPlans() {
@@ -955,15 +977,23 @@ const {
     return;
   }
 
-  const { data: sidesData } =
+const { data: sidesData } =
   await supabase
     .from("meal_sides")
-    .select("*");
+    .select("*")
+    .eq(
+      "database_id",
+      databaseId
+    );
 
 const { data: saladsData } =
   await supabase
     .from("meal_salads")
-    .select("*");
+    .select("*")
+    .eq(
+      "database_id",
+      databaseId
+    );
 
     setAllSides(
   [...new Set(
@@ -1129,13 +1159,14 @@ async function addNewSide() {
 
   if (!sideName) return;
 
-  await supabase
-    .from("meal_sides")
-    .insert([
-      {
-        side_name: sideName,
-      },
-    ]);
+await supabase
+  .from("meal_sides")
+  .insert([
+    {
+      side_name: sideName,
+      database_id: databaseId,
+    },
+  ]);
 
   loadMeals();
 }
@@ -1209,13 +1240,14 @@ async function addNewSalad() {
 
   if (!saladName) return;
 
-  await supabase
-    .from("meal_salads")
-    .insert([
-      {
-        salad_name: saladName,
-      },
-    ]);
+await supabase
+  .from("meal_salads")
+  .insert([
+    {
+      salad_name: saladName,
+      database_id: databaseId,
+    },
+  ]);
 
   loadMeals();
 }
@@ -1456,10 +1488,33 @@ if (currentPage === "settings") {
         Iestatījumi
       </h1>
 
-      <p>
-        Šeit vēlāk būs datubāzes
-        izvēle un citi parametri
-      </p>
+     <div
+  style={{
+    border: "2px solid #000",
+    borderRadius: "12px",
+    padding: "12px",
+  }}
+>
+
+  <p>
+    <b>Lietotājs:</b>
+  </p>
+
+  <p>
+    {session.user.email}
+  </p>
+
+  <hr />
+
+  <p>
+    <b>Aktīvā datubāze:</b>
+  </p>
+
+  <p>
+    {databaseName}
+  </p>
+
+</div>
     </div>
   );
 }
