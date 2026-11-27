@@ -1423,6 +1423,7 @@ if (
           width: "100%",
           padding: "12px",
           borderRadius: "12px",
+          color: "#000",
         }}
       >
         Izveidot jaunu datubāzi
