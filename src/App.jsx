@@ -98,6 +98,7 @@ export default function App() {
   const [showCreateDbPopup,  setShowCreateDbPopup] = useState(false);
   const [newDatabaseName,  setNewDatabaseName] = useState("");
   const [loadingDatabase, setLoadingDatabase] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
 function TopNavigation() {
   return (
@@ -886,6 +887,7 @@ if (data.length > 0) {
   setLoadingDatabase(false);
   return;
 }
+setIsLoading(false);
 }
 }
 
@@ -1046,6 +1048,7 @@ useEffect(() => {
         session.user.id);
       loadMealPlans();
     }
+    setIsLoading(false);
   };
 
   getSession();
@@ -1288,6 +1291,19 @@ async function startEditMeal(meal) {
   setShowEditPopup(true);
 }
 
+if (isLoading) {
+  return (
+    <div
+      style={{
+        textAlign: "center",
+        padding: "50px",
+      }}
+    >
+      Ielādē...
+    </div>
+  );
+}
+
 if (!session) {
 
   return (
@@ -1383,7 +1399,7 @@ if (
           fontSize: "18px",
         }}
       >
-        📦 Ielādēt noklusējuma datubāzi
+        📦 Ielādēt Izmailovu ēdienus
       </button>
 
       <button
@@ -1436,9 +1452,16 @@ if (
       }}
     >
 
-      <h3>
-        Jauna datubāze
-      </h3>
+<h3
+  style={{
+    color: "#000",
+    marginTop: "0",
+    marginBottom: "12px",
+    textAlign: "center",
+  }}
+>
+  Jauna datubāze
+</h3>
 
       <input
         value={newDatabaseName}
@@ -1453,6 +1476,7 @@ if (
           padding: "12px",
           marginBottom: "12px",
           boxSizing: "border-box",
+          fontSize: "16px",
         }}
       />
 
