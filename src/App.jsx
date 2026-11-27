@@ -97,6 +97,7 @@ export default function App() {
   const [databaseName, setDatabaseName] = useState("");
   const [showCreateDbPopup,  setShowCreateDbPopup] = useState(false);
   const [newDatabaseName,  setNewDatabaseName] = useState("");
+  const [loadingDatabase, setLoadingDatabase] = useState(true);
 
 function TopNavigation() {
   return (
@@ -878,6 +879,13 @@ if (data.length > 0) {
   setDatabaseId(dbId);
 
   await loadDatabaseInfo(dbId);
+  setLoadingDatabase(false);
+
+  if (error) {
+  console.log(error);
+  setLoadingDatabase(false);
+  return;
+}
 }
 }
 
@@ -1096,6 +1104,7 @@ async function attachTomDatabase() {
   await loadUserDatabases(
     session.user.id
   );
+  setCurrentPage("home");
 }
 
 async function createDatabase() {
@@ -1140,7 +1149,6 @@ if (!newDatabaseName.trim()) {
   setCurrentPage("addMeal");
   setNewDatabaseName("");
 setShowCreateDbPopup(false);
-setCurrentPage("addMeal");
 }
 
 async function addNewSide() {
@@ -1321,6 +1329,19 @@ if (!session) {
   );
 }
 
+if (session && loadingDatabase) {
+  return (
+    <div
+      style={{
+        textAlign: "center",
+        padding: "40px",
+      }}
+    >
+      Ielādē...
+    </div>
+  );
+}
+
 if (
   session &&
   !hasDatabase
@@ -1359,6 +1380,7 @@ if (
             "#fff",
           fontWeight: "bold",
           color: "#000",
+          fontSize: "18px",
         }}
       >
         📦 Ielādēt noklusējuma datubāzi
@@ -1378,6 +1400,7 @@ if (
             "#fff",
           fontWeight: "bold",
           color: "#000",
+          fontSize: "18px",
         }}
       >
         ➕ Veidot jaunu datubāzi
