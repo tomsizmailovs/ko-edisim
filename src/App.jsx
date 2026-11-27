@@ -95,6 +95,8 @@ export default function App() {
   const [hasDatabase, setHasDatabase] = useState(false);
   const [databaseId, setDatabaseId] = useState(null);
   const [databaseName, setDatabaseName] = useState("");
+  const [showCreateDbPopup,  setShowCreateDbPopup] = useState(false);
+  const [newDatabaseName,  setNewDatabaseName] = useState("");
 
 function TopNavigation() {
   return (
@@ -1098,13 +1100,18 @@ async function attachTomDatabase() {
 
 async function createDatabase() {
 
+if (!newDatabaseName.trim()) {
+  alert("Ievadi nosaukumu");
+  return;
+}
+
   const { data, error } =
     await supabase
       .from("meal_databases")
       .insert([
         {
           name:
-            `${session.user.email} datubāze`,
+            newDatabaseName
         },
       ])
       .select()
@@ -1130,6 +1137,9 @@ async function createDatabase() {
   setHasDatabase(true);
   setDatabaseId(data.id);
   setCurrentPage("addMeal");
+  setNewDatabaseName("");
+setShowCreateDbPopup(false);
+setCurrentPage("addMeal");
 }
 
 async function addNewSide() {
@@ -1285,6 +1295,7 @@ if (!session) {
           fontSize: "16px",
           fontWeight: "bold",
           cursor: "pointer",
+          color: "#000",
         }}
       >
         🔐 Pieslēgties ar Google
@@ -1299,6 +1310,7 @@ if (
   !hasDatabase
 ) {
   return (
+    <>
     <div
       style={{
         maxWidth: "380px",
@@ -1332,12 +1344,12 @@ if (
           fontWeight: "bold",
         }}
       >
-        📦 Pievienot datubāzi
+        📦 Ielādēt noklusējuma datubāzi
       </button>
 
       <button
-        onClick={
-          createDatabase
+        onClick={() =>
+          setShowCreateDbPopup(true)
         }
         style={{
           width: "100%",
@@ -1354,6 +1366,73 @@ if (
       </button>
 
     </div>
+      {showCreateDbPopup && (
+  <div
+    onClick={() =>
+      setShowCreateDbPopup(false)
+    }
+    style={{
+      position: "fixed",
+      inset: 0,
+      backgroundColor:
+        "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 2000,
+    }}
+  >
+    <div
+      onClick={(e) =>
+        e.stopPropagation()
+      }
+      style={{
+        background: "white",
+        padding: "16px",
+        borderRadius: "16px",
+        width: "90%",
+        maxWidth: "320px",
+      }}
+    >
+
+      <h3>
+        Jauna datubāze
+      </h3>
+
+      <input
+        value={newDatabaseName}
+        onChange={(e) =>
+          setNewDatabaseName(
+            e.target.value
+          )
+        }
+        placeholder="Datubāzes nosaukums"
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginBottom: "12px",
+          boxSizing: "border-box",
+        }}
+      />
+
+      <button
+        onClick={
+          createDatabase
+        }
+        style={{
+          width: "100%",
+          padding: "12px",
+          borderRadius: "12px",
+        }}
+      >
+        Izveidot jaunu datubāzi
+      </button>
+
+    </div>
+  </div>
+)}
+
+</> 
   );
 }
 
