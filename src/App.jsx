@@ -1036,7 +1036,6 @@ useEffect(() => {
     if (session) {
       loadUserDatabases(
         session.user.id);
-      loadMeals();
       loadMealPlans();
     }
   };
@@ -1053,7 +1052,6 @@ useEffect(() => {
       if (session) {
         loadUserDatabases(
           session.user.id);
-        loadMeals();
         loadMealPlans();
       }
     }
